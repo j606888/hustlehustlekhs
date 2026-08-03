@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400" role="img" aria-label="尚未提供圖片">
+  <title>圖片待補</title>
+  <desc>全站共用的缺圖佔位。任何還沒有照片的地方（老師、學員心得、首頁合照）都指向這個檔，避免破圖。有實際照片後把該處的 imageUrl 改掉即可。</desc>
+  <rect width="600" height="400" fill="#f1f5f9"/>
+  <g fill="none" stroke="#cbd5e1" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="228" y="158" width="144" height="104" rx="12"/>
+    <path d="M264 158l14-22h44l14 22"/>
+    <circle cx="300" cy="212" r="30"/>
+  </g>
+  <text x="300" y="312" text-anchor="middle"
+        font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-size="22" fill="#94a3b8">圖片待補</text>
+</svg>

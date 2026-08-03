@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 56" width="340" height="56" role="img" aria-label="HustleHustle KHS">
+  <title>HustleHustle KHS</title>
+  <desc>佔位 wordmark。拿到正式 logo 後整個檔案換掉。下方的 #009689 需與 globals.css 的品牌色手動同步（SVG 讀不到 CSS 變數）。換成正式 logo 時建議把文字輸出成路徑，才不會在沒有該字型的裝置上跑版。注意：Footer 會對這個檔套用 brightness-0 invert 把它變成全白，所以不要用「白字壓在色塊上」的設計（反轉後會整塊變白、字消失），KHS 因此做成外框式。</desc>
+  <text x="0" y="40"
+        font-family="Poppins, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-size="34" font-weight="700" letter-spacing="-0.5"
+        fill="#1f2937">Hustle<tspan fill="#009689">Hustle</tspan></text>
+  <rect x="252" y="12" width="76" height="32" rx="16" fill="none" stroke="#009689" stroke-width="3"/>
+  <text x="290" y="35" text-anchor="middle"
+        font-family="Poppins, 'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-size="19" font-weight="700" letter-spacing="1"
+        fill="#009689">KHS</text>
+</svg>
