@@ -7,6 +7,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-brand: var(--brand);
+  --color-brand-pale: var(--brand-pale);
   --color-brand-strong: var(--brand-strong);
   --color-brand-hover: var(--brand-hover);
   --color-brand-light: var(--brand-light);
@@ -56,14 +57,24 @@ body {
 /* ─────────────────────────────────────────────────────────────
    品牌主色。全站唯一來源 —— 要換色只改下面 --brand 這一組。
    元件一律用 text-brand / bg-brand / border-brand，不要寫死 Tailwind 色階。
-   目前的值 = Tailwind v4 的 teal-600 (#009689)，屬佔位色。
    衍生色（hover / 淺底 / 深字）都用 color-mix 從 --brand 算出來，
    所以只要換 --brand 這一行，整組會一起跟著變。
-   TODO: 拿到 HustleHustle KHS 的品牌色後，改這裡 + public/logo.svg
-         + src/app/icon.svg 裡的 hex（SVG 讀不到 CSS 變數，需手動同步）。
+
+   目前是玫瑰粉 #B45055，取自業主指定的 #F8B2B2。
+   為什麼不直接用 #F8B2B2：那個色太淺（相對亮度 0.55），白字壓上去
+   與拿它當文字壓白底都只有 1.75:1，遠低於 WCAG AA 的 4.5:1，
+   全站的 text-brand 小標與 bg-brand 按鈕都會近乎看不見。
+   因此保留它的色相（oklch 19°）、把亮度壓到 0.56 並降低飽和度
+   （避免變成正紅），得到 oklch(0.56 0.13 19) = #B45055，對比 4.98:1。
+   #F8B2B2 本身仍以 --brand-pale 保留，用於淺色底。
+
+   TODO: 換色時同步 public/logo.svg + src/app/icon.svg 裡的 hex
+         （SVG 讀不到 CSS 變數，需手動改）。
    ───────────────────────────────────────────────────────────── */
 :root {
-  --brand: oklch(0.627 0.122 182.1);
+  --brand: oklch(0.56 0.13 19);
+  /* 業主原本指定的淺粉，只適合當底色，不可拿來當文字或按鈕底 */
+  --brand-pale: #f8b2b2;
   /* 深一階，用於淺底上的小字 */
   --brand-strong: color-mix(in oklab, var(--brand) 82%, black);
   /* 按鈕 hover */

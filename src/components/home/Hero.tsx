@@ -77,8 +77,10 @@ function HeroMedia({ media }: Props) {
   }
 
   // 還沒有素材時的佔位。刻意不放破圖／破影片，直接用品牌色的漸層區塊撐版面。
+  // 這裡用 brand-pale（業主指定的 #F8B2B2）當底，它太淺不能當文字或按鈕色，
+  // 但拿來鋪淺色背景剛好。
   return (
-    <div className="flex aspect-[3/2] w-full items-center justify-center rounded-[10px] bg-gradient-to-br from-brand/15 via-brand/5 to-brand/20">
+    <div className="flex aspect-[3/2] w-full items-center justify-center rounded-[10px] bg-gradient-to-br from-brand-pale/50 via-brand-pale/20 to-brand-pale/70">
       <p className="px-6 text-center text-sm text-gray-500">
         這裡放教室的照片或影片
         <br />
