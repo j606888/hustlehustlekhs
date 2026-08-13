@@ -136,16 +136,16 @@ export default function TrackCard({ track }: { track: Track }) {
         </a>
       </div>
 
-      {/* 地點：連到該據點頁，順便把權重導過去 */}
+      {/* 地點：連到據點頁該場地的錨點，順便把權重導過去 */}
       <div className="relative mt-4 flex items-start gap-1.5 text-sm text-[#2d3a5e] md:text-base">
         <span aria-hidden>📍</span>
         <Link
-          href={`/location/${venue.slug}`}
+          href={`/location#${venue.slug}`}
           className="font-medium underline-offset-2 hover:underline"
         >
           {venue.addressFull}（{venue.shortName}）
           <span className={cn('ml-1 whitespace-nowrap', theme.accentText)}>
-            看地圖 →
+            看地點 →
           </span>
         </Link>
       </div>

@@ -81,14 +81,14 @@ function openingHours(tracks: Track[]): JsonLd[] {
 
 /** 單一據點的 LocalBusiness。這是「高雄 Hustle」這類本地查詢真正吃的訊號。 */
 export function venueJsonLd(venue: Venue, tracks: Track[]): JsonLd {
-  // 單據點時期據點頁就是 /location；之後開第二個據點要改成 /location/${venue.slug}。
-  const url = `${SITE_URL}/location`;
+  // 兩個據點共用 /location，靠錨點區分；@id 必須各自唯一，否則 Google 會當成同一間。
+  const url = `${SITE_URL}/location#${venue.slug}`;
   const courses = [...new Set(tracks.flatMap((t) => t.slots.map((s) => s.title)))];
 
   return {
     '@context': 'https://schema.org',
     '@type': ['LocalBusiness', 'SportsActivityLocation'],
-    '@id': `${url}#localbusiness`,
+    '@id': `${url}-localbusiness`,
     name: venue.name,
     url,
     parentOrganization: { '@id': ORGANIZATION_ID },

@@ -15,7 +15,8 @@
 | **Instagram 帳號** | `src/constants/links.ts` 的 `IG_HANDLE` | 只填帳號本身、不要 `@`。目前填的是 `hustlehustlekh`（推測值），**請務必核對** |
 | **LINE 連結** | `src/constants/links.ts` 的 `LINE` | 沒有官方 LINE 就留空字串，Footer 會自動不顯示這一項 |
 | **教室地址** | `src/data/venues.ts` | 全站唯一的地址來源。Footer、地點頁、Google 結構化資料都從這裡取，**不要在別的地方另外寫地址** |
-| **地圖座標** | `src/data/venues.ts` 的 `geo` | 在 Google 地圖上對場地按右鍵 → 複製座標，貼進 `lat` / `lng`。同時把 `mapEmbedSrc` 裡的座標一起改掉。不確定就整個 `geo` 刪掉，寧可不放也不要放錯位置 |
+| **導航連結** | `src/data/venues.ts` 的 `mapLink` | 點下去會開 Google 地圖的那個連結。頁面上不放地圖大圖，只放這個連結 |
+| **地圖座標** | `src/data/venues.ts` 的 `geo` | 選填。在 Google 地圖上對場地按右鍵 → 複製座標，貼進 `lat` / `lng`，Google 就知道教室的精確位置。不確定就整個 `geo` 不要寫，寧可不放也不要放錯位置 |
 
 ## 二、課程相關
 
@@ -24,6 +25,7 @@
 | 想改什麼 | 找檔案裡的這一段 |
 |---|---|
 | 這個月的月曆（哪幾號有課、什麼顏色） | `MONTH` —— `year` / `month` 換成當月，`highlights` 的 key 是「幾號」 |
+| 當月課表圖（IG 發的那張） | `MONTH` 的 `poster` —— 圖存到 `public/images/`，把 `src` 換成新檔名（例如 `/images/schedule-2026-09.png`）。不放圖就把整個 `poster` 刪掉 |
 | 每週固定課程的時間與內容 | `TRACKS` —— 每一筆是一條固定課程線，`slots` 是當天的時段 |
 | 這一期有哪幾堂課（日期） | `TRACKS` 裡各自的 `dates` |
 | 價錢、課卡方案 | `PRICE_PLANS` |

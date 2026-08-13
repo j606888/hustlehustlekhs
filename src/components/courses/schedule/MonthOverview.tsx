@@ -1,9 +1,11 @@
+import Image from 'next/image';
 import { MONTH, THEMES } from './data';
 
 const WEEKDAYS = ['日', '一', '二', '三', '四', '五', '六'];
 
 export default function MonthOverview() {
-  const { year, month, titleEn, titleZh, highlights, legend, footnote } = MONTH;
+  const { year, month, titleEn, titleZh, poster, highlights, legend, footnote } =
+    MONTH;
 
   const firstWeekday = new Date(year, month - 1, 1).getDay(); // 0 = 週日
   const daysInMonth = new Date(year, month, 0).getDate();
@@ -39,6 +41,26 @@ export default function MonthOverview() {
           {titleZh}課程總覽
         </p>
       </div>
+
+      {/* 當月課表圖。點一下開原圖，方便客人存下來或轉傳。 */}
+      {poster && (
+        <a
+          href={poster.src}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-5 block overflow-hidden rounded-2xl shadow-sm ring-1 ring-gray-200"
+        >
+          <Image
+            src={poster.src}
+            alt={poster.alt}
+            width={890}
+            height={1190}
+            priority
+            sizes="(min-width: 768px) 672px, 100vw"
+            className="h-auto w-full"
+          />
+        </a>
+      )}
 
       {/* 月曆 */}
       <div className="mt-5 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-gray-200 md:p-5">

@@ -50,7 +50,7 @@ const Footer = () => {
               {VENUES.map((venue) => (
                 <Link
                   key={venue.slug}
-                  href="/location"
+                  href={`/location#${venue.slug}`}
                   className="flex flex-col gap-0.5 hover:text-white transition-colors"
                 >
                   <span className="font-semibold">

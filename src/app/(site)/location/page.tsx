@@ -1,20 +1,20 @@
 import type { Metadata } from 'next';
-import React from 'react';
 import JsonLd from '@/components/JsonLd';
 import VenueDetail from '@/components/location/VenueDetail';
 import { getTracksByVenue } from '@/components/courses/schedule/data';
-import { PRIMARY_VENUE } from '@/data/venues';
+import { VENUES } from '@/data/venues';
 import { breadcrumbJsonLd, venueJsonLd } from '@/lib/jsonLd';
 
-// 目前只有一個據點，所以 /location 直接就是那個據點的詳情頁，沒有 /location/[city]。
-// 之後若開第二個據點，這頁改回「據點列表」，再各自加 /location/[slug] 子頁。
+// 兩個據點都放在這一頁，各自用 venue.slug 當錨點（/location#zhirenzhan）。
+// 據點多到這頁滑不完時，再改成列表 + /location/[slug] 子頁。
 
-const venue = PRIMARY_VENUE;
-const tracks = getTracksByVenue(venue.slug);
+const venues = VENUES.map((venue) => ({
+  venue,
+  tracks: getTracksByVenue(venue.slug),
+}));
 
-// TODO: 這段描述會直接出現在 Google 搜尋結果，等實際地址／課程確定後改寫。
 const DESCRIPTION =
-  'HustleHustle KHS 高雄 Hustle 教室的上課地點、地址與交通方式。零基礎、沒有舞伴都可以直接報名。';
+  'HustleHustle KHS 的上課地點：週四 Hustle 在高雄左營區職人棧、週五 Zouk 在三民區 Social Hub。零基礎、沒有舞伴都可以直接報名。';
 
 export const metadata: Metadata = {
   title: '上課地點・高雄 Hustle 教室',
@@ -32,7 +32,7 @@ export default function LocationPage() {
     <>
       <JsonLd
         data={[
-          venueJsonLd(venue, tracks),
+          ...venues.map(({ venue, tracks }) => venueJsonLd(venue, tracks)),
           breadcrumbJsonLd([
             { name: '首頁', path: '/' },
             { name: '上課地點', path: '/location' },
@@ -40,13 +40,11 @@ export default function LocationPage() {
         ]}
       />
       <VenueDetail
-        venue={venue}
-        tracks={tracks}
+        venues={venues}
         eyebrow="高雄據點"
         title="上課地點"
         subtitle="HustleHustle KHS 的固定上課場地"
-        // TODO: 換成實際的場地介紹。這段話承載「高雄 Hustle」的關鍵字，保持精簡。
-        intro="HustleHustle KHS 的固定上課場地位在高雄市，每週定期開課。不需要舞伴、零基礎也可以直接報名，歡迎先來看看。"
+        intro="我們的固定上課場地位在高雄市，每週定期開課。不需要舞伴、零基礎也可以直接報名，歡迎先來體驗看看。"
         // TODO: 拍一張場地／入口的照片放到 public/images/venue.jpg，再把下面的 photo 打開。
         // photo={{
         //   src: '/images/venue.jpg',
