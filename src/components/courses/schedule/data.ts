@@ -202,7 +202,7 @@ export const TRACKS: Track[] = [
     ],
     venueSlug: 'social-hub',
     pricePlanId: 'zouk-card',
-    priceSummary: '課卡制・單堂 $450・6 堂 $3200',
+    priceSummary: '課卡制・單堂 $450・8 堂 $3200',
   },
 ];
 
@@ -243,12 +243,12 @@ export interface PricePlan {
   note?: string;
 }
 
-// Hustle 與 Zouk 是兩張獨立課卡（堂數不同），所以拆成兩個 plan。
+// Hustle 與 Zouk 是兩張獨立課卡（各自只適用自己的課程），所以拆成兩個 plan。
 // 每個 plan 的 id 要跟上面 Track.pricePlanId 對得起來，課表卡才連得過來。
 export const PRICE_PLANS: PricePlan[] = [
   {
     id: 'hustle-card',
-    // 兩張課卡的堂數與適用課程不同，名字要能一眼分開，不然費用頁會出現兩個同名區塊。
+    // 兩張課卡適用的課程不同，名字要能一眼分開，不然費用頁會出現兩個同名區塊。
     name: 'Hustle 課卡方案',
     chips: [{ label: '週四・職人棧', theme: 'trackA' }],
     tiers: [
@@ -281,7 +281,7 @@ export const PRICE_PLANS: PricePlan[] = [
         ],
         options: [
           { name: '單堂', price: 450 },
-          { name: '6 堂課卡', price: 3200 },
+          { name: '8 堂課卡', price: 3200 },
         ],
       },
     ],
