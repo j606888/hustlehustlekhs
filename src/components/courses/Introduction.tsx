@@ -63,8 +63,21 @@ const DANCE_STYLES: DanceStyle[] = [
       '它的核心是兩個人之間的牽引與回彈——leader 給訊號、follower 接住再回應。步伐本身不複雜，難的是那份默契，也正因為如此，越跳越有意思。',
     ],
     traits: ['節奏明快', '大量旋轉', '牽引回彈', 'disco / 流行音樂'],
-    beginnerFriendly: true,
     theme: THEMES.coral,
+  },
+  {
+    id: 'zouk',
+    nameEn: 'BRAZILIAN ZOUK',
+    nameZh: '巴西祖克舞',
+    origin: '源自巴西的雙人社交舞',
+    youtubeId: undefined, // TODO: 補上示範影片的 YouTube ID
+    tagline: '柔和、流動，跟著音樂自在律動',
+    description: [
+      'Brazilian Zouk 是源自巴西的雙人社交舞，融合 Lambada 的流動感與豐富的身體律動，發展出獨特的旋轉、波浪與身體延伸。舞蹈不只講究步伐，更重視兩個人之間的連結、引導與回應。',
+      '隨著音樂節奏自由變化，Brazilian Zouk 可以很柔和、浪漫，也能充滿力量與活力。舞者透過身體的律動與彼此的互動，讓每一首音樂都呈現出不同的風格與情緒。',
+    ],
+    traits: ['流動律動', '旋轉變化', '熱情浪漫', '中南美洲/流行音樂'],
+    theme: THEMES.blue,
   },
 ];
 

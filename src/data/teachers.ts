@@ -18,37 +18,38 @@ export interface Teacher {
   published: boolean;
 }
 
-// TODO: 以下兩筆全部是佔位資料。
-//   1. 照片放到 public/teachers/ 底下，再把 imageUrl 指過去
-//      （沒有照片就維持 /placeholder.svg，不會破圖）
-//   2. slug 換成老師的英文名（會變成網址 /teachers/xxx，之後最好別再改，
-//      改了舊連結會 404）
-//   3. videos 留空陣列即可，個人頁的影片區塊會自動不顯示
+// TODO: 三位助教（小杜、乙婕、丁丁）的照片已經放在 public/teachers/ 底下
+//   （xiaodu.jpg、yijie.jpg、dingding.jpg），但目前的資料結構只有「老師」，
+//   還沒有「助教」欄位/分區。等要把助教也放上 /teachers 頁時，再回來加。
 export const TEACHERS: Teacher[] = [
   {
-    slug: 'teacher-1',
-    name: '老師一',
+    slug: 'yangyang',
+    name: '暘暘',
     title: '創辦人',
-    imageUrl: '/placeholder.svg',
+    imageUrl: '/teachers/yangyang.jpg',
     instagram: undefined,
-    skills: ['Hustle'],
-    courses: ['Hustle Lv1', 'Hustle Lv2'],
+    skills: ['Hustle', 'Brazilian Zouk'],
+    courses: ['Hustle', 'Brazilian Zouk'],
     description: [
-      '這裡放老師的簡介第一段：跳舞資歷、教學風格、擅長什麼。這一段也會被拿去當列表卡片的摘要與搜尋結果的描述，所以寫得具體一點比較好。',
-      '第二段可以寫教學理念，或是想跟學生說的話。段落數量不限，照需要增減。',
+      '擁有20多年的舞蹈經歷，從民俗舞蹈、爵士舞、街舞一路探索至社交舞，涉獵多元舞蹈風格，並專精於 Hustle 與 Brazilian Zouk。',
+      '2020年與又嘉共同於高雄創立 Hustlehustlekhs，累積多年舞蹈教學經驗。教學風格輕鬆且注重理解，擅長將複雜動作拆解成清楚易懂的步驟，並透過明確的動作指引，幫助學員掌握身體運用與舞蹈邏輯，讓學習舞蹈不只輕鬆，更能真正跳得自在。',
     ],
     videos: [],
     sortOrder: 0,
     published: true,
   },
   {
-    slug: 'teacher-2',
-    name: '老師二',
-    imageUrl: '/placeholder.svg',
+    slug: 'youjia',
+    name: '又嘉',
+    title: '創辦人',
+    imageUrl: '/teachers/youjia.jpg',
     instagram: undefined,
-    skills: ['Hustle'],
-    courses: ['Hustle 基礎'],
-    description: ['這裡放老師的簡介。'],
+    skills: ['Hustle', 'Brazilian Zouk'],
+    courses: ['Hustle', 'Brazilian Zouk'],
+    description: [
+      '大約10年的舞蹈經歷，從大學學習街舞開始，到畢業後接觸社交舞大約7年，專精於 Hustle 與 Brazilian Zouk。',
+      '2020年與暘暘共同於高雄創立 Hustlehustlekhs，教學風格清晰簡單，擅長將雙人舞遊戲化，並透過明確的規則與概念，幫助學員掌握不同舞蹈的身體運用方式，有效避免受傷的同時，讓學習舞蹈的過程輕鬆升級，更能跳得好玩並自在。',
+    ],
     videos: [],
     sortOrder: 1,
     published: true,
@@ -65,4 +66,24 @@ export function getPublishedTeacherSlugs(): { slug: string }[] {
 
 export function getTeacherBySlug(slug: string): Teacher | undefined {
   return TEACHERS.find((t) => t.slug === slug);
+}
+
+// 助教：只在 /teachers 列表頁露出照片＋名字，沒有個人頁（沒有簡介/專長等資料）。
+// 之後若要幫助教做個人頁，再把這幾位併回 TEACHERS 補齊欄位即可。
+export interface Assistant {
+  slug: string;
+  name: string;
+  imageUrl: string;
+  sortOrder: number;
+  published: boolean;
+}
+
+export const ASSISTANTS: Assistant[] = [
+  { slug: 'xiaodu', name: '小杜', imageUrl: '/teachers/xiaodu.jpg', sortOrder: 0, published: true },
+  { slug: 'yijie', name: '乙婕', imageUrl: '/teachers/yijie.jpg', sortOrder: 1, published: true },
+  { slug: 'dingding', name: '丁丁', imageUrl: '/teachers/dingding.png', sortOrder: 2, published: true },
+];
+
+export function getPublishedAssistants(): Assistant[] {
+  return ASSISTANTS.filter((a) => a.published).sort((a, b) => a.sortOrder - b.sortOrder);
 }

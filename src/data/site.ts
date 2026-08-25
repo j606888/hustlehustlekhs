@@ -10,5 +10,5 @@
  */
 export const HERO_MEDIA: { videoUrl?: string; imageUrl?: string } = {
   videoUrl: undefined,
-  imageUrl: undefined,
+  imageUrl: '/images/hero.jpg',
 };
