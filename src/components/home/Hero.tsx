@@ -23,7 +23,7 @@ const Hero = ({ media }: Props) => {
         <p className="text-base max-w-2xl text-center md:text-left md:text-md">
           沒舞伴、沒經驗都沒關係，
           <br className="md:hidden" />
-          來試一次 Hustle。
+          來試一次體驗課。
         </p>
         <div className="flex flex-wrap gap-4">
           <Link href={LINKS.INSTAGRAM_DM} target="_blank" rel="noopener noreferrer">

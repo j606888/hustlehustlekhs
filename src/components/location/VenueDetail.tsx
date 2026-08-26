@@ -109,7 +109,16 @@ export default function VenueDetail({
       <section className="flex w-full flex-col items-center gap-3 rounded-xl bg-slate-50 px-4 py-8 text-center">
         <h2 className="text-xl font-bold md:text-2xl">想來上課？</h2>
         <p className="max-w-md text-sm text-gray-600 md:text-base">
-          不需舞伴、零基礎都可以報名。直接 Instagram 私訊我們，或在上課時間到教室現場體驗。
+          不需舞伴、零基礎都可以報名。直接{' '}
+          <Link
+            href={LINKS.INSTAGRAM_DM}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand underline"
+          >
+            Instagram 私訊我們
+          </Link>
+          ，或在上課時間到教室現場體驗。
         </p>
         <div className="mt-2 flex flex-wrap justify-center gap-4">
           <Link

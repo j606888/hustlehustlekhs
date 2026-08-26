@@ -1,3 +1,5 @@
+import { LINKS } from '@/constants/links';
+
 // 常見問題的單一資料來源。顯示在首頁最下方，同時產生 FAQPage 結構化資料。
 //
 // answer 是 Markdown：可以用 [文字](/連結) 做站內連結、空一行分段。
@@ -48,7 +50,7 @@ export const FAQS: Faq[] = [
     id: 'how-to-join',
     question: '要怎麼報名？',
     answer:
-      '直接 Instagram 私訊我們就可以了，告訴我們你想上哪一堂課，我們會回覆你細節。',
+      `直接 [Instagram 私訊我們](${LINKS.INSTAGRAM_DM}) 就可以了，告訴我們你想上哪一堂課，我們會回覆你細節。`,
     sortOrder: 5,
     published: true,
   },

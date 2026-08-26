@@ -53,9 +53,15 @@ export default function LocationPage() {
         // }}
         notes={[
           {
-            // TODO: 換成實際的注意事項（停車、電梯、要不要換鞋等）。
             question: '第一次來要注意什麼？',
-            answer: '待補：交通與停車方式、要不要提早到、需不需要自備舞鞋。',
+            answer: (
+              <ul className="list-disc space-y-1 pl-5">
+                <li>穿好活動的衣服與鞋子</li>
+                <li>會流汗，可以準備毛巾或替換衣物</li>
+                <li>社交舞與舞伴距離較近，請保持衣物與口腔清新</li>
+                <li>Social Hub 教室不提供飲用水，且需穿室內鞋</li>
+              </ul>
+            ),
           },
         ]}
       />
