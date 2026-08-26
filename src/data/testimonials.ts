@@ -50,9 +50,8 @@ export const TESTIMONIALS: Testimonial[] = [
   {
     id: 'chemistry',
     name: '化學',
-    // TODO: 本人還沒提供照片，拿到後放進 public/testimonials/ 並改掉 imageUrl。
     title: '大學國標社出身，多年後重新跳舞',
-    imageUrl: '/placeholder.svg',
+    imageUrl: '/testimonials/chemistry.jpg',
     danceStyle: 'Hustle',
     content: [
       '大學曾是國標社，但好多年沒跳舞，好不容易身體健康，剛好聽到有人要學跳舞，就跟去了～～',
@@ -62,6 +61,20 @@ export const TESTIMONIALS: Testimonial[] = [
       '感謝各位同學與學長姐一路的一起扶持成長，大家跳舞不斷進步，也分享生活的點點滴滴，最愛大家了！！！',
     ],
     sortOrder: 2,
+    published: true,
+  },
+  {
+    id: 'johnny',
+    name: 'Johnny',
+    title: '下班想找新活動，就這樣跳進 Hustle 的上班族',
+    imageUrl: '/testimonials/johnny.jpg',
+    danceStyle: 'Hustle',
+    content: [
+      '工作之外的下班時間，除了聊天聚餐運動之外，想找有興趣的新的活動，也是在不再考慮自我的限制下，才對跳舞萌生出嘗試的念頭，多次看到跳舞資訊，某一次就決定試試。我一開始是不太懂，而選擇了 Hustle。如果多了解去選適合的舞風，或是不了解先試試體驗課，覺得其實差不多，體驗課可以可直接感受。',
+      '原本以為跳舞是 E 人的場合，但真正接觸之後才發現比想像的豐富，是好聽的 disco 音樂，和不同人互動，團體中也有 I 人。在跳舞的學習中，從跳舞的舞步、一些基本招，到進階，都是逐步熟悉整個過程，hustlehustlekhs 的老師能把整個過程變比較容易，還有和人互動，及邀舞都是在一種健康環境。重要的是，能更享受在舞蹈中就佷棒。',
+      '最有感的是從舞步，到一些基本招，到和 Follower 間連結的拿捏，和舞步能夠與歌的節奏協調，真是以前沒見過的新世界（但大家也都在互相學習）。實際上去培養興趣，和同樣興趣的人一起，及一個放鬆的環境，很值得。',
+    ],
+    sortOrder: 4,
     published: true,
   },
   {
