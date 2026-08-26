@@ -3,7 +3,7 @@
 //
 // 地址不寫在這裡：據點資料集中於 src/data/venues.ts，track 只存 venueSlug。
 //
-// 課表與價目已是實際內容（2026/08）；每個月要更新 MONTH（含 poster 圖）與各 track 的 dates。
+// 課表與價目已是實際內容（2026/09）；每個月要更新 MONTH（含 poster 圖）與各 track 的 dates。
 
 import type { VenueSlug } from '@/data/venues';
 
@@ -123,35 +123,42 @@ export interface MonthConfig {
 //       highlights 的 key 是「幾號」，值決定那一格的顏色與點下去跳到哪張課表卡。
 export const MONTH: MonthConfig = {
   year: 2026,
-  month: 8,
-  titleEn: 'AUGUST',
-  titleZh: '八月',
+  month: 9,
+  titleEn: 'SEPTEMBER',
+  titleZh: '九月',
   poster: {
-    src: '/images/schedule-2026-08.png',
-    alt: 'HustleHustle KHS 2026 年八月課表：週四 Hustle 在職人棧、週五 Zouk 在 Social Hub',
+    src: '/images/schedule-2026-09.png',
+    alt: 'HustleHustle KHS 2026 年九月課表：週四 Hustle 在職人棧、週五 Zouk 在 Social Hub，9/18 Zouk × Hustle Party、9/27–9/28 IAGO Workshop',
   },
   highlights: {
-    6: { theme: 'trackA', label: '職人棧', trackId: 'hustle-thu' },
-    7: { theme: 'trackB', label: 'Social Hub', trackId: 'zouk-fri' },
-    13: { theme: 'trackA', label: '職人棧', trackId: 'hustle-thu' },
-    14: { theme: 'trackB', label: 'Social Hub', trackId: 'zouk-fri' },
-    20: { theme: 'trackA', label: '職人棧', trackId: 'hustle-thu' },
-    21: { theme: 'trackB', label: 'Social Hub', trackId: 'zouk-fri' },
-    // 8/27、8/28 停課，所以不 highlight。
+    3: { theme: 'trackA', label: '職人棧', trackId: 'hustle-thu' },
+    4: { theme: 'trackB', label: 'Social Hub', trackId: 'zouk-fri' },
+    17: { theme: 'trackA', label: '職人棧', trackId: 'hustle-thu' },
+    18: { theme: 'trackB', label: 'Party', trackId: 'zouk-fri' },
+    24: { theme: 'trackA', label: '體驗課', trackId: 'hustle-thu' },
+    25: { theme: 'trackB', label: 'Social Hub', trackId: 'zouk-fri' },
+    27: { theme: 'trackC', label: 'IAGO', trackId: 'zouk-fri' },
+    28: { theme: 'trackC', label: 'IAGO', trackId: 'zouk-fri' },
+    // 9/10、9/11 停課，所以不 highlight。
   },
   legend: [
     {
       theme: 'trackA',
       title: '週四・職人棧',
-      desc: 'Hustle 新手 / 進階 · 19:30–22:00',
+      desc: 'Hustle 初階 / 中階 · 19:30–22:00',
     },
     {
       theme: 'trackB',
       title: '週五・Social Hub',
-      desc: 'Zouk 新手 / 進階 · 19:30–23:00',
+      desc: 'Zouk 初階 / 進階 · 19:30–23:00',
+    },
+    {
+      theme: 'trackC',
+      title: '9/27–9/28・IAGO Workshop',
+      desc: '客座 workshop・報名與地點見 Instagram',
     },
   ],
-  footnote: '★ 實際場次以 Instagram 公告為準', // TODO: 有停課／加開時記得更新
+  footnote: '★ 9/10、9/11 停課；實際場次以 Instagram 公告為準', // TODO: 有停課／加開時記得更新
 };
 
 // 兩條固定課程線：週四 Hustle（職人棧）、週五 Zouk（Social Hub）。
@@ -166,16 +173,16 @@ export const TRACKS: Track[] = [
     sessionLabelEn: 'THURSDAY',
     dayZh: '週四',
     slots: [
-      { time: '19:30–20:30', title: 'Hustle 進階班' },
-      { time: '20:30–21:30', title: 'Hustle 新手班' },
+      { time: '19:30–20:30', title: 'Hustle 初階班' },
+      { time: '20:30–21:30', title: 'Hustle 中階班' },
       { time: '21:30–22:00', title: '課後練習 social' },
     ],
     datesTitle: '本期場次',
-    datesNote: '每週四・8/27 停課',
+    datesNote: '每週四・9/10 停課',
     dates: [
-      { label: '8/6' },
-      { label: '8/13' },
-      { label: '8/20', note: '體驗課 + social' },
+      { label: '9/3' },
+      { label: '9/17' },
+      { label: '9/24', note: '體驗課 + social' },
     ],
     venueSlug: 'zhirenzhan',
     pricePlanId: 'hustle-card',
@@ -189,16 +196,16 @@ export const TRACKS: Track[] = [
     sessionLabelEn: 'FRIDAY',
     dayZh: '週五',
     slots: [
-      { time: '19:30–20:30', title: 'Zouk 新手班' },
+      { time: '19:30–20:30', title: 'Zouk 初階班' },
       { time: '20:45–21:45', title: 'Zouk 進階班' },
       { time: '22:00–23:00', title: '課後練習' },
     ],
     datesTitle: '本期場次',
-    datesNote: '每週五・8/28 停課',
+    datesNote: '每週五・9/11 停課',
     dates: [
-      { label: '8/7', note: '體驗課 + party' },
-      { label: '8/14' },
-      { label: '8/21' },
+      { label: '9/4' },
+      { label: '9/18', note: '體驗課 + Zouk × Hustle Party' },
+      { label: '9/25' },
     ],
     venueSlug: 'social-hub',
     pricePlanId: 'zouk-card',
@@ -256,8 +263,8 @@ export const PRICE_PLANS: PricePlan[] = [
         title: 'Hustle 課卡',
         subtitle: '適用週四職人棧的 Hustle 課程',
         courses: [
-          { name: 'Hustle 新手班', theme: 'trackA' },
-          { name: 'Hustle 進階班', theme: 'trackA' },
+          { name: 'Hustle 初階班', theme: 'trackA' },
+          { name: 'Hustle 中階班', theme: 'trackA' },
         ],
         options: [
           { name: '單堂', price: 450 },
@@ -276,7 +283,7 @@ export const PRICE_PLANS: PricePlan[] = [
         title: 'Zouk 課卡',
         subtitle: '適用週五 Social Hub 的 Zouk 課程',
         courses: [
-          { name: 'Zouk 新手班', theme: 'trackB' },
+          { name: 'Zouk 初階班', theme: 'trackB' },
           { name: 'Zouk 進階班', theme: 'trackB' },
         ],
         options: [
