@@ -18,7 +18,7 @@ export interface Teacher {
   published: boolean;
 }
 
-// TODO: 三位助教（小杜、乙婕、丁丁）的照片已經放在 public/teachers/ 底下
+// TODO: 三位助教（小杜、乙杰、丁丁）的照片已經放在 public/teachers/ 底下
 //   （xiaodu.jpg、yijie.jpg、dingding.jpg），但目前的資料結構只有「老師」，
 //   還沒有「助教」欄位/分區。等要把助教也放上 /teachers 頁時，再回來加。
 export const TEACHERS: Teacher[] = [
@@ -80,7 +80,7 @@ export interface Assistant {
 
 export const ASSISTANTS: Assistant[] = [
   { slug: 'xiaodu', name: '小杜', imageUrl: '/teachers/xiaodu.jpg', sortOrder: 0, published: true },
-  { slug: 'yijie', name: '乙婕', imageUrl: '/teachers/yijie.jpg', sortOrder: 1, published: true },
+  { slug: 'yijie', name: '乙杰', imageUrl: '/teachers/yijie.jpg', sortOrder: 1, published: true },
   { slug: 'dingding', name: '丁丁', imageUrl: '/teachers/dingding.png', sortOrder: 2, published: true },
 ];
 

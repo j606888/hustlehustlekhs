@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ChevronRight } from 'lucide-react';
 import { getPublishedAssistants, getPublishedTeachers } from '@/data/teachers';
 import SectionHeading from '@/components/SectionHeading';
 
@@ -36,53 +37,67 @@ export default function TeachersPage() {
           className='py-2 md:py-4'
         />
 
-        {/* 兩位老師：等寬並排。用 max-w 限制整排寬度，避免電腦版卡片被拉得太大。 */}
-        <div className='w-full max-w-xl mx-auto grid gap-4 grid-cols-2 md:gap-6'>
+        {/* 兩位老師：等寬並排。照片是直式的，所以手機用 3/4、電腦用 2/3，都是直的，
+            避免橫向裁切把人切掉。照片在上、資訊在下，資訊區帶「查看介紹」的箭頭表示可以點進去。 */}
+        <div className='w-full max-w-xl mx-auto grid gap-3 grid-cols-2 md:gap-6'>
           {teachers.map((teacher) => (
             <Link
               key={teacher.slug}
               href={`/teachers/${teacher.slug}`}
-              className='relative aspect-[2/3] cursor-pointer group'
+              className='group flex flex-col overflow-hidden rounded-lg bg-white ring-1 ring-black/5 shadow-sm transition-shadow hover:shadow-md'
             >
-              <Image
-                src={teacher.imageUrl}
-                alt={teacher.name}
-                fill
-                priority
-                sizes='(min-width: 768px) 50vw, 50vw'
-                className='object-cover rounded-lg'
-              />
-              <div className='absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-200 rounded-lg' />
-              <div className='absolute bottom-3 left-3 right-3 bg-white/80 rounded-lg p-3 md:p-4'>
-                <h3 className='text-xl font-bold mb-1 md:text-2xl'>
-                  {teacher.name}
-                  {teacher.title && <span className='text-sm text-gray-500'>（{teacher.title}）</span>}
-                </h3>
-                <div className='flex gap-2 flex-wrap'>
+              <div className='relative aspect-[3/4] overflow-hidden md:aspect-[2/3]'>
+                <Image
+                  src={teacher.imageUrl}
+                  alt={teacher.name}
+                  fill
+                  priority
+                  sizes='(min-width: 768px) 288px, 50vw'
+                  className='object-cover object-top transition-transform duration-300 group-hover:scale-105'
+                />
+              </div>
+              <div className='flex flex-1 flex-col p-3 md:p-4'>
+                <h3 className='text-base font-bold leading-tight md:text-xl'>{teacher.name}</h3>
+                {teacher.title && (
+                  <p className='mt-0.5 text-xs text-gray-500 md:text-sm'>{teacher.title}</p>
+                )}
+                <div className='mt-2 flex flex-wrap gap-1.5'>
                   {teacher.courses.map((item) => (
-                    <div key={item} className='text-xs text-white bg-brand p-2 rounded-md'>{item}</div>
+                    <span
+                      key={item}
+                      className='text-[11px] text-white bg-brand px-2 py-0.5 rounded md:text-xs md:px-2.5 md:py-1'
+                    >
+                      {item}
+                    </span>
                   ))}
                 </div>
+                <span className='mt-3 inline-flex items-center gap-0.5 text-xs font-medium text-brand md:mt-4 md:text-sm'>
+                  查看介紹
+                  <ChevronRight className='size-3.5 transition-transform group-hover:translate-x-0.5 md:size-4' />
+                </span>
               </div>
             </Link>
           ))}
         </div>
 
-        {/* 三位助教：只露出照片＋名字，沒有個人頁可連。 */}
+        {/* 三位助教：只露出照片＋名字，沒有個人頁可連。
+            名字放在照片下方（不疊在照片上），保持乾淨；「助教」用小字灰色註記就好。 */}
         {assistants.length > 0 && (
           <div className='w-full grid gap-3 grid-cols-3 md:gap-6'>
             {assistants.map((assistant) => (
-              <div key={assistant.slug} className='h-[160px] relative md:h-[260px]'>
-                <Image
-                  src={assistant.imageUrl}
-                  alt={assistant.name}
-                  fill
-                  sizes='(min-width: 768px) 33vw, 33vw'
-                  className='object-cover object-top rounded-lg'
-                />
-                <div className='absolute top-2 left-2 text-xs text-white bg-brand px-2 py-1 rounded-md md:text-sm'>助教</div>
-                <div className='absolute bottom-2 left-2 right-2 bg-white/80 rounded-lg py-1 px-2 text-center md:py-2'>
-                  <h3 className='text-sm font-bold md:text-lg'>{assistant.name}</h3>
+              <div key={assistant.slug}>
+                <div className='relative h-[160px] overflow-hidden rounded-lg md:h-[260px]'>
+                  <Image
+                    src={assistant.imageUrl}
+                    alt={assistant.name}
+                    fill
+                    sizes='(min-width: 768px) 33vw, 33vw'
+                    className='object-cover object-top'
+                  />
+                </div>
+                <div className='mt-2 text-center'>
+                  <h3 className='text-sm font-bold md:text-base'>{assistant.name}</h3>
+                  <p className='text-xs text-gray-500'>助教</p>
                 </div>
               </div>
             ))}
