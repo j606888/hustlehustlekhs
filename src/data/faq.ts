@@ -29,10 +29,11 @@ export const FAQS: Faq[] = [
     published: true,
   },
   {
-    id: 'what-is-hustle',
-    question: 'Hustle 是什麼樣的舞？',
+    // 兩個舞風各自連到風格介紹頁的對應區塊（Introduction.tsx 的 DANCE_STYLES id）。
+    id: 'dance-styles',
+    question: '我們有教什麼舞風？',
     answer:
-      'Hustle 是一種雙人社交舞，配 disco、funk 或流行音樂都很合，節奏明快、旋轉多。\n\n想了解更多可以看[課程資訊](/courses)裡的風格介紹。',
+      '我們有教 [Hustle](/courses?tab=introduction#hustle) 跟 [Brazilian Zouk](/courses?tab=introduction#zouk)，想了解更多可以看[課程資訊](/courses?tab=introduction)裡的風格介紹。',
     sortOrder: 3,
     published: true,
   },

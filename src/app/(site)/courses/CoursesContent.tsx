@@ -13,6 +13,9 @@ const TABS = [
   { label: '風格介紹', query: 'introduction' },
 ]
 
+// 這兩個 tab 的內容有帶 id 的錨點區塊（價目方案、舞風介紹），網址帶 hash 進來要能捲過去。
+const HASH_TABS = ['pricing', 'introduction'];
+
 export default function CoursesContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -28,10 +31,10 @@ export default function CoursesContent() {
     }
   }, [searchParams, router]);
 
-  // 從課表卡的「查看費用 →」跳轉過來時（/courses?tab=pricing#plan-id），
-  // 切到費用 tab 後把對應方案區塊捲入畫面。
+  // 帶 hash 進來時（課表卡的「查看費用 →」/courses?tab=pricing#plan-id，
+  // 或首頁 Q&A 連到 /courses?tab=introduction#hustle），切好 tab 後把該區塊捲入畫面。
   useEffect(() => {
-    if (activeTab !== 'pricing') return;
+    if (!HASH_TABS.includes(activeTab)) return;
     const hash = window.location.hash.slice(1);
     if (!hash) return;
     const timer = setTimeout(() => {
