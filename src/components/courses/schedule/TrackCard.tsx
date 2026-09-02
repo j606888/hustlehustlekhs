@@ -107,7 +107,10 @@ export default function TrackCard({ track }: { track: Track }) {
           <p className="font-bold text-[#2d3a5e]">{track.datesTitle}</p>
           <p className="text-xs text-gray-500 md:text-sm">{track.datesNote}</p>
         </div>
-        <div className="mt-2 grid grid-cols-3 gap-2 sm:grid-cols-6">
+        {/* 場次數量會變（3～6 堂），所以不用固定欄數的 grid：固定 6 欄時只有 3 堂
+            會把每張卡擠成 1/6 寬，note 被折成三行。改用 flex-wrap，手機一列三張，
+            桌機讓卡片長到 max-w 為止。 */}
+        <div className="mt-2 flex flex-wrap gap-2">
           {track.dates.map((d) => (
             <DateChip
               key={d.label}
@@ -171,7 +174,7 @@ function DateChip({
   return (
     <div
       className={cn(
-        'overflow-hidden rounded-xl text-center shadow-sm',
+        'flex basis-[calc((100%-1rem)/3)] flex-col overflow-hidden rounded-xl text-center shadow-sm sm:grow sm:basis-24 sm:max-w-48',
         (isDone || isUpcoming) && 'opacity-70'
       )}
     >
@@ -183,7 +186,7 @@ function DateChip({
       >
         {weekdayEn}
       </div>
-      <div className="flex flex-col bg-white px-1 py-2">
+      <div className="flex flex-1 flex-col bg-white px-1.5 py-2">
         <span
           className={cn(
             'font-poppins text-base font-bold leading-tight text-[#2d3a5e] md:text-lg',
@@ -193,7 +196,7 @@ function DateChip({
           {date.label}
         </span>
         {(isDone || date.note) && (
-          <span className="mt-0.5 text-[10px] leading-tight text-gray-500 md:text-xs">
+          <span className="mt-0.5 text-balance break-words text-[10px] leading-tight text-gray-500 md:text-xs">
             {isDone ? '已結束' : date.note}
           </span>
         )}
