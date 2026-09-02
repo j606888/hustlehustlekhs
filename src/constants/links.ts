@@ -10,6 +10,15 @@ export const LINKS = {
   // 報名 CTA 用，點擊直接開啟 IG 私訊對話
   INSTAGRAM_DM: `https://ig.me/m/${IG_HANDLE}`,
   INSTAGRAM: `https://www.instagram.com/${IG_HANDLE}`,
+  THREADS: `https://www.threads.net/@${IG_HANDLE}`,
+  BIO_SITE: `https://bio.site/${IG_HANDLE}`,
   COURSES: '/courses',
   PRICING: '/courses?tab=pricing',
 } as const;
+
+/**
+ * 同一個品牌在站外的其他身分，供 JSON-LD 的 sameAs 使用。
+ * sameAs 是 Google 用來確認「這個網站 = 這個社群帳號」的方式；IG 帳號已認證
+ * 且有數千追蹤，把網站跟它綁在一起有助於建立品牌實體的可信度。
+ */
+export const SAME_AS: string[] = [LINKS.INSTAGRAM, LINKS.THREADS, LINKS.BIO_SITE];

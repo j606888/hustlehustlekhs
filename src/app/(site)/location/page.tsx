@@ -14,14 +14,14 @@ const venues = VENUES.map((venue) => ({
 }));
 
 const DESCRIPTION =
-  'HustleHustle KHS 的上課地點：週四 Hustle 在高雄左營區職人棧、週五 Zouk 在三民區 Social Hub。零基礎、沒有舞伴都可以直接報名。';
+  '高雄雙人舞課程的上課地點：週四 Hustle 在左營區至聖路的職人棧、週五 Brazilian Zouk 在三民區大昌二路的 Social Hub。零基礎、沒有舞伴都可以直接報名。';
 
 export const metadata: Metadata = {
-  title: '上課地點・高雄 Hustle 教室',
+  title: '上課地點・高雄雙人舞教室（左營・三民）',
   description: DESCRIPTION,
   alternates: { canonical: '/location' },
   openGraph: {
-    title: '上課地點・高雄 Hustle 教室 | HustleHustle KHS',
+    title: '上課地點・高雄雙人舞教室（左營・三民） | HustleHustle KHS',
     description: DESCRIPTION,
     url: '/location',
   },
@@ -43,8 +43,8 @@ export default function LocationPage() {
         venues={venues}
         eyebrow="高雄據點"
         title="上課地點"
-        subtitle="HustleHustle KHS 的固定上課場地"
-        intro="我們的固定上課場地位在高雄市，每週定期開課。不需要舞伴、零基礎也可以直接報名，歡迎先來體驗看看。"
+        subtitle="高雄 Hustle 與 Brazilian Zouk 的固定上課場地"
+        intro="我們是高雄唯一同時教 Hustle 與 Brazilian Zouk 的雙人舞教室，兩個場地都在高雄市區：週四的 Hustle 在左營區的職人棧，週五的 Zouk 在三民區的 Social Hub，每週定期開課。不需要舞伴、零基礎也可以直接報名，歡迎先來體驗看看。"
         // TODO: 拍一張場地／入口的照片放到 public/images/venue.jpg，再把下面的 photo 打開。
         // photo={{
         //   src: '/images/venue.jpg',

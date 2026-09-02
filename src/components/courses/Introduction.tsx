@@ -87,8 +87,12 @@ export default function Introduction() {
       <div className="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-8 md:gap-10 md:px-6 md:py-12">
         <div className="flex flex-col gap-3">
           <h2 className="font-poppins text-2xl font-bold text-[#2d3a5e] md:text-3xl">
-            舞蹈風格介紹
+            舞蹈風格介紹｜Hustle 與 Brazilian Zouk
           </h2>
+          <p className="text-sm text-gray-600 md:text-base">
+            我們在高雄教兩種雙人舞（社交舞）：明快好轉的 Hustle，和柔和流動的 Brazilian
+            Zouk。兩種都是兩人一組、透過牽引與回應即興互動的舞蹈。
+          </p>
           <div className="flex items-start gap-3 rounded-2xl border border-[#e8c9c3] bg-[#fbeae6] px-4 py-3.5">
             <span className="text-xl leading-none" aria-hidden>✨</span>
             <p className="text-sm text-[#2d3a5e] md:text-base">

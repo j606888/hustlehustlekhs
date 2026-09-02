@@ -13,14 +13,19 @@ const Hero = ({ media }: Props) => {
   return (
     <div className="px-5 py-10 flex flex-col items-center justify-center gap-6 md:flex-row md:gap-6 md:max-w-7xl md:mx-auto">
       <div className="flex flex-col items-center justify-center gap-4 md:w-[420px] md:items-start md:flex-shrink-0">
-        {/* TODO: 換成 HustleHustle KHS 自己的標語 */}
         <h1 className="font-poppins text-2xl font-bold mb-1 md:text-5xl">
           第一次跳舞，
           <br className="hidden md:block" />
           就從這裡開始
         </h1>
 
+        {/* h1 是情感標語，關鍵字（高雄／Hustle／Zouk／雙人舞）由這句副標帶，
+            讓搜尋引擎和 AI 在頁面最上方就讀到我們是誰、在哪、教什麼。 */}
         <p className="text-base max-w-2xl text-center md:text-left md:text-md">
+          <strong className="font-semibold">
+            高雄唯一同時教 Hustle 與 Brazilian Zouk 的雙人舞教室。
+          </strong>
+          <br className="hidden md:block" />
           沒舞伴、沒經驗都沒關係，
           <br className="md:hidden" />
           來試一次體驗課。

@@ -4,17 +4,18 @@
 // 純文字提到城市名的權重低很多。據點頁 /location 會掛一份。
 
 import {
+  DANCE_STYLES,
   SERVICE_AREAS,
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_NAME_FULL,
   SITE_URL,
 } from '@/constants/site';
-import { LINKS } from '@/constants/links';
-import type { Venue } from '@/data/venues';
+import { SAME_AS } from '@/constants/links';
+import { getVenue, type Venue } from '@/data/venues';
 import type { Faq } from '@/data/faq';
 import type { Teacher } from '@/data/teachers';
-import type { Track } from '@/components/courses/schedule/data';
+import { PRICE_PLANS, type Track } from '@/components/courses/schedule/data';
 
 /** JSON-LD 是自由格式的物件，值可以是巢狀物件／陣列。 */
 export type JsonLd = Record<string, unknown>;
@@ -29,18 +30,21 @@ function absolute(path: string): string {
 export function organizationJsonLd(): JsonLd {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    // 同時宣告 EducationalOrganization，讓 Google 知道這是「教學單位」而不只是公司
+    '@type': ['Organization', 'EducationalOrganization'],
     '@id': ORGANIZATION_ID,
     name: SITE_NAME,
     alternateName: SITE_NAME_FULL,
     url: SITE_URL,
     logo: absolute('/logo.svg'),
     description: SITE_DESCRIPTION,
+    knowsAbout: [...DANCE_STYLES],
     areaServed: SERVICE_AREAS.map((name) => ({
       '@type': 'City',
       name,
     })),
-    sameAs: [LINKS.INSTAGRAM],
+    // sameAs 是 Google 確認「這個網站 = 這個社群帳號」的方式
+    sameAs: SAME_AS,
   };
 }
 
@@ -107,12 +111,87 @@ export function venueJsonLd(venue: Venue, tracks: Track[]): JsonLd {
         longitude: venue.geo.lng,
       },
     }),
+    description: venueDescription(venue, tracks),
     areaServed: { '@type': 'City', name: venue.city },
     openingHoursSpecification: openingHours(tracks),
-    knowsAbout: courses,
-    sameAs: [LINKS.INSTAGRAM],
+    knowsAbout: [...new Set([...tracks.map((t) => t.danceStyle), '雙人舞', '社交舞', ...courses])],
+    sameAs: SAME_AS,
     // TODO: 有場地照片後補上 image: absolute('/images/venue.jpg')
     hasMap: venue.mapLink,
+  };
+}
+
+/** 據點的一句話描述，帶上舞種與行政區，讓 LocalBusiness 自己說得清楚它在哪、教什麼。 */
+function venueDescription(venue: Venue, tracks: Track[]): string {
+  const lines = tracks.map((track) => {
+    const first = parseSlotTime(track.slots[0]?.time ?? '');
+    const last = parseSlotTime(track.slots[track.slots.length - 1]?.time ?? '');
+    const time = first && last ? `${first.opens}–${last.closes}` : '';
+    return `${track.dayZh} ${time} ${track.danceStyle}`.trim();
+  });
+  return `HustleHustle KHS 在${venue.city}${venue.district}的上課場地（${venue.shortName}），${lines.join('、')}。零基礎與沒有舞伴都可以報名的雙人舞（社交舞）課程。`;
+}
+
+/** 某條課程線的單堂價格，取自 PRICE_PLANS；找不到就不輸出 offers。 */
+function singleSessionPrice(track: Track): number | undefined {
+  const plan = PRICE_PLANS.find((p) => p.id === track.pricePlanId);
+  const options = plan?.tiers.flatMap((t) => t.options) ?? [];
+  return options.find((o) => o.name.includes('單堂'))?.price;
+}
+
+/**
+ * 單一課程線的 Course + CourseInstance。
+ *
+ * 為什麼要有這個：LocalBusiness 告訴 Google「我們在哪」，Course 告訴它
+ * 「我們教什麼、什麼時候上、多少錢」。這是「高雄哪裡可以學 Zouk」這類
+ * 查詢會用到的訊號，也是 AI 回答課程問題時最容易照抄的一段。
+ */
+export function courseJsonLd(track: Track): JsonLd {
+  const venue = getVenue(track.venueSlug);
+  const first = parseSlotTime(track.slots[0]?.time ?? '');
+  const last = parseSlotTime(track.slots[track.slots.length - 1]?.time ?? '');
+  const byDay = DAY_OF_WEEK[track.sessionLabelEn.toUpperCase()];
+  const price = singleSessionPrice(track);
+  const slotList = track.slots.map((s) => `${s.time} ${s.title}`).join('、');
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    '@id': `${SITE_URL}/courses#${track.id}`,
+    name: `${track.danceStyle} 雙人舞課程・高雄${venue.district}`,
+    description: `在${venue.addressFull}（${venue.shortName}）每${track.dayZh}上課的 ${track.danceStyle} 課程：${slotList}。零基礎歡迎、不需舞伴。`,
+    url: `${SITE_URL}/courses#${track.id}`,
+    provider: { '@id': ORGANIZATION_ID },
+    inLanguage: 'zh-TW',
+    teaches: [track.danceStyle, '雙人舞', '社交舞'],
+    hasCourseInstance: {
+      '@type': 'CourseInstance',
+      courseMode: 'Onsite',
+      inLanguage: 'zh-TW',
+      location: { '@id': `${SITE_URL}/location#${venue.slug}-localbusiness` },
+      ...(byDay &&
+        first &&
+        last && {
+          courseSchedule: {
+            '@type': 'Schedule',
+            byDay,
+            repeatFrequency: 'P1W',
+            startTime: first.opens,
+            endTime: last.closes,
+            scheduleTimezone: 'Asia/Taipei',
+          },
+        }),
+    },
+    ...(price !== undefined && {
+      offers: {
+        '@type': 'Offer',
+        category: 'Paid',
+        price,
+        priceCurrency: 'TWD',
+        availability: 'https://schema.org/InStock',
+        url: `${SITE_URL}/courses?tab=pricing#${track.pricePlanId}`,
+      },
+    }),
   };
 }
 
@@ -144,7 +223,7 @@ export function teacherJsonLd(teacher: Teacher): JsonLd {
     name: teacher.name,
     url: `${SITE_URL}/teachers/${teacher.slug}`,
     image: absolute(teacher.imageUrl),
-    jobTitle: teacher.title ?? 'Hustle 老師',
+    jobTitle: teacher.title ?? 'Hustle / Brazilian Zouk 老師',
     description: teacher.description[0],
     knowsAbout: teacher.skills,
     worksFor: { '@id': ORGANIZATION_ID },

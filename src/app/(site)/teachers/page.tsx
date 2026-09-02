@@ -6,16 +6,15 @@ import { ChevronRight } from 'lucide-react';
 import { getPublishedAssistants, getPublishedTeachers } from '@/data/teachers';
 import SectionHeading from '@/components/SectionHeading';
 
-// TODO: 等老師資料填好後改寫這段描述。
 const DESCRIPTION =
-  '認識 HustleHustle KHS 的舞蹈老師團隊。高雄的 Hustle 教學，陪你從零開始跳。';
+  '認識 HustleHustle KHS 的老師團隊：暘暘與又嘉，2020 年起在高雄推廣 Hustle，2022 年把 Brazilian Zouk 帶回高雄。零基礎的雙人舞教學，陪你從第一步開始跳。';
 
 export const metadata: Metadata = {
-  title: '師資介紹',
+  title: '師資介紹・高雄 Hustle / Zouk 老師',
   description: DESCRIPTION,
   alternates: { canonical: '/teachers' },
   openGraph: {
-    title: '師資介紹 | HustleHustle KHS',
+    title: '師資介紹・高雄 Hustle / Zouk 老師 | HustleHustle KHS',
     description: DESCRIPTION,
     url: '/teachers',
   },
@@ -32,7 +31,7 @@ export default function TeachersPage() {
           as='h1'
           eyebrow='認識我們團隊'
           title='師資介紹'
-          subtitle='陪你從第一步跳到舞池中央' /* TODO: 老師人數確定後可以改成更具體的說法 */
+          subtitle='高雄 Hustle 與 Brazilian Zouk 的教學團隊，陪你從第一步跳到舞池中央'
           size='lg'
           className='py-2 md:py-4'
         />

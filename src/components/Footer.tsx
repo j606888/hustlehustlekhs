@@ -11,8 +11,9 @@ const Footer = () => {
           {/* Brand */}
           <div className="flex flex-col gap-3">
             <Image src="/logo.svg" alt="HustleHustle KHS" width={340} height={56} className="brightness-0 invert w-auto h-8" />
-            {/* TODO: 換成一句話的定位描述 */}
-            <p className="text-sm text-gray-400">高雄的 Hustle 社交舞教室</p>
+            <p className="text-sm text-gray-400">
+              高雄 Hustle・Brazilian Zouk 雙人舞教室
+            </p>
           </div>
 
           {/* Quick Links */}

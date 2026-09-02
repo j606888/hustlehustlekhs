@@ -14,7 +14,8 @@ const WhoWeAre = () => {
           />
           <div className="space-y-4 text-base text-gray-700">
             <p>
-              我們是 HustleHustle KHS，一群在高雄跳 Hustle 跟 Zouk 的人。
+              我們是 HustleHustle KHS，一群在高雄跳 Hustle 跟 Brazilian Zouk
+              的人，也是<strong className="font-semibold">高雄唯一同時教這兩種雙人舞（社交舞）的教室</strong>。
             </p>
             <p>
               2018 年初次接觸 Hustle，被「不需言語就能心靈相通」的默契深深打動；2020
@@ -26,12 +27,16 @@ const WhoWeAre = () => {
             <p>
               我們不把舞蹈當成商品販售，而是因為自己曾被這兩門舞蹈深深打動，才想把這份純粹的感動，分享給高雄的大家 ❤️
             </p>
+            <p>
+              現在每週四晚上在左營區的職人棧上 Hustle、每週五晚上在三民區的 Social Hub 上
+              Zouk，零基礎、沒有舞伴都可以直接來。
+            </p>
           </div>
         </div>
         <div className="mx-auto px-5 md:px-6 lg:px-8 ">
           <Image
             src="/placeholder.svg"
-            alt="HustleHustle KHS 師生合照"
+            alt="HustleHustle KHS 在高雄的 Hustle 與 Brazilian Zouk 雙人舞課程師生合照"
             width={800}
             height={533}
             className="w-full h-auto rounded-lg"
