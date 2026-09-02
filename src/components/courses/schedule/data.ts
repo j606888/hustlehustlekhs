@@ -3,7 +3,7 @@
 //
 // 地址不寫在這裡：據點資料集中於 src/data/venues.ts，track 只存 venueSlug。
 //
-// 課表與價目已是實際內容（2026/09）；每個月要更新 MONTH 與各 track 的 dates。
+// 課表與價目已是實際內容（2026/09）；每個月要更新 MONTHS 與各 track 的 dates。
 
 import type { VenueSlug } from '@/data/venues';
 
@@ -47,6 +47,8 @@ export function getSessionStatus(
 export interface Track {
   id: string; // 錨點 id，例如 'hustle-thu'
   theme: ThemeKey;
+  /** 這條線教的舞種，例如 'Hustle' / 'Brazilian Zouk'。jsonLd 的 Course 名稱用它。 */
+  danceStyle: string;
   cityEn: string; // 'KAOHSIUNG'
   cityZh: string; // 'Hustle・職人棧'（舞種＋場地，課表卡與據點頁的標題）
   sessionLabelEn: string; // 'THURSDAY'（圓章顯示，也是 JSON-LD 營業日的來源，必須是英文星期）
@@ -70,6 +72,7 @@ export interface ThemeStyle {
   accentText: string; // 時間 / 重點文字色
   accentBg: string; // 圓章 / active chip 底色
   highlightCell: string; // 月曆 highlight 方塊底色
+  highlightCellStrong: string; // 同色系但深一階：那天除了固定課程還有體驗課／Party
   legendDot: string; // 圖例圓點
   blob: string; // 卡片裝飾色塊
 }
@@ -81,6 +84,7 @@ export const THEMES: Record<ThemeKey, ThemeStyle> = {
     accentText: 'text-[#d4796e]',
     accentBg: 'bg-[#d4796e]',
     highlightCell: 'bg-[#d98b82]',
+    highlightCellStrong: 'bg-[#c2685c]',
     legendDot: 'bg-[#d98b82]',
     blob: 'bg-[#c9bfe0]',
   },
@@ -89,6 +93,7 @@ export const THEMES: Record<ThemeKey, ThemeStyle> = {
     accentText: 'text-[#4d7fc4]',
     accentBg: 'bg-[#5b8dd9]',
     highlightCell: 'bg-[#5b8dd9]',
+    highlightCellStrong: 'bg-[#3a68b8]',
     legendDot: 'bg-[#5b8dd9]',
     blob: 'bg-[#c7e36a]',
   },
@@ -97,6 +102,7 @@ export const THEMES: Record<ThemeKey, ThemeStyle> = {
     accentText: 'text-[#d28e2a]',
     accentBg: 'bg-[#e0a23c]',
     highlightCell: 'bg-[#e0a23c]',
+    highlightCellStrong: 'bg-[#c8861f]',
     legendDot: 'bg-[#e0a23c]',
     blob: 'bg-[#f0c878]',
   },
@@ -107,49 +113,117 @@ export interface MonthConfig {
   month: number; // 1-12
   titleEn: string;
   titleZh: string;
-  // 日 -> { theme（決定顏色）, label（小字）, trackId（錨點目標）}
-  highlights: Record<number, { theme: ThemeKey; label: string; trackId: string }>;
+  // 日 -> { theme（決定顏色）, label（小字，\n 是刻意指定的斷行位置）, trackId（錨點目標）,
+  //          emphasis（那天除了固定課程還有體驗課／Party，方塊用深一階的顏色）}
+  highlights: Record<
+    number,
+    { theme: ThemeKey; label: string; trackId: string; emphasis?: boolean }
+  >;
   legend: { theme: ThemeKey; title: string; desc: string }[];
   footnote: string;
 }
 
-// TODO: 每個月要更新這一塊 —— year / month / titleEn / titleZh 換成當月，
+// TODO: 每個月要更新這一塊 —— 新的月份 push 到 MONTHS 後面（或替換掉過期的），
 //       highlights 的 key 是「幾號」，值決定那一格的顏色與點下去跳到哪張課表卡。
-export const MONTH: MonthConfig = {
-  year: 2026,
-  month: 9,
-  titleEn: 'SEPTEMBER',
-  titleZh: '九月',
-  highlights: {
-    3: { theme: 'trackA', label: '職人棧', trackId: 'hustle-thu' },
-    4: { theme: 'trackB', label: 'Social Hub', trackId: 'zouk-fri' },
-    17: { theme: 'trackA', label: '職人棧', trackId: 'hustle-thu' },
-    18: { theme: 'trackB', label: 'Party', trackId: 'zouk-fri' },
-    24: { theme: 'trackA', label: '體驗課', trackId: 'hustle-thu' },
-    25: { theme: 'trackB', label: 'Social Hub', trackId: 'zouk-fri' },
-    27: { theme: 'trackC', label: 'IAGO', trackId: 'zouk-fri' },
-    28: { theme: 'trackC', label: 'IAGO', trackId: 'zouk-fri' },
-    // 9/10、9/11 停課，所以不 highlight。
+// 陣列順序就是月曆在 /courses 課表 tab 的顯示順序（由近到遠）。
+export const MONTHS: MonthConfig[] = [
+  {
+    year: 2026,
+    month: 9,
+    titleEn: 'SEPTEMBER',
+    titleZh: '九月',
+    highlights: {
+      3: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
+      4: { theme: 'trackB', label: 'Zouk', trackId: 'zouk-fri' },
+      17: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
+      18: {
+        theme: 'trackB',
+        label: '體驗課\n+Party',
+        trackId: 'zouk-fri',
+        emphasis: true,
+      },
+      24: {
+        theme: 'trackA',
+        label: 'Hustle\n體驗課',
+        trackId: 'hustle-thu',
+        emphasis: true,
+      },
+      25: { theme: 'trackB', label: 'Zouk', trackId: 'zouk-fri' },
+      27: { theme: 'trackC', label: 'Zouk\nWorkshop', trackId: 'zouk-fri' },
+      28: { theme: 'trackC', label: 'Zouk\nWorkshop', trackId: 'zouk-fri' },
+      // 9/10、9/11 停課，所以不 highlight。
+    },
+    legend: [
+      {
+        theme: 'trackA',
+        title: '週四・Hustle',
+        desc: '進階 / 中階 · 19:30–22:00・職人棧（9/24 是體驗課）',
+      },
+      {
+        theme: 'trackB',
+        title: '週五・Zouk',
+        desc: '初階 / 進階 · 19:30–23:00・Social Hub（9/18 是體驗課，課後接 Zouk/Hustle Party）',
+      },
+      {
+        theme: 'trackC',
+        title: '9/27–9/28・Zouk Workshop',
+        desc: '客座老師 IAGO 的 Brazilian Zouk workshop・報名與地點見 Instagram',
+      },
+    ],
+    footnote: '★ 9/10、9/11 停課；實際場次以 Instagram 公告為準', // TODO: 有停課／加開時記得更新
   },
-  legend: [
-    {
-      theme: 'trackA',
-      title: '週四・職人棧',
-      desc: 'Hustle 進階 / 中階 · 19:30–22:00',
+  {
+    year: 2026,
+    month: 10,
+    titleEn: 'OCTOBER',
+    titleZh: '十月',
+    highlights: {
+      1: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
+      2: { theme: 'trackB', label: 'Zouk', trackId: 'zouk-fri' },
+      8: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
+      9: {
+        theme: 'trackB',
+        label: '體驗課\n+Party',
+        trackId: 'zouk-fri',
+        emphasis: true,
+      },
+      15: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
+      16: { theme: 'trackB', label: 'Zouk', trackId: 'zouk-fri' },
+      22: {
+        theme: 'trackA',
+        label: 'Hustle\n體驗課',
+        trackId: 'hustle-thu',
+        emphasis: true,
+      },
+      23: { theme: 'trackB', label: 'Zouk', trackId: 'zouk-fri' },
+      24: { theme: 'trackC', label: 'Zouk\nWorkshop', trackId: 'zouk-fri' },
+      25: { theme: 'trackC', label: 'Zouk\nWorkshop', trackId: 'zouk-fri' },
+      29: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
+      30: { theme: 'trackB', label: 'Zouk', trackId: 'zouk-fri' },
     },
-    {
-      theme: 'trackB',
-      title: '週五・Social Hub',
-      desc: 'Zouk 初階 / 進階 · 19:30–23:00',
-    },
-    {
-      theme: 'trackC',
-      title: '9/27–9/28・IAGO Workshop',
-      desc: '客座 workshop・報名與地點見 Instagram',
-    },
-  ],
-  footnote: '★ 9/10、9/11 停課；實際場次以 Instagram 公告為準', // TODO: 有停課／加開時記得更新
-};
+    legend: [
+      {
+        theme: 'trackA',
+        title: '週四・Hustle',
+        desc: '進階 / 中階 · 19:30–22:00・職人棧（10/22 是體驗課）',
+      },
+      {
+        theme: 'trackB',
+        title: '週五・Zouk',
+        desc: '初階 / 進階 · 19:30–23:00・Social Hub（10/9 是體驗課，課後接 Zouk/Hustle Party）',
+      },
+      {
+        theme: 'trackC',
+        title: '10/24–10/25・Zouk Workshop',
+        desc: '客座老師 Matheus & Cozyyi 的 Brazilian Zouk workshop・報名與地點見 Instagram',
+      },
+    ],
+    footnote: '★ 實際場次以 Instagram 公告為準', // TODO: 有停課／加開時記得更新
+  },
+];
+
+/** 目前月份（getSessionStatus 用它補上場次 label 缺少的年份）。 */
+export const MONTH: MonthConfig = MONTHS[0];
 
 // 兩條固定課程線：週四 Hustle（職人棧）、週五 Zouk（Social Hub）。
 // track 數量可以增減，記得同步 venues.ts 的 trackIds 與 MONTH.legend。
@@ -158,6 +232,7 @@ export const TRACKS: Track[] = [
   {
     id: 'hustle-thu',
     theme: 'trackA',
+    danceStyle: 'Hustle',
     cityEn: 'KAOHSIUNG',
     cityZh: 'Hustle・職人棧',
     sessionLabelEn: 'THURSDAY',
@@ -172,7 +247,7 @@ export const TRACKS: Track[] = [
     dates: [
       { label: '9/3' },
       { label: '9/17' },
-      { label: '9/24', note: '體驗課 + social' },
+      { label: '9/24', note: 'Hustle 體驗課 + social' },
     ],
     venueSlug: 'zhirenzhan',
     pricePlanId: 'hustle-card',
@@ -181,6 +256,7 @@ export const TRACKS: Track[] = [
   {
     id: 'zouk-fri',
     theme: 'trackB',
+    danceStyle: 'Brazilian Zouk',
     cityEn: 'KAOHSIUNG',
     cityZh: 'Zouk・Social Hub',
     sessionLabelEn: 'FRIDAY',
@@ -194,7 +270,7 @@ export const TRACKS: Track[] = [
     datesNote: '每週五・9/11 停課',
     dates: [
       { label: '9/4' },
-      { label: '9/18', note: '體驗課 + Zouk × Hustle Party' },
+      { label: '9/18', note: 'Zouk 體驗課 + Zouk/Hustle Party' },
       { label: '9/25' },
     ],
     venueSlug: 'social-hub',

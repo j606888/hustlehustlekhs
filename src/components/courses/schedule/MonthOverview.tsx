@@ -1,9 +1,11 @@
-import { MONTH, THEMES } from './data';
+import { THEMES, type MonthConfig } from './data';
 
 const WEEKDAYS = ['日', '一', '二', '三', '四', '五', '六'];
 
-export default function MonthOverview() {
-  const { year, month, titleEn, titleZh, highlights, legend, footnote } = MONTH;
+// 品牌抬頭（HUSTLEHUSTLE KHS / 2026 SCHEDULE）不在這裡，
+// 它固定在 MonthCarousel 上方、不隨月份切換。
+export default function MonthOverview({ config }: { config: MonthConfig }) {
+  const { year, month, titleEn, titleZh, highlights, legend, footnote } = config;
 
   const firstWeekday = new Date(year, month - 1, 1).getDay(); // 0 = 週日
   const daysInMonth = new Date(year, month, 0).getDate();
@@ -19,13 +21,7 @@ export default function MonthOverview() {
       {/* 頁首 */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex flex-col">
-          <p className="font-poppins text-sm font-bold tracking-[0.2em] text-[#c47b5a] md:text-base">
-            HUSTLEHUSTLE KHS
-          </p>
-          <p className="font-poppins text-xs font-medium tracking-[0.3em] text-gray-500 md:text-sm">
-            {MONTH.year} SCHEDULE
-          </p>
-          <h2 className="mt-1 flex items-end gap-2 font-poppins font-bold leading-none text-[#2d3a5e]">
+          <h2 className="flex items-end gap-2 font-poppins font-bold leading-none text-[#2d3a5e]">
             <span
               className="text-[clamp(2.25rem,11.5vw,3.75rem)] md:text-7xl"
               style={{ textShadow: '3px 3px 0 rgba(212,121,110,0.45)' }}
@@ -41,7 +37,9 @@ export default function MonthOverview() {
       </div>
 
       {/* 月曆 */}
-      <div className="mt-5 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-gray-200 md:p-5">
+      {/* ring-inset：這張卡在輪播裡的寬度等於捲動容器寬度，
+          外擴的 ring 會被 overflow 裁掉（左右兩側的線會不見），所以畫在框內。 */}
+      <div className="mt-5 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-inset ring-gray-200 md:p-5">
         <div className="grid grid-cols-7 gap-1 md:gap-2">
           {WEEKDAYS.map((w, i) => (
             <div
@@ -68,16 +66,29 @@ export default function MonthOverview() {
               );
             }
             const theme = THEMES[hl.theme];
+            // 有體驗課／Party 的日子用深一階的同色，一眼看得出那天不只有固定課程
+            const cellColor = hl.emphasis
+              ? theme.highlightCellStrong
+              : theme.highlightCell;
             return (
               <a
                 key={day}
                 href={`#${hl.trackId}`}
-                className={`flex aspect-square flex-col items-center justify-center overflow-hidden rounded-xl px-0.5 text-white shadow-sm transition-transform hover:scale-[1.04] ${theme.highlightCell}`}
+                className={`flex aspect-square flex-col items-center justify-center overflow-hidden rounded-xl px-0.5 text-white shadow-sm transition-transform hover:scale-[1.04] ${cellColor}`}
               >
                 <span className="text-sm font-bold leading-tight md:text-xl">
                   {day}
                 </span>
-                <span className="w-full break-words text-center text-[9px] leading-[1.05] md:text-xs md:leading-tight">
+                {/* 手機的格子只有約 42px 寬，太長的標籤（例如「Zouk Workshop」）
+                    用 9px 會排到第三行被裁掉，所以長標籤降一階字級。
+                    桌機格子夠大，一律 text-xs。
+                    whitespace-pre-line：label 裡的換行是刻意指定的斷行位置
+                    （中文可以斷在任何字之間，不指定就會出現「Hustle 體驗 / 課」）。 */}
+                <span
+                  className={`w-full whitespace-pre-line break-words text-center leading-[1.05] md:text-xs md:leading-tight ${
+                    hl.label.length > 10 ? 'text-[8px]' : 'text-[9px]'
+                  }`}
+                >
                   {hl.label}
                 </span>
               </a>

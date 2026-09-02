@@ -37,7 +37,7 @@ but it has been reduced to a single venue and single dance style.
   hardcode an address anywhere else; inconsistent NAP hurts local search ranking.
   `PRIMARY_VENUE` is the convenience export for the single-venue case.
 - Course dates, tracks, pricing: `src/components/courses/schedule/data.ts`
-  (`TRACKS`, `MONTH`, `PRICE_PLANS`, `THEMES`). A track's venue is `venueSlug`, resolved via
+  (`TRACKS`, `MONTHS`, `PRICE_PLANS`, `THEMES`). A track's venue is `venueSlug`, resolved via
   `getVenue()`. `Track.sessionLabelEn` must be an English weekday — `jsonLd.ts` parses it to
   build `OpeningHoursSpecification`.
 - Teacher data: `src/data/teachers.ts`
