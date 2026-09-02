@@ -135,7 +135,7 @@ export const MONTH: MonthConfig = {
     {
       theme: 'trackA',
       title: '週四・職人棧',
-      desc: 'Hustle 初階 / 中階 · 19:30–22:00',
+      desc: 'Hustle 進階 / 中階 · 19:30–22:00',
     },
     {
       theme: 'trackB',
@@ -163,7 +163,7 @@ export const TRACKS: Track[] = [
     sessionLabelEn: 'THURSDAY',
     dayZh: '週四',
     slots: [
-      { time: '19:30–20:30', title: 'Hustle 初階班' },
+      { time: '19:30–20:30', title: 'Hustle 進階班' },
       { time: '20:30–21:30', title: 'Hustle 中階班' },
       { time: '21:30–22:00', title: '課後練習 social' },
     ],
@@ -253,7 +253,7 @@ export const PRICE_PLANS: PricePlan[] = [
         title: 'Hustle 課卡',
         subtitle: '適用週四職人棧的 Hustle 課程',
         courses: [
-          { name: 'Hustle 初階班', theme: 'trackA' },
+          { name: 'Hustle 進階班', theme: 'trackA' },
           { name: 'Hustle 中階班', theme: 'trackA' },
         ],
         options: [
