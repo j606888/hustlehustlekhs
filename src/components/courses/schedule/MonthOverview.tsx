@@ -19,22 +19,15 @@ export default function MonthOverview({ config }: { config: MonthConfig }) {
   return (
     <section className="w-full">
       {/* 頁首 */}
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex flex-col">
-          <h2 className="flex items-end gap-2 font-poppins font-bold leading-none text-[#2d3a5e]">
-            <span
-              className="text-[clamp(2.25rem,11.5vw,3.75rem)] md:text-7xl"
-              style={{ textShadow: '3px 3px 0 rgba(212,121,110,0.45)' }}
-            >
-              {titleEn}
-            </span>
-            <span className="pb-1 text-2xl md:text-3xl">{titleZh}</span>
-          </h2>
-        </div>
-        <p className="mt-1 hidden whitespace-nowrap text-sm font-medium tracking-widest text-gray-700 md:block md:text-base">
-          {titleZh}課程總覽
-        </p>
-      </div>
+      <h2 className="flex items-end gap-2 font-poppins font-bold leading-none text-[#2d3a5e]">
+        <span
+          className="text-[clamp(2.25rem,11.5vw,3.75rem)] md:text-7xl"
+          style={{ textShadow: '3px 3px 0 rgba(212,121,110,0.45)' }}
+        >
+          {titleEn}
+        </span>
+        <span className="pb-1 text-2xl md:text-3xl">{titleZh}</span>
+      </h2>
 
       {/* 月曆 */}
       {/* ring-inset：這張卡在輪播裡的寬度等於捲動容器寬度，

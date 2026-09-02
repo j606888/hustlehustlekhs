@@ -166,8 +166,8 @@ export const MONTHS: MonthConfig[] = [
       },
       {
         theme: 'trackC',
-        title: '9/27–9/28・Zouk Workshop',
-        desc: '客座老師 IAGO 的 Brazilian Zouk workshop・報名與地點見 Instagram',
+        title: '9/27–9/28',
+        desc: 'Iago Zouk Workshop',
       },
     ],
     footnote: '★ 9/10、9/11 停課；實際場次以 Instagram 公告為準', // TODO: 有停課／加開時記得更新
@@ -214,8 +214,8 @@ export const MONTHS: MonthConfig[] = [
       },
       {
         theme: 'trackC',
-        title: '10/24–10/25・Zouk Workshop',
-        desc: '客座老師 Matheus & Cozyyi 的 Brazilian Zouk workshop・報名與地點見 Instagram',
+        title: '10/24–10/25',
+        desc: 'Matheus & Cozyyi Workshop',
       },
     ],
     footnote: '★ 實際場次以 Instagram 公告為準', // TODO: 有停課／加開時記得更新
