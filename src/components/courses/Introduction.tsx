@@ -89,9 +89,6 @@ export default function Introduction() {
           <h2 className="font-poppins text-2xl font-bold text-[#2d3a5e] md:text-3xl">
             舞蹈風格介紹
           </h2>
-          <p className="text-sm text-gray-600 md:text-base">
-            先看看 Hustle 是什麼樣的舞，感受一下它在跳什麼，再決定要不要來試一堂。
-          </p>
           <div className="flex items-start gap-3 rounded-2xl border border-[#e8c9c3] bg-[#fbeae6] px-4 py-3.5">
             <span className="text-xl leading-none" aria-hidden>✨</span>
             <p className="text-sm text-[#2d3a5e] md:text-base">

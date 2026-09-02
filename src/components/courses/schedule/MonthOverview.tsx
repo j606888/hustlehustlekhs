@@ -1,11 +1,9 @@
-import Image from 'next/image';
 import { MONTH, THEMES } from './data';
 
 const WEEKDAYS = ['日', '一', '二', '三', '四', '五', '六'];
 
 export default function MonthOverview() {
-  const { year, month, titleEn, titleZh, poster, highlights, legend, footnote } =
-    MONTH;
+  const { year, month, titleEn, titleZh, highlights, legend, footnote } = MONTH;
 
   const firstWeekday = new Date(year, month - 1, 1).getDay(); // 0 = 週日
   const daysInMonth = new Date(year, month, 0).getDate();
@@ -19,7 +17,7 @@ export default function MonthOverview() {
   return (
     <section className="w-full">
       {/* 頁首 */}
-      <div className="flex items-start justify-between">
+      <div className="flex items-start justify-between gap-3">
         <div className="flex flex-col">
           <p className="font-poppins text-sm font-bold tracking-[0.2em] text-[#c47b5a] md:text-base">
             HUSTLEHUSTLE KHS
@@ -29,7 +27,7 @@ export default function MonthOverview() {
           </p>
           <h2 className="mt-1 flex items-end gap-2 font-poppins font-bold leading-none text-[#2d3a5e]">
             <span
-              className="text-6xl md:text-7xl"
+              className="text-[clamp(2.25rem,11.5vw,3.75rem)] md:text-7xl"
               style={{ textShadow: '3px 3px 0 rgba(212,121,110,0.45)' }}
             >
               {titleEn}
@@ -37,30 +35,10 @@ export default function MonthOverview() {
             <span className="pb-1 text-2xl md:text-3xl">{titleZh}</span>
           </h2>
         </div>
-        <p className="mt-1 text-sm font-medium tracking-widest text-gray-700 md:text-base">
+        <p className="mt-1 hidden whitespace-nowrap text-sm font-medium tracking-widest text-gray-700 md:block md:text-base">
           {titleZh}課程總覽
         </p>
       </div>
-
-      {/* 當月課表圖。點一下開原圖，方便客人存下來或轉傳。 */}
-      {poster && (
-        <a
-          href={poster.src}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-5 block overflow-hidden rounded-2xl shadow-sm ring-1 ring-gray-200"
-        >
-          <Image
-            src={poster.src}
-            alt={poster.alt}
-            width={890}
-            height={1190}
-            priority
-            sizes="(min-width: 768px) 672px, 100vw"
-            className="h-auto w-full"
-          />
-        </a>
-      )}
 
       {/* 月曆 */}
       <div className="mt-5 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-gray-200 md:p-5">
@@ -94,12 +72,12 @@ export default function MonthOverview() {
               <a
                 key={day}
                 href={`#${hl.trackId}`}
-                className={`flex aspect-square flex-col items-center justify-center rounded-xl text-white shadow-sm transition-transform hover:scale-[1.04] ${theme.highlightCell}`}
+                className={`flex aspect-square flex-col items-center justify-center overflow-hidden rounded-xl px-0.5 text-white shadow-sm transition-transform hover:scale-[1.04] ${theme.highlightCell}`}
               >
-                <span className="text-base font-bold leading-tight md:text-xl">
+                <span className="text-sm font-bold leading-tight md:text-xl">
                   {day}
                 </span>
-                <span className="text-[10px] leading-tight md:text-xs">
+                <span className="w-full break-words text-center text-[9px] leading-[1.05] md:text-xs md:leading-tight">
                   {hl.label}
                 </span>
               </a>

@@ -3,7 +3,7 @@
 //
 // 地址不寫在這裡：據點資料集中於 src/data/venues.ts，track 只存 venueSlug。
 //
-// 課表與價目已是實際內容（2026/09）；每個月要更新 MONTH（含 poster 圖）與各 track 的 dates。
+// 課表與價目已是實際內容（2026/09）；每個月要更新 MONTH 與各 track 的 dates。
 
 import type { VenueSlug } from '@/data/venues';
 
@@ -107,12 +107,6 @@ export interface MonthConfig {
   month: number; // 1-12
   titleEn: string;
   titleZh: string;
-  /**
-   * 當月課表圖（IG 發的那張）。放在 public/images/ 底下，換月時換檔名。
-   * 留 undefined 就只顯示下面自動產生的月曆。
-   * 圖片本身不會被搜尋引擎讀到，所以下面的月曆與課表卡仍要維持正確。
-   */
-  poster?: { src: string; alt: string };
   // 日 -> { theme（決定顏色）, label（小字）, trackId（錨點目標）}
   highlights: Record<number, { theme: ThemeKey; label: string; trackId: string }>;
   legend: { theme: ThemeKey; title: string; desc: string }[];
@@ -126,10 +120,6 @@ export const MONTH: MonthConfig = {
   month: 9,
   titleEn: 'SEPTEMBER',
   titleZh: '九月',
-  poster: {
-    src: '/images/schedule-2026-09.png',
-    alt: 'HustleHustle KHS 2026 年九月課表：週四 Hustle 在職人棧、週五 Zouk 在 Social Hub，9/18 Zouk × Hustle Party、9/27–9/28 IAGO Workshop',
-  },
   highlights: {
     3: { theme: 'trackA', label: '職人棧', trackId: 'hustle-thu' },
     4: { theme: 'trackB', label: 'Social Hub', trackId: 'zouk-fri' },
