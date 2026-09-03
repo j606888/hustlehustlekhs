@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { LINKS } from '@/constants/links';
 import { getVenue } from '@/data/venues';
 import { getSessionStatus, THEMES, type SessionStatus, type Track } from './data';
 
@@ -137,6 +138,16 @@ export default function TrackCard({ track }: { track: Track }) {
         >
           查看費用 →
         </a>
+        {/* 看完課表想報名時要有路可走，報名連結集中在 /enroll */}
+        <Link
+          href={LINKS.ENROLL}
+          className={cn(
+            'text-sm font-medium underline-offset-2 hover:underline',
+            theme.accentText
+          )}
+        >
+          立即報名 →
+        </Link>
       </div>
 
       {/* 地點：連到據點頁該場地的錨點，順便把權重導過去 */}

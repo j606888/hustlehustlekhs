@@ -50,7 +50,7 @@ export const FAQS: Faq[] = [
     id: 'how-to-join',
     question: '要怎麼報名？',
     answer:
-      `直接 [Instagram 私訊我們](${LINKS.INSTAGRAM_DM}) 就可以了，告訴我們你想上哪一堂課，我們會回覆你細節。`,
+      `到[課程報名](${LINKS.ENROLL})頁面，選你想上的課、填表單就完成報名。體驗課、常態課卡與客座 Workshop 的報名連結都在那一頁。不確定該選哪一種，也可以直接 [Instagram 私訊我們](${LINKS.INSTAGRAM_DM})。`,
     sortOrder: 5,
     published: true,
   },

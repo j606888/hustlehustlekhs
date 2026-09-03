@@ -15,7 +15,12 @@ import { SAME_AS } from '@/constants/links';
 import { getVenue, type Venue } from '@/data/venues';
 import type { Faq } from '@/data/faq';
 import type { Teacher } from '@/data/teachers';
-import { PRICE_PLANS, type Track } from '@/components/courses/schedule/data';
+import {
+  PRICE_PLANS,
+  getEventYear,
+  type EnrollEvent,
+  type Track,
+} from '@/components/courses/schedule/data';
 
 /** JSON-LD 是自由格式的物件，值可以是巢狀物件／陣列。 */
 export type JsonLd = Record<string, unknown>;
@@ -190,6 +195,67 @@ export function courseJsonLd(track: Track): JsonLd {
         priceCurrency: 'TWD',
         availability: 'https://schema.org/InStock',
         url: `${SITE_URL}/courses?tab=pricing#${track.pricePlanId}`,
+      },
+    }),
+  };
+}
+
+/** '9/18' + 2026 + '19:30' → '2026-09-18T19:30:00+08:00'（沒有時間就只到日期）。 */
+function isoDate(label: string, year: number, time?: string): string | null {
+  const [month, day] = label.split('/').map(Number);
+  if (!month || !day) return null;
+  const date = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+  return time ? `${date}T${time}:00+08:00` : date;
+}
+
+/**
+ * 單場活動（體驗課 / 客座 Workshop）的 Event。
+ *
+ * 為什麼要有這個：這些是有明確日期、地點、報名連結的活動，正是 Google 的
+ * 活動搜尋結果會吃的資料，也是 AI 回答「最近有沒有體驗課」時最容易照抄的一段。
+ *
+ * 兩種情況回傳 null 不輸出：
+ * 1. 場地未定（沒有 venueSlug）—— Event 需要 location，硬填一個猜的地址比不放
+ *    更糟（會跟 LocalBusiness 的 NAP 打架）。
+ * 2. 還沒開放報名（enrollUrl 是空的）—— 那一場在頁面上也不會顯示，
+ *    只有結構化資料宣告了看不到的活動反而是錯誤訊號。
+ */
+export function eventJsonLd(event: EnrollEvent): JsonLd | null {
+  if (!event.venueSlug || !event.enrollUrl) return null;
+
+  const venue = getVenue(event.venueSlug);
+  const year = getEventYear(event);
+  const startDate = isoDate(event.dateLabel, year, event.startTime);
+  if (!startDate) return null;
+
+  const endDate = event.endDateLabel
+    ? isoDate(event.endDateLabel, year)
+    : undefined;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': ['Event', 'EducationEvent'],
+    '@id': `${SITE_URL}/enroll#${event.id}`,
+    name: `${event.title}・高雄${venue.district}`,
+    description: `${event.danceStyle} 課程活動，在${venue.addressFull}（${venue.shortName}）舉行。零基礎歡迎、不需舞伴。`,
+    url: `${SITE_URL}/enroll#${event.id}`,
+    startDate,
+    ...(endDate && { endDate }),
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    eventStatus: 'https://schema.org/EventScheduled',
+    inLanguage: 'zh-TW',
+    // 據點的 LocalBusiness 已經在 /location 宣告過，這裡用 @id 指回去就好
+    location: { '@id': `${SITE_URL}/location#${venue.slug}-localbusiness` },
+    organizer: { '@id': ORGANIZATION_ID },
+    about: [event.danceStyle, '雙人舞', '社交舞'],
+    ...(event.price !== undefined && {
+      offers: {
+        '@type': 'Offer',
+        category: 'Paid',
+        price: event.price,
+        priceCurrency: 'TWD',
+        availability: 'https://schema.org/InStock',
+        url: event.enrollUrl || `${SITE_URL}/enroll`,
       },
     }),
   };

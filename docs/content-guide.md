@@ -29,6 +29,8 @@
 | 這一期有哪幾堂課（日期） | `TRACKS` 裡各自的 `dates` |
 | 價錢、課卡方案 | `PRICE_PLANS` |
 | 課表卡片的顏色 | `THEMES` |
+| 體驗課、客座 Workshop 的報名連結 | `EVENTS` —— 一場活動一筆（報名頁 `/enroll` 的上半段與下半段） |
+| 常態課的報名表單 | `TRACKS` 裡各自的 `enrollUrl` |
 
 小提醒：
 - 每個月要記得更新 `MONTHS`：新月份加一筆到陣列後面，過期的月份直接刪掉，
@@ -39,6 +41,16 @@
 - `TRACKS` 裡的 `sessionLabelEn` 必須是英文星期（`SUNDAY` / `THURSDAY` …），
   Google 靠它判斷你們的上課時間，寫錯會失效。
 - 課表卡上的「查看費用」要連得到，`Track.pricePlanId` 要跟 `PRICE_PLANS` 的 `id` 對得起來。
+
+**報名頁 `/enroll`**（就是取代 bio.site 的那一頁，IG bio 請改指這裡）：
+- 有新的體驗課／Workshop 就往 `EVENTS` 加一筆，`kind` 填 `'trial'`（體驗課）或
+  `'workshop'`（客座）；`theme` 決定卡片上的舞種顏色：`'trackA'` 是 Hustle（紅），
+  `'trackB'` 是 Zouk（藍）。
+- **辦完的活動不用手動刪**，程式會用今天的日期自動隱藏（跨兩天的活動要等第二天過完）。
+- 表單還沒開放就把 `enrollUrl` 留成空字串 `''`，那一場**整張卡不會顯示**；
+  日期可以先寫進去佔位，等表單網址填進來它才會出現在報名頁。
+- `venueSlug` 不確定就不要填，畫面會顯示「地點另行公布」；亂填地址會跟教室頁的
+  地址打架，Google 的本地搜尋會扣分。價格同理，`priceNote` 沒填會顯示「[價格待填]」。
 
 **Hustle 的風格介紹**（課程頁第三個 tab）在另一個檔：
 `src/components/courses/Introduction.tsx` 的 `DANCE_STYLES`。

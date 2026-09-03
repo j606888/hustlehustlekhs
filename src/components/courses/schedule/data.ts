@@ -26,6 +26,24 @@ export interface SessionDate {
   upcoming?: boolean; // 下一期（尚未開放/預告）場次，顯示為淡色
 }
 
+/** '9/18' → Date（當地時區的當天 0 點）。label 只有月/日，年份要另外給。 */
+function toDate(label: string, year: number): Date | null {
+  const [month, day] = label.split('/').map(Number);
+  if (!month || !day) return null;
+  return new Date(year, month - 1, day);
+}
+
+/**
+ * 那一天是否已經過去。當天仍算進行中，隔天才算過去。
+ * 課表的場次與報名頁的體驗課／Workshop 共用這個判斷，不要各寫一份。
+ */
+export function isPast(label: string, year: number, now: Date): boolean {
+  const date = toDate(label, year);
+  if (!date) return false;
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return date < today;
+}
+
 // 場次是否已結束由「真實日期」決定，不寫死。
 // label 只有月/日，年份一律取 MONTH.year（目前課表不跨年）。
 export function getSessionStatus(
@@ -33,15 +51,8 @@ export function getSessionStatus(
   now: Date = new Date()
 ): SessionStatus {
   if (date.upcoming) return 'upcoming';
-
-  const [month, day] = date.label.split('/').map(Number);
-  if (!month || !day) return 'active';
-
-  const sessionDay = new Date(MONTH.year, month - 1, day);
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
-  // 當天仍算進行中，隔天才標記為已結束
-  return sessionDay < today ? 'done' : 'active';
+  if (!toDate(date.label, MONTH.year)) return 'active';
+  return isPast(date.label, MONTH.year, now) ? 'done' : 'active';
 }
 
 export interface Track {
@@ -62,6 +73,11 @@ export interface Track {
   venueSlug: VenueSlug; // 對應 src/data/venues.ts 的據點
   pricePlanId: string; // 對應 PRICE_PLANS 的 id
   priceSummary: string; // 課表卡上顯示的一行費用摘要
+  /**
+   * 常態課的報名表單（/enroll 的按鈕連過去）。
+   * 目前兩條 track 共用同一張 Google 表單，之後要分開收就各自換掉這一行。
+   */
+  enrollUrl: string;
 }
 
 // 每個 theme 對應一組完整字面 Tailwind class（讓 v4 JIT 掃得到），集中於此方便調色。
@@ -252,6 +268,7 @@ export const TRACKS: Track[] = [
     venueSlug: 'zhirenzhan',
     pricePlanId: 'hustle-card',
     priceSummary: '課卡制・單堂 $450・8 堂 $3200',
+    enrollUrl: 'https://forms.gle/SYm2SMxnT8PoEjFr5',
   },
   {
     id: 'zouk-fri',
@@ -276,12 +293,167 @@ export const TRACKS: Track[] = [
     venueSlug: 'social-hub',
     pricePlanId: 'zouk-card',
     priceSummary: '課卡制・單堂 $450・8 堂 $3200',
+    enrollUrl: 'https://forms.gle/SYm2SMxnT8PoEjFr5',
   },
 ];
 
 /** 取得某個據點的所有課程 track（據點頁用來列出該城市的課表）。 */
 export function getTracksByVenue(slug: VenueSlug): Track[] {
   return TRACKS.filter((t) => t.venueSlug === slug);
+}
+
+// ---- 報名用的單場活動（體驗課 / 客座 Workshop）----
+//
+// 報名頁 /enroll 的資料來源。跟月曆放同一個檔案是刻意的：MONTHS 的 highlights
+// 已經標了哪幾天有體驗課／Workshop，日期改了兩邊要一起改，分開放遲早會對不起來。
+//
+// 常態課不在這裡（它們是 TRACKS，報名連結存在 Track.enrollUrl）。
+
+export type EventKind = 'trial' | 'workshop';
+
+export interface EnrollEvent {
+  id: string; // 錨點與 JSON-LD 的 @id，例如 'zouk-trial-0918'
+  kind: EventKind;
+  /** 舞種色。報名頁刻意只用兩色：trackA=Hustle、trackB=Zouk（Workshop 也照舞種上色）。 */
+  theme: 'trackA' | 'trackB';
+  danceStyle: string; // 'Brazilian Zouk'，JSON-LD 用
+  title: string;
+  note?: string; // 卡片第二行的說明
+  /** 預設取 MONTH.year；活動跨到下一年時要明寫。 */
+  year?: number;
+  dateLabel: string; // '9/18'
+  endDateLabel?: string; // '9/28'，多天活動才填
+  weekdayEn: string; // 'FRI'（日期章上的字）
+  startTime?: string; // '19:30'，JSON-LD 的 startDate 用
+  /** 客座 Workshop 場地未定時留空；留空就不會輸出 Event 結構化資料。 */
+  venueSlug?: VenueSlug;
+  price?: number; // 有數字才輸出 JSON-LD 的 offers
+  priceNote?: string; // 畫面顯示用，例如 '單堂 $450'
+  /**
+   * 報名表單。留空字串＝報名還沒開放，這一場就整張卡不顯示
+   * （日期先寫在這裡沒關係，表單網址填進來的那一刻才會出現在報名頁）。
+   */
+  enrollUrl: string;
+}
+
+// TODO: 每次有新的體驗課／Workshop 就往這裡加一筆；辦完的不用手動刪，
+//       程式會用今天的日期自動隱藏（見 getUpcomingEvents）。
+export const EVENTS: EnrollEvent[] = [
+  {
+    id: 'zouk-trial-0918',
+    kind: 'trial',
+    theme: 'trackB',
+    danceStyle: 'Brazilian Zouk',
+    title: 'Zouk 體驗課 ＋ Zouk / Hustle Party',
+    note: '課後直接接派對，可以留下來看大家跳，也可以自己下場',
+    dateLabel: '9/18',
+    weekdayEn: 'FRI',
+    startTime: '19:30',
+    venueSlug: 'social-hub',
+    price: 450,
+    priceNote: '單堂 $450',
+    enrollUrl: 'https://forms.gle/TwnBuWRz1f7bH1vJ6',
+  },
+  {
+    id: 'hustle-trial-0924',
+    kind: 'trial',
+    theme: 'trackA',
+    danceStyle: 'Hustle',
+    title: 'Hustle 體驗課 ＋ social',
+    note: '課後留下來練習，老師會在旁邊帶',
+    dateLabel: '9/24',
+    weekdayEn: 'THU',
+    startTime: '19:30',
+    venueSlug: 'zhirenzhan',
+    price: 450,
+    priceNote: '單堂 $450',
+    enrollUrl: 'https://forms.gle/DcYhJ7u6fH1FtzB8A',
+  },
+  {
+    id: 'iago-workshop',
+    kind: 'workshop',
+    theme: 'trackB',
+    danceStyle: 'Brazilian Zouk',
+    title: 'Iago Zouk Weekender',
+    note: '兩天課程＋派對',
+    dateLabel: '9/27',
+    endDateLabel: '9/28',
+    weekdayEn: 'SAT',
+    // TODO: 補上這場 workshop 的場地與價格（場地留空時不會輸出結構化資料）
+    enrollUrl: 'https://forms.gle/s7qoX8pvpbeBKeHQ8',
+  },
+  {
+    id: 'zouk-trial-1009',
+    kind: 'trial',
+    theme: 'trackB',
+    danceStyle: 'Brazilian Zouk',
+    title: 'Zouk 體驗課 ＋ Zouk / Hustle Party',
+    note: '課後直接接派對',
+    dateLabel: '10/9',
+    weekdayEn: 'FRI',
+    startTime: '19:30',
+    venueSlug: 'social-hub',
+    price: 450,
+    priceNote: '單堂 $450',
+    enrollUrl: '', // TODO: 表單開放後填入
+  },
+  {
+    id: 'hustle-trial-1022',
+    kind: 'trial',
+    theme: 'trackA',
+    danceStyle: 'Hustle',
+    title: 'Hustle 體驗課 ＋ social',
+    dateLabel: '10/22',
+    weekdayEn: 'THU',
+    startTime: '19:30',
+    venueSlug: 'zhirenzhan',
+    price: 450,
+    priceNote: '單堂 $450',
+    enrollUrl: '', // TODO: 表單開放後填入
+  },
+  {
+    id: 'matheus-cozyyi-workshop',
+    kind: 'workshop',
+    theme: 'trackB',
+    danceStyle: 'Brazilian Zouk',
+    title: 'Matheus & Cozyyi Zouk Weekender',
+    note: '兩天課程＋派對',
+    dateLabel: '10/24',
+    endDateLabel: '10/25',
+    weekdayEn: 'SAT',
+    // TODO: 補上這場 workshop 的場地與價格
+    enrollUrl: 'https://forms.gle/9Mjrqxydhpu2emFs8',
+  },
+];
+
+/** 活動的年份：沒寫就用目前月份的年份。 */
+export function getEventYear(event: EnrollEvent): number {
+  return event.year ?? MONTH.year;
+}
+
+/**
+ * 可以報名的活動，依日期由近到遠排序。
+ *
+ * 兩種情況會被濾掉：已經辦完的（多天活動要等最後一天過了才算結束，
+ * 週末 workshop 的第一天過了還是要看得到），以及還沒開放報名的
+ * （enrollUrl 是空字串）—— 一張點不下去的卡片對客人沒有意義。
+ */
+export function getUpcomingEvents(
+  kind: EventKind,
+  now: Date = new Date()
+): EnrollEvent[] {
+  return EVENTS.filter((event) => {
+    if (event.kind !== kind) return false;
+    if (!event.enrollUrl) return false;
+    const lastDay = event.endDateLabel ?? event.dateLabel;
+    return !isPast(lastDay, getEventYear(event), now);
+  }).sort((a, b) => sortKey(a) - sortKey(b));
+}
+
+/** 排序用：把 '9/18' + 年份壓成可比較的數字，資料寫的順序就不重要了。 */
+function sortKey(event: EnrollEvent): number {
+  const [month, day] = event.dateLabel.split('/').map(Number);
+  return getEventYear(event) * 10000 + (month ?? 0) * 100 + (day ?? 0);
 }
 
 // ---- 費用方案（與課表共用顏色，方便客人對應）----

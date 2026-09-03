@@ -9,6 +9,7 @@ import { Button } from './ui/button';
 
 const NAV_LINKS = [
   { name: '課程資訊', href: '/courses' },
+  { name: '課程報名', href: LINKS.ENROLL },
   { name: '師資介紹', href: '/teachers' },
   { name: '教室資訊', href: '/location' },
   // 之後要加「活動 / 派對」頁的話，在這裡加一行就會同時出現在桌機與手機選單。
@@ -68,7 +69,7 @@ const Navbar = () => {
             <Link href={LINKS.INSTAGRAM_DM} target="_blank" rel="noopener noreferrer">
               <Button className="ml-2 cursor-pointer">
                 <IGIcon className="w-6 h-6" color="#ffffff" />
-                IG 私訊報名
+                IG 私訊詢問
               </Button>
             </Link>
           </div>
@@ -103,7 +104,7 @@ const Navbar = () => {
           <Link href={LINKS.INSTAGRAM_DM} target="_blank" rel="noopener noreferrer">
             <Button className="mt-3">
               <IGIcon className="w-6 h-6" color="#ffffff" />
-              IG 私訊報名
+              IG 私訊詢問
             </Button>
           </Link>
         </div>

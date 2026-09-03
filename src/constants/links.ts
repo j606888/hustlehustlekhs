@@ -14,6 +14,8 @@ export const LINKS = {
   BIO_SITE: `https://bio.site/${IG_HANDLE}`,
   COURSES: '/courses',
   PRICING: '/courses?tab=pricing',
+  // 報名頁。IG bio 之後就指這裡，取代 bio.site 的連結頁。
+  ENROLL: '/enroll',
 } as const;
 
 /**
