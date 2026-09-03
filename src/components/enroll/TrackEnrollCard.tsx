@@ -55,7 +55,12 @@ export default function TrackEnrollCard({ track }: { track: Track }) {
         </p>
       </div>
 
-      <Button asChild className="h-11 w-full px-5 sm:w-fit sm:self-start">
+      {/* 體驗課才是主要 CTA（filled）；常態課卡是次要選項，用 outlined。 */}
+      <Button
+        asChild
+        variant="outline"
+        className="h-11 w-full px-5 sm:w-fit sm:self-start"
+      >
         <a href={track.enrollUrl} target="_blank" rel="noopener noreferrer">
           報名 {track.danceStyle} 課卡
           <ArrowRight className="size-4" />

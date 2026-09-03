@@ -97,8 +97,13 @@ export default function EventCard({ event }: { event: EnrollEvent }) {
         </div>
       </div>
 
-      {/* 還沒開放報名的場次不會走到這裡 —— getUpcomingEvents 已經先濾掉了 */}
-      <Button asChild className="h-11 w-full flex-shrink-0 px-5 sm:w-auto">
+      {/* 還沒開放報名的場次不會走到這裡 —— getUpcomingEvents 已經先濾掉了。
+          體驗課是這頁最想推的入口，用 filled；workshop 是次要選項，用 outlined。 */}
+      <Button
+        asChild
+        variant={event.kind === 'trial' ? 'default' : 'outline'}
+        className="h-11 w-full flex-shrink-0 px-5 sm:w-auto"
+      >
         <a href={event.enrollUrl} target="_blank" rel="noopener noreferrer">
           報名
           <ArrowRight className="size-4" />
