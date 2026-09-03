@@ -66,7 +66,7 @@
 | 老師照片 | `public/teachers/名字.jpg` | `src/data/teachers.ts` 的 `imageUrl` |
 | 學員頭像 | `public/testimonials/名字.jpg` | `src/data/testimonials.ts` 的 `imageUrl` |
 | 首頁大圖／影片 | `public/images/hero.jpg` | `src/data/site.ts` 的 `HERO_MEDIA` |
-| 首頁「我們是誰」合照 | `public/images/who-we-are.jpg` | `src/components/home/WhoWeAre.tsx` 的 `<Image src=...>` |
+| 首頁「我們是誰」合照（目前沒放，整段是置中純文字） | `public/images/who-we-are.jpg` | `src/components/home/WhoWeAre.tsx`，照註解加回 `<Image>` 與左右兩欄版面 |
 | 教室場地照 | `public/images/venue.jpg` | `src/app/(site)/location/page.tsx` 裡被註解掉的 `photo={{...}}`，取消註解即可 |
 | 分享到 FB／LINE 的預覽圖 | `public/images/og.jpg`（1200×630） | `src/app/layout.tsx` 裡被註解掉的 `images`，取消註解即可 |
 
