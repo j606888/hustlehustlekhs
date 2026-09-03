@@ -11,8 +11,8 @@
 
 | 想改什麼 | 改這個檔案 | 說明 |
 |---|---|---|
-| **網址** | `src/constants/site.ts` 的 `SITE_URL` | 這個值會寫進 sitemap、robots.txt 與所有結構化資料。**填錯 Google 會抓到錯的網址**，一定要先確定 |
-| **Instagram 帳號** | `src/constants/links.ts` 的 `IG_HANDLE` | 只填帳號本身、不要 `@`。目前填的是 `hustlehustlekh`（推測值），**請務必核對** |
+| **網址** | `src/constants/site.ts` 的 `SITE_URL` | 已填好正式網域 `https://www.hustlehustlekhs.com`（帶 www）。這個值會寫進 sitemap、robots.txt 與所有結構化資料，換網域時才需要動 |
+| **Instagram 帳號** | `src/constants/links.ts` 的 `IG_HANDLE` | 只填帳號本身、不要 `@`。目前是 `hustlehustlekhs` |
 | **LINE 連結** | `src/constants/links.ts` 的 `LINE` | 沒有官方 LINE 就留空字串，Footer 會自動不顯示這一項 |
 | **教室地址** | `src/data/venues.ts` | 全站唯一的地址來源。Footer、地點頁、Google 結構化資料都從這裡取，**不要在別的地方另外寫地址** |
 | **導航連結** | `src/data/venues.ts` 的 `mapLink` | 點下去會開 Google 地圖的那個連結。頁面上不放地圖大圖，只放這個連結 |
@@ -49,8 +49,9 @@
 - **辦完的活動不用手動刪**，程式會用今天的日期自動隱藏（跨兩天的活動要等第二天過完）。
 - 表單還沒開放就把 `enrollUrl` 留成空字串 `''`，那一場**整張卡不會顯示**；
   日期可以先寫進去佔位，等表單網址填進來它才會出現在報名頁。
-- `venueSlug` 不確定就不要填，畫面會顯示「地點另行公布」；亂填地址會跟教室頁的
-  地址打架，Google 的本地搜尋會扣分。價格同理，`priceNote` 沒填會顯示「[價格待填]」。
+- `venueSlug`、`startTime`、`priceNote` 是有填才顯示，沒填就整行不出現（不會留
+  「待公布」之類的佔位字）。地點不確定就不要亂填，跟教室頁的地址打架 Google 會扣分；
+  另外沒填 `venueSlug` 的活動也不會產生給 Google 的活動結構化資料。
 
 **Hustle 的風格介紹**（課程頁第三個 tab）在另一個檔：
 `src/components/courses/Introduction.tsx` 的 `DANCE_STYLES`。
@@ -88,7 +89,7 @@
 
 **換主色**：改 `src/app/globals.css` 裡的 `--brand` 這一行就好，全站顏色會一起變。
 
-但有兩個地方是 SVG 圖檔，讀不到那個設定，要手動把裡面的 `#009689` 換成新的顏色：
+但有兩個地方是 SVG 圖檔，讀不到那個設定，要手動把裡面的舊色碼（目前是 `#B45055`）換成新的顏色：
 - `public/logo.svg`（左上角的 logo）
 - `src/app/icon.svg`（瀏覽器分頁的小圖示）
 

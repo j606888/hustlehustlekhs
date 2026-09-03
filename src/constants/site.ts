@@ -1,9 +1,9 @@
 // 站台層級的識別資訊。metadata、sitemap、robots、JSON-LD 都從這裡取值，
 // 避免同一個網址／名稱散落在多處而互相不一致。
 
-// TODO: 確認這就是實際上線的網址（含 www 與否要跟部署設定一致）。
-//       這個值會寫進 sitemap.xml、robots.txt、canonical 連結與所有 JSON-LD
-//       的 @id，填錯 Google 會抓到錯誤的正規網址。
+// 正式網域（已上線）。刻意帶 www：非 www 會 308 導到 www，正規網址必須是導向後的那個。
+// 這個值會寫進 sitemap.xml、robots.txt、canonical 連結與所有 JSON-LD 的 @id，
+// 改動時要跟部署設定的網域一起改，不然 Google 會抓到錯誤的正規網址。
 export const SITE_URL = 'https://www.hustlehustlekhs.com';
 
 // 品牌名的正式寫法。venues.ts 的據點名稱、logo.svg、Footer 版權都用這個寫法，
