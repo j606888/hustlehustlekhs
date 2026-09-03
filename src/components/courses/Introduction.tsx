@@ -48,7 +48,6 @@ const THEMES: Record<'coral' | 'gold' | 'blue', DanceTheme> = {
 
 // TODO: 文案需要 HustleHustle KHS 校對 —— 下面關於 Hustle 的敘述是通用說法，
 //       但「我們怎麼教、強調什麼」應該換成你們自己的說法。
-//       youtubeId 也待補：填示範影片網址 ?v= 後面那一段，留空則不顯示影片區塊。
 //       之後若開第二種舞（例如 Salsa / Zouk），照著複製一個物件、換一組 THEMES 即可。
 const DANCE_STYLES: DanceStyle[] = [
   {
@@ -56,7 +55,7 @@ const DANCE_STYLES: DanceStyle[] = [
     nameEn: 'HUSTLE',
     nameZh: '哈梭',
     origin: '源自 1970 年代的紐約 disco 舞廳',
-    youtubeId: undefined, // TODO: 補上示範影片的 YouTube ID
+    youtubeId: '3gT-KXXdOsw',
     tagline: '明快、好玩，跟著 disco 節奏轉起來',
     description: [
       'Hustle 是 1970 年代從紐約 disco 場景長出來的雙人社交舞。節奏明快、旋轉多，配 disco、funk 或現在的流行音樂都很合，是那種一聽到音樂就會想動起來的舞。',
@@ -70,7 +69,7 @@ const DANCE_STYLES: DanceStyle[] = [
     nameEn: 'BRAZILIAN ZOUK',
     nameZh: '巴西祖克舞',
     origin: '源自巴西的雙人社交舞',
-    youtubeId: undefined, // TODO: 補上示範影片的 YouTube ID
+    youtubeId: 'smGRd1Exxo4',
     tagline: '柔和、流動，跟著音樂自在律動',
     description: [
       'Brazilian Zouk 是源自巴西的雙人社交舞，融合 Lambada 的流動感與豐富的身體律動，發展出獨特的旋轉、波浪與身體延伸。舞蹈不只講究步伐，更重視兩個人之間的連結、引導與回應。',
@@ -150,8 +149,9 @@ function DanceCard({ dance }: { dance: DanceStyle }) {
         >
           <iframe
             className="absolute left-0 top-0 h-full w-full"
-            src={`https://www.youtube.com/embed/${dance.youtubeId}`}
-            title={`${dance.nameEn} demo`}
+            src={`https://www.youtube-nocookie.com/embed/${dance.youtubeId}`}
+            title={`${dance.nameZh} ${dance.nameEn} 示範影片`}
+            loading="lazy"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
