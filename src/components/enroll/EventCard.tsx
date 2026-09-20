@@ -22,10 +22,14 @@ export default function EventCard({ event }: { event: EnrollEvent }) {
 
   const meta: React.ReactNode[] = [];
   if (venue) {
+    // 臨時換場地的場次，場地名加粗 —— 熟客掃過這行時最容易漏掉的就是它。
     meta.push(
       <Link
         href={`/location#${venue.slug}`}
-        className="underline-offset-2 hover:underline"
+        className={cn(
+          'underline-offset-2 hover:underline',
+          event.venueChanged && 'font-bold text-[#2d3a5e] underline'
+        )}
       >
         {venue.shortName}
       </Link>
@@ -77,6 +81,13 @@ export default function EventCard({ event }: { event: EnrollEvent }) {
             >
               {event.danceStyle}
             </span>
+            {/* 場地異動刻意不用品牌色也不用舞種色：那兩色在這頁各有職責
+                （CTA、舞種），警示要跳出來就得是第三種顏色。 */}
+            {event.venueChanged && (
+              <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-bold text-amber-900">
+                場地異動
+              </span>
+            )}
           </div>
           <h3 className="text-base font-bold text-[#2d3a5e] md:text-lg">
             {event.title}

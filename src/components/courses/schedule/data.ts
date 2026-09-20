@@ -207,7 +207,9 @@ export const MONTHS: MonthConfig[] = [
       16: { theme: 'trackB', label: 'Zouk', trackId: 'zouk-fri' },
       22: {
         theme: 'trackA',
-        label: 'Hustle\n體驗課',
+        // ★ 對應下方 footnote：這一場改在 Social Hub。
+        // 格子只有約 42px 寬，塞不下場地名，細節寫在圖例與 footnote。
+        label: 'Hustle\n體驗課★',
         trackId: 'hustle-thu',
         emphasis: true,
       },
@@ -221,7 +223,7 @@ export const MONTHS: MonthConfig[] = [
       {
         theme: 'trackA',
         title: '週四・Hustle',
-        desc: '進階 / 中階 · 19:30–22:00・職人棧（10/22 是體驗課）',
+        desc: '進階 / 中階 · 19:30–22:00・職人棧（10/22 是體驗課，改在 Social Hub）',
       },
       {
         theme: 'trackB',
@@ -234,7 +236,8 @@ export const MONTHS: MonthConfig[] = [
         desc: 'Matheus & Cozyyi Workshop',
       },
     ],
-    footnote: '★ 實際場次以 Instagram 公告為準', // TODO: 有停課／加開時記得更新
+    footnote:
+      '★ 10/22 Hustle 體驗課改在 Social Hub 上（不在職人棧）；實際場次以 Instagram 公告為準', // TODO: 有停課／加開時記得更新
   },
 ];
 
@@ -327,6 +330,12 @@ export interface EnrollEvent {
   startTime?: string; // '19:30'，JSON-LD 的 startDate 用
   /** 客座 Workshop 場地未定時留空；留空就不會輸出 Event 結構化資料。 */
   venueSlug?: VenueSlug;
+  /**
+   * 這一場臨時換到平常不上課的場地（例如週四 Hustle 借用 Social Hub）。
+   * true 時報名卡會多一個「場地異動」標記，避免熟客照舊跑到原場地。
+   * venueSlug 一律填「實際上課的場地」，這裡只負責提醒。
+   */
+  venueChanged?: boolean;
   price?: number; // 有數字才輸出 JSON-LD 的 offers
   priceNote?: string; // 畫面顯示用，例如 '單堂 $450'
   /**
@@ -403,10 +412,12 @@ export const EVENTS: EnrollEvent[] = [
     theme: 'trackA',
     danceStyle: 'Hustle',
     title: 'Hustle 體驗課 ＋ social',
+    note: '這一場不在職人棧，改到 Social Hub',
     dateLabel: '10/22',
     weekdayEn: 'THU',
     startTime: '19:30',
-    venueSlug: 'zhirenzhan',
+    venueSlug: 'social-hub',
+    venueChanged: true,
     price: 450,
     priceNote: '單堂 $450',
     enrollUrl: '', // TODO: 表單開放後填入
