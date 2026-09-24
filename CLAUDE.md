@@ -57,9 +57,10 @@ but it has been reduced to a single venue and single dance style.
 - Styling: Tailwind CSS v4, mobile-first with `md:` breakpoints
 - **Brand color: use `text-brand` / `bg-brand` / `border-brand`, never a hardcoded Tailwind
   color scale.** The single source is `--brand` in `src/app/globals.css`; `--primary` and
-  `--ring` both point at it. `src/app/icon.svg` and `public/logo.svg` hardcode the hex
-  (`#009689`) because SVG cannot read CSS variables — keep them in sync manually when the
-  brand color changes.
+  `--ring` both point at it. `public/logo.svg` hardcodes the hex
+  because SVG cannot read CSS variables — keep it in sync manually when the brand color
+  changes. The favicon (`src/app/icon.svg`) is a dark-background/white mark and does not
+  follow the brand color.
   Note the schedule/introduction cards (`THEMES` in `schedule/data.ts` and `Introduction.tsx`)
   deliberately use their own hardcoded palette: they need several mutually-distinguishable
   colors, which is a different job from the brand color.

@@ -89,9 +89,8 @@
 
 **換主色**：改 `src/app/globals.css` 裡的 `--brand` 這一行就好，全站顏色會一起變。
 
-但有兩個地方是 SVG 圖檔，讀不到那個設定，要手動把裡面的舊色碼（目前是 `#B45055`）換成新的顏色：
-- `public/logo.svg`（左上角的 logo）
-- `src/app/icon.svg`（瀏覽器分頁的小圖示）
+但 `public/logo.svg`（左上角的 logo）是 SVG 圖檔，讀不到那個設定，要手動把裡面的舊色碼（目前是 `#B45055`）換成新的顏色。
+（`src/app/icon.svg` 瀏覽器分頁小圖示是深底白字，不跟主色走，換主色時不用改。）
 
 **換 logo**：直接把 `public/logo.svg` 整個檔案換掉即可，Navbar 與 Footer 都會跟著換。
 

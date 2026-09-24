@@ -68,8 +68,8 @@ body {
    （避免變成正紅），得到 oklch(0.56 0.13 19) = #B45055，對比 4.98:1。
    #F8B2B2 本身仍以 --brand-pale 保留，用於淺色底。
 
-   TODO: 換色時同步 public/logo.svg + src/app/icon.svg 裡的 hex
-         （SVG 讀不到 CSS 變數，需手動改）。
+   TODO: 換色時同步 public/logo.svg 裡的 hex
+         （SVG 讀不到 CSS 變數，需手動改）。src/app/icon.svg 是深底白字，不跟品牌色。
    ───────────────────────────────────────────────────────────── */
 :root {
   --brand: oklch(0.56 0.13 19);
