@@ -19,11 +19,11 @@ const Hero = ({ media }: Props) => {
           就從這裡開始
         </h1>
 
-        {/* h1 是情感標語，關鍵字（高雄／Hustle／Zouk／雙人舞）由這句副標帶，
+        {/* h1 是情感標語，關鍵字（高雄／Hustle／Zouk／社交舞／雙人舞）由這句副標帶，
             讓搜尋引擎和 AI 在頁面最上方就讀到我們是誰、在哪、教什麼。 */}
         <p className="text-base max-w-2xl text-center md:text-left md:text-md">
           <strong className="font-semibold">
-            高雄唯一同時教 Hustle 與 Brazilian Zouk 的雙人舞教室。
+            高雄唯一同時教 Hustle 與 Brazilian Zouk 的社交舞・雙人舞教室。
           </strong>
           <br className="hidden md:block" />
           沒舞伴、沒經驗都沒關係，

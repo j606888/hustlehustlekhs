@@ -25,7 +25,7 @@ export const SITE_NAME_FULL =
  * 不會自動把這兩個詞視為同義。
  */
 export const SITE_DESCRIPTION =
-  '高雄唯一同時教 Hustle 與 Brazilian Zouk 的雙人舞教室。左營區、三民區兩處場地每週定期開課，零基礎歡迎、不需舞伴即可報名。';
+  '高雄唯一同時教 Hustle 與 Brazilian Zouk 的社交舞・雙人舞教室。左營區、三民區兩處場地每週定期開課，零基礎歡迎、不需舞伴即可報名。';
 
 /** 我們教的舞種，供 Organization / LocalBusiness 的 knowsAbout 使用。 */
 export const DANCE_STYLES = [
