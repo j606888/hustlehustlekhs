@@ -409,7 +409,8 @@ export const EVENTS: EnrollEvent[] = [
     venueSlug: 'social-hub',
     price: 450,
     priceNote: '單堂 $450',
-    enrollUrl: '', // TODO: 表單開放後填入
+    enrollUrl:
+      'https://docs.google.com/forms/d/e/1FAIpQLSfz7KIFDnDoKzfAj4qvfd1TgqypqWxiiy_5vIkc5BB2F33dyw/viewform',
   },
   {
     id: 'hustle-trial-1022',
@@ -425,7 +426,8 @@ export const EVENTS: EnrollEvent[] = [
     venueChanged: true,
     price: 450,
     priceNote: '單堂 $450',
-    enrollUrl: '', // TODO: 表單開放後填入
+    enrollUrl:
+      'https://docs.google.com/forms/d/e/1FAIpQLSexxiaDuhCHwDUUWwoiKAG33ZZmdr8ztHYWVaVTnnSZs32ceA/viewform',
   },
   {
     id: 'matheus-cozyyi-workshop',
