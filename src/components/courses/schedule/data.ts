@@ -3,7 +3,7 @@
 //
 // 地址不寫在這裡：據點資料集中於 src/data/venues.ts，track 只存 venueSlug。
 //
-// 課表與價目已是實際內容（2026/09）；每個月要更新 MONTHS 與各 track 的 dates。
+// 課表與價目已是實際內容（2026/10）；每個月要更新 MONTHS 與各 track 的 dates。
 
 import type { VenueSlug } from '@/data/venues';
 
@@ -145,51 +145,6 @@ export interface MonthConfig {
 export const MONTHS: MonthConfig[] = [
   {
     year: 2026,
-    month: 9,
-    titleEn: 'SEPTEMBER',
-    titleZh: '九月',
-    highlights: {
-      3: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
-      4: { theme: 'trackB', label: 'Zouk', trackId: 'zouk-fri' },
-      17: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
-      18: {
-        theme: 'trackB',
-        label: '體驗課\n+Party',
-        trackId: 'zouk-fri',
-        emphasis: true,
-      },
-      24: {
-        theme: 'trackA',
-        label: 'Hustle\n體驗課',
-        trackId: 'hustle-thu',
-        emphasis: true,
-      },
-      25: { theme: 'trackB', label: 'Zouk', trackId: 'zouk-fri' },
-      27: { theme: 'trackC', label: 'Zouk\nWorkshop', trackId: 'zouk-fri' },
-      28: { theme: 'trackC', label: 'Zouk\nWorkshop', trackId: 'zouk-fri' },
-      // 9/10、9/11 停課，所以不 highlight。
-    },
-    legend: [
-      {
-        theme: 'trackA',
-        title: '週四・Hustle',
-        desc: '進階 / 中階 · 19:30–22:00・職人棧（9/24 是體驗課）',
-      },
-      {
-        theme: 'trackB',
-        title: '週五・Zouk',
-        desc: '初階 / 進階 · 19:30–23:00・Social Hub（9/18 是體驗課，課後接 Zouk/Hustle Party）',
-      },
-      {
-        theme: 'trackC',
-        title: '9/27–9/28',
-        desc: 'Iago Zouk Workshop',
-      },
-    ],
-    footnote: '★ 9/10、9/11 停課；實際場次以 Instagram 公告為準', // TODO: 有停課／加開時記得更新
-  },
-  {
-    year: 2026,
     month: 10,
     titleEn: 'OCTOBER',
     titleZh: '十月',
@@ -239,6 +194,45 @@ export const MONTHS: MonthConfig[] = [
     footnote:
       '★ 10/22 Hustle 體驗課改在 Social Hub 上（不在職人棧）；實際場次以 Instagram 公告為準', // TODO: 有停課／加開時記得更新
   },
+  {
+    year: 2026,
+    month: 11,
+    titleEn: 'NOVEMBER',
+    titleZh: '十一月',
+    // 十一月週五沒有 Zouk 正式課：週五只剩 11/13 Party 與 11/27 Lambada，
+    // 兩場都掛在 Zouk 那張課表卡（zouk-fri）上。
+    highlights: {
+      12: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
+      13: {
+        theme: 'trackB',
+        label: 'Party',
+        trackId: 'zouk-fri',
+        emphasis: true,
+      },
+      19: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
+      26: {
+        theme: 'trackA',
+        label: 'Hustle\n體驗課',
+        trackId: 'hustle-thu',
+        emphasis: true,
+      },
+      27: { theme: 'trackB', label: 'Lambada', trackId: 'zouk-fri' },
+      // 11/5、11/6 沒課，所以不 highlight。
+    },
+    legend: [
+      {
+        theme: 'trackA',
+        title: '週四・Hustle',
+        desc: '進階 / 中階 · 19:30–22:00・職人棧（11/26 是體驗課）',
+      },
+      {
+        theme: 'trackB',
+        title: '週五・Social Hub',
+        desc: '11/13 Party・11/27 Lambada Fast Track 19:30–22:00（扣兩堂 Zouk 課卡）・十一月沒有 Zouk 正式課',
+      },
+    ],
+    footnote: '★ 11/5、11/6 沒課；十一月週五沒有 Zouk 正式課；實際場次以 Instagram 公告為準', // TODO: 有停課／加開時記得更新
+  },
 ];
 
 /** 目前月份（getSessionStatus 用它補上場次 label 缺少的年份）。 */
@@ -261,7 +255,7 @@ export const TRACKS: Track[] = [
       { time: '20:30–21:30', title: 'Hustle 中階班' },
       { time: '21:30–22:00', title: '課後練習 social' },
     ],
-    datesTitle: '本期場次',
+    datesTitle: '場次',
     datesNote: '每週四・10/22 改在 Social Hub',
     dates: [
       { label: '10/1' },
@@ -270,6 +264,9 @@ export const TRACKS: Track[] = [
       // 這一場換到 Social Hub（見 MONTHS 十月的 footnote 與 EVENTS 的 hustle-trial-1022）
       { label: '10/22', note: '體驗課・改在 Social Hub' },
       { label: '10/29' },
+      { label: '11/12' },
+      { label: '11/19' },
+      { label: '11/26', note: '體驗課' },
     ],
     venueSlug: 'zhirenzhan',
     pricePlanId: 'hustle-card',
@@ -289,14 +286,17 @@ export const TRACKS: Track[] = [
       { time: '20:45–21:45', title: 'Zouk 進階班' },
       { time: '22:00–23:00', title: '課後練習' },
     ],
-    datesTitle: '本期場次',
-    datesNote: '每週五',
+    datesTitle: '場次',
+    datesNote: '每週五・十一月沒有 Zouk 正式課',
     dates: [
       { label: '10/2' },
       { label: '10/9', note: 'Zouk 體驗課 + Zouk/Hustle Party' },
       { label: '10/16' },
       { label: '10/23' },
       { label: '10/30' },
+      // 十一月沒有 Zouk 正式課，週五只有這兩場；Lambada Fast Track（19:30–22:00）沿用這張卡，扣兩堂 Zouk 課卡。
+      { label: '11/13', note: 'Party' },
+      { label: '11/27', note: 'Lambada Fast Track・扣兩堂' },
     ],
     venueSlug: 'social-hub',
     pricePlanId: 'zouk-card',
@@ -441,6 +441,23 @@ export const EVENTS: EnrollEvent[] = [
     weekdayEn: 'SAT',
     // TODO: 補上這場 workshop 的場地與價格
     enrollUrl: 'https://forms.gle/9Mjrqxydhpu2emFs8',
+  },
+  {
+    id: 'hustle-trial-1126',
+    kind: 'trial',
+    theme: 'trackA',
+    danceStyle: 'Hustle',
+    title: 'Hustle 體驗課 ＋ social',
+    note: '課後留下來練習，老師會在旁邊帶',
+    dateLabel: '11/26',
+    weekdayEn: 'THU',
+    startTime: '19:30',
+    venueSlug: 'zhirenzhan',
+    price: 450,
+    priceNote: '單堂 $450',
+    // 同類型的報名表沿用（跟 10/22 Hustle 體驗課同一張）
+    enrollUrl:
+      'https://docs.google.com/forms/d/e/1FAIpQLSexxiaDuhCHwDUUWwoiKAG33ZZmdr8ztHYWVaVTnnSZs32ceA/viewform',
   },
 ];
 
