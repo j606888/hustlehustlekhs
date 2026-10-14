@@ -465,13 +465,14 @@ export const EVENTS: EnrollEvent[] = [
     theme: 'trackB',
     danceStyle: 'Brazilian Zouk',
     title: 'Zouk 體驗課 ＋ Zouk / Hustle Party',
-    note: '課後直接接派對',
+    note: '19:30 體驗課，20:30 接 Party 到 23:00・兩人同行一人免費（限新生）',
     dateLabel: '11/13',
     weekdayEn: 'FRI',
     startTime: '19:30',
     venueSlug: 'social-hub',
-    price: 450,
-    priceNote: '單堂 $450',
+    // 以報名表為準：11/12 23:59 前報名 $300，現場 $400
+    price: 300,
+    priceNote: '預約 $300（11/12 前）・現場 $400',
     // 同類型的報名表沿用（跟 10/9 Zouk 體驗課同一張）
     enrollUrl:
       'https://docs.google.com/forms/d/e/1FAIpQLSfz7KIFDnDoKzfAj4qvfd1TgqypqWxiiy_5vIkc5BB2F33dyw/viewform',
