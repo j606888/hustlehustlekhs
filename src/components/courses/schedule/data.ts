@@ -199,13 +199,13 @@ export const MONTHS: MonthConfig[] = [
     month: 11,
     titleEn: 'NOVEMBER',
     titleZh: '十一月',
-    // 十一月週五沒有 Zouk 正式課：週五只剩 11/13 Party 與 11/27 Lambada，
+    // 十一月週五沒有 Zouk 正式課：週五只剩 11/13 體驗課＋Party 與 11/27 Lambada，
     // 兩場都掛在 Zouk 那張課表卡（zouk-fri）上。
     highlights: {
       12: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
       13: {
         theme: 'trackB',
-        label: 'Party',
+        label: '體驗課\n+Party',
         trackId: 'zouk-fri',
         emphasis: true,
       },
@@ -228,7 +228,7 @@ export const MONTHS: MonthConfig[] = [
       {
         theme: 'trackB',
         title: '週五・Social Hub',
-        desc: '11/13 Party・11/27 Lambada Fast Track 19:30–22:00（扣兩堂 Zouk 課卡）・十一月沒有 Zouk 正式課',
+        desc: '11/13 Zouk 體驗課＋Zouk/Hustle Party・11/27 Lambada Fast Track 19:30–22:00（扣兩堂 Zouk 課卡）・十一月沒有 Zouk 正式課',
       },
     ],
     footnote: '★ 11/5、11/6 沒課；十一月週五沒有 Zouk 正式課；實際場次以 Instagram 公告為準', // TODO: 有停課／加開時記得更新
@@ -295,7 +295,7 @@ export const TRACKS: Track[] = [
       { label: '10/23' },
       { label: '10/30' },
       // 十一月沒有 Zouk 正式課，週五只有這兩場；Lambada Fast Track（19:30–22:00）沿用這張卡，扣兩堂 Zouk 課卡。
-      { label: '11/13', note: 'Party' },
+      { label: '11/13', note: 'Zouk 體驗課 + Zouk/Hustle Party' },
       { label: '11/27', note: 'Lambada Fast Track・扣兩堂' },
     ],
     venueSlug: 'social-hub',
@@ -458,6 +458,23 @@ export const EVENTS: EnrollEvent[] = [
     // 同類型的報名表沿用（跟 10/22 Hustle 體驗課同一張）
     enrollUrl:
       'https://docs.google.com/forms/d/e/1FAIpQLSexxiaDuhCHwDUUWwoiKAG33ZZmdr8ztHYWVaVTnnSZs32ceA/viewform',
+  },
+  {
+    id: 'zouk-trial-1113',
+    kind: 'trial',
+    theme: 'trackB',
+    danceStyle: 'Brazilian Zouk',
+    title: 'Zouk 體驗課 ＋ Zouk / Hustle Party',
+    note: '課後直接接派對',
+    dateLabel: '11/13',
+    weekdayEn: 'FRI',
+    startTime: '19:30',
+    venueSlug: 'social-hub',
+    price: 450,
+    priceNote: '單堂 $450',
+    // 同類型的報名表沿用（跟 10/9 Zouk 體驗課同一張）
+    enrollUrl:
+      'https://docs.google.com/forms/d/e/1FAIpQLSfz7KIFDnDoKzfAj4qvfd1TgqypqWxiiy_5vIkc5BB2F33dyw/viewform',
   },
 ];
 
