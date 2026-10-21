@@ -20,6 +20,13 @@ export const SITE_NAME_FULL =
   'Hustlehustlekhs 高雄舞蹈教室｜Hustle・Brazilian Zouk 雙人舞';
 
 /**
+ * Google 搜尋結果最上方那行「網站名稱」，由首頁的 WebSite 結構化資料提供
+ * （沒有的話 Google 只會顯示網域）。跟 SITE_NAME 分開：SITE_NAME 是 NAP 用的品牌名，
+ * 這裡是給搜尋結果看的、帶城市與類別的名稱。og:site_name 也用這個，讓訊號一致。
+ */
+export const SITE_NAME_SERP = 'Hustlehustlekhs 高雄雙人舞蹈教室';
+
+/**
  * 全站預設描述（root layout 用），也是 Organization 結構化資料的 description。
  * 刻意同時帶到「雙人舞」與「社交舞」—— 台灣人搜尋打的是前者，但 Google
  * 不會自動把這兩個詞視為同義。

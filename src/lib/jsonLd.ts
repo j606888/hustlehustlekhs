@@ -9,6 +9,7 @@ import {
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_NAME_FULL,
+  SITE_NAME_SERP,
   SITE_URL,
 } from '@/constants/site';
 import { SAME_AS } from '@/constants/links';
@@ -50,6 +51,23 @@ export function organizationJsonLd(): JsonLd {
     })),
     // sameAs 是 Google 確認「這個網站 = 這個社群帳號」的方式
     sameAs: SAME_AS,
+  };
+}
+
+/**
+ * 網站本身的實體，只掛在首頁（Google 只從首頁讀網站名稱）。
+ * name 就是搜尋結果最上方顯示的那行；alternateName 是 Google 不採用 name 時的備選。
+ */
+export function websiteJsonLd(): JsonLd {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE_URL}/#website`,
+    name: SITE_NAME_SERP,
+    alternateName: [SITE_NAME, 'Hustlehustlekhs'],
+    url: `${SITE_URL}/`,
+    inLanguage: 'zh-TW',
+    publisher: { '@id': ORGANIZATION_ID },
   };
 }
 

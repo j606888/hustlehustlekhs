@@ -8,7 +8,8 @@ import JsonLd from '@/components/JsonLd';
 import { getPublishedTestimonials } from '@/data/testimonials';
 import { getPublishedFaqs } from '@/data/faq';
 import { HERO_MEDIA } from '@/data/site';
-import { faqPageJsonLd } from '@/lib/jsonLd';
+import { SITE_NAME_SERP } from '@/constants/site';
+import { faqPageJsonLd, websiteJsonLd } from '@/lib/jsonLd';
 
 const HOME_DESCRIPTION =
   '高雄唯一同時教 Hustle 與 Brazilian Zouk 的社交舞・雙人舞教室。週四晚上在左營區、週五晚上在三民區開課，單堂 $450，零基礎歡迎、不需舞伴即可報名。';
@@ -25,6 +26,8 @@ export const metadata: Metadata = {
   description: HOME_DESCRIPTION,
   alternates: { canonical: '/' },
   openGraph: {
+    // 頁面層級的 openGraph 會整個蓋掉 layout 的，siteName 要在這裡重給
+    siteName: SITE_NAME_SERP,
     title: HOME_TITLE,
     description: HOME_DESCRIPTION,
     url: '/',
@@ -50,6 +53,7 @@ export default function Home() {
 
   return (
     <>
+      <JsonLd data={websiteJsonLd()} />
       <JsonLd data={faqPageJsonLd(faqs)} />
       <Hero media={HERO_MEDIA} />
       <DanceStyles />

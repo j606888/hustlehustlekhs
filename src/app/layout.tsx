@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Roboto, Poppins } from "next/font/google";
 import { Analytics } from '@vercel/analytics/next';
 import JsonLd from '@/components/JsonLd';
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '@/constants/site';
+import { SITE_DESCRIPTION, SITE_NAME, SITE_NAME_SERP, SITE_URL } from '@/constants/site';
 import { organizationJsonLd } from '@/lib/jsonLd';
 import "./globals.css";
 
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   openGraph: {
-    siteName: SITE_NAME,
+    siteName: SITE_NAME_SERP,
     locale: 'zh_TW',
     type: 'website',
     // TODO: 拍一張 1200x630 的分享圖放到 public/images/og.jpg 後把 images 打開。
