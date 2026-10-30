@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { MessageCircle } from 'lucide-react';
 import { LINKS } from '@/constants/links';
 import {
@@ -79,15 +80,13 @@ export default function EnrollBoard() {
           <MessageCircle className="mt-0.5 size-5 flex-shrink-0 text-brand" />
           <p className="text-sm leading-relaxed text-gray-600">
             表單送出後會收到 Google 表單的回覆信。
-            有任何問題（要不要帶舞伴、穿什麼鞋、課卡怎麼算）直接{' '}
-            <a
-              href={LINKS.INSTAGRAM_DM}
-              target="_blank"
-              rel="noopener noreferrer"
+            有任何問題（要不要帶舞伴、穿什麼鞋、課卡怎麼算）先看{' '}
+            <Link
+              href={LINKS.FAQ}
               className="font-medium text-brand underline-offset-2 hover:underline"
             >
-              IG 私訊我們
-            </a>
+              Q&amp;A
+            </Link>
             。
           </p>
         </div>

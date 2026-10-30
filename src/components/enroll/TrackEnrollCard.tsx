@@ -11,7 +11,7 @@ export default function TrackEnrollCard({ track }: { track: Track }) {
   const theme = THEMES[track.theme];
   const venue = getVenue(track.venueSlug);
   // 只列真正的課（課後練習／social 不是要報名的對象）
-  const classSlots = track.slots.filter((slot) => slot.title.includes('班'));
+  const classSlots = track.slots.filter((slot) => !slot.title.includes('練習'));
 
   return (
     <article className="flex flex-col gap-4 rounded-3xl bg-white p-4 shadow-sm ring-1 ring-gray-200 sm:p-5">

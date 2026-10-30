@@ -16,6 +16,8 @@ export const LINKS = {
   PRICING: '/courses?tab=pricing',
   // 報名頁。IG bio 之後就指這裡，取代 bio.site 的連結頁。
   ENROLL: '/enroll',
+  // 首頁最下面的常見 Q&A 段落
+  FAQ: '/#faq',
 } as const;
 
 /**
