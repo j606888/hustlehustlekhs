@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import IGIcon from "@/components/icons/IGIcon";
 import { Button } from "../ui/button";
 import { LINKS } from "@/constants/links";
 
@@ -31,10 +30,9 @@ const Hero = ({ media }: Props) => {
           來試一次體驗課。
         </p>
         <div className="flex flex-wrap gap-4">
-          <Link href={LINKS.INSTAGRAM_DM} target="_blank" rel="noopener noreferrer">
+          <Link href={LINKS.ENROLL}>
             <Button size="lg" className="hover:cursor-pointer">
-              <IGIcon className="w-6 h-6" color="#ffffff" />
-              IG 私訊報名
+              馬上報名
             </Button>
           </Link>
           <Link href={LINKS.PRICING}>

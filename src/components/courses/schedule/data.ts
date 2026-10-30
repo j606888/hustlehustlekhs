@@ -223,7 +223,7 @@ export const MONTHS: MonthConfig[] = [
       {
         theme: 'trackA',
         title: '週四・Hustle',
-        desc: '進階 / 中階 · 19:30–22:00・職人棧（11/26 是體驗課）',
+        desc: '初中階 · 19:30–20:30・職人棧（11/26 是體驗課）',
       },
       {
         theme: 'trackB',
@@ -251,9 +251,7 @@ export const TRACKS: Track[] = [
     sessionLabelEn: 'THURSDAY',
     dayZh: '週四',
     slots: [
-      { time: '19:30–20:30', title: 'Hustle 進階班' },
-      { time: '20:30–21:30', title: 'Hustle 中階班' },
-      { time: '21:30–22:00', title: '課後練習 social' },
+      { time: '19:30–20:30', title: 'Hustle 初中階課' },
     ],
     datesTitle: '場次',
     datesNote: '每週四・10/22 改在 Social Hub',
@@ -447,14 +445,14 @@ export const EVENTS: EnrollEvent[] = [
     kind: 'trial',
     theme: 'trackA',
     danceStyle: 'Hustle',
-    title: 'Hustle 體驗課 ＋ social',
-    note: '課後留下來練習，老師會在旁邊帶',
+    title: 'Hustle 體驗課 ＋ Party',
+    note: '19:30 體驗課，20:30 接 Party 到 22:30・兩人同行一人免費（限新生）',
     dateLabel: '11/26',
     weekdayEn: 'THU',
     startTime: '19:30',
     venueSlug: 'zhirenzhan',
-    price: 450,
-    priceNote: '單堂 $450',
+    price: 300,
+    priceNote: '單堂 $300',
     // 同類型的報名表沿用（跟 10/22 Hustle 體驗課同一張）
     enrollUrl:
       'https://docs.google.com/forms/d/e/1FAIpQLSexxiaDuhCHwDUUWwoiKAG33ZZmdr8ztHYWVaVTnnSZs32ceA/viewform',
@@ -554,8 +552,7 @@ export const PRICE_PLANS: PricePlan[] = [
         title: 'Hustle 課卡',
         subtitle: '適用週四職人棧的 Hustle 課程',
         courses: [
-          { name: 'Hustle 進階班', theme: 'trackA' },
-          { name: 'Hustle 中階班', theme: 'trackA' },
+          { name: 'Hustle 初中階課', theme: 'trackA' },
         ],
         options: [
           { name: '單堂', price: 450 },
