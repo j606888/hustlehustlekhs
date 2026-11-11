@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import MonthOverview from './MonthOverview';
-import type { MonthConfig } from './data';
+import { SHOW_MONTH_EVENT, type MonthConfig, type ShowMonthDetail } from './data';
 
 /**
  * 月曆輪播：一次看一個月，用上方的月份分頁或手指滑動切換。
@@ -78,10 +78,24 @@ export default function MonthCarousel({ months }: { months: MonthConfig[] }) {
     scroller.scrollTo({ left: index * getStep(), behavior: 'smooth' });
   };
 
+  // 課表卡的場次圓點被點時：切到那個月，再把月曆捲進畫面（scroll-mt 留出導覽列的高度）
+  const sectionRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const onShowMonth = (e: Event) => {
+      const { year, month } = (e as CustomEvent<ShowMonthDetail>).detail;
+      const index = months.findIndex((m) => m.year === year && m.month === month);
+      if (index < 0) return;
+      scrollerRef.current?.scrollTo({ left: index * getStep(), behavior: 'smooth' });
+      sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    window.addEventListener(SHOW_MONTH_EVENT, onShowMonth);
+    return () => window.removeEventListener(SHOW_MONTH_EVENT, onShowMonth);
+  }, [months]);
+
   const showControls = months.length > 1;
 
   return (
-    <section className="w-full">
+    <section ref={sectionRef} className="w-full scroll-mt-24">
       {/* 品牌抬頭固定在輪播外面，不隨月份切換 */}
       <div className="flex flex-col">
         <p className="font-poppins text-sm font-bold tracking-[0.2em] text-[#c47b5a] md:text-base">

@@ -66,12 +66,12 @@ const Navbar = () => {
                 {link.name}
               </Link>
             ))}
-            <Link href={LINKS.INSTAGRAM_DM} target="_blank" rel="noopener noreferrer">
-              <Button className="ml-2 cursor-pointer">
+            <Button asChild className="ml-2">
+              <Link href={LINKS.INSTAGRAM_DM} target="_blank" rel="noopener noreferrer">
                 <IGIcon className="w-6 h-6" color="#ffffff" />
                 IG 私訊詢問
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
           <div className="md:hidden flex items-center">
             <button
@@ -101,12 +101,12 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
-          <Link href={LINKS.INSTAGRAM_DM} target="_blank" rel="noopener noreferrer">
-            <Button className="mt-3">
+          <Button asChild className="mt-3">
+            <Link href={LINKS.INSTAGRAM_DM} target="_blank" rel="noopener noreferrer">
               <IGIcon className="w-6 h-6" color="#ffffff" />
               IG 私訊詢問
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         </div>
       </div>
     </nav>

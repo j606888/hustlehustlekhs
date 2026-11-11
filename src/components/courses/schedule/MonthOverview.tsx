@@ -67,21 +67,22 @@ export default function MonthOverview({ config }: { config: MonthConfig }) {
               <a
                 key={day}
                 href={`#${hl.trackId}`}
+                // 手機上看不到標籤文字，用 aria-label 讓讀屏軟體還是念得出那天是什麼課
+                aria-label={`${month}/${day} ${hl.label.replace(/\n/g, ' ')}`}
                 className={`flex aspect-square flex-col items-center justify-center overflow-hidden rounded-xl px-0.5 text-white shadow-sm transition-transform hover:scale-[1.04] ${cellColor}`}
               >
-                <span className="text-sm font-bold leading-tight md:text-xl">
+                <span className="text-base font-bold leading-tight md:text-xl">
                   {day}
                 </span>
-                {/* 手機的格子只有約 42px 寬，太長的標籤（例如「Zouk Workshop」）
-                    用 9px 會排到第三行被裁掉，所以長標籤降一階字級。
-                    桌機格子夠大，一律 text-xs。
+                {/* 手機的格子只有約 42px 寬，塞文字一定擠（「Lambada」會被拆成兩行），
+                    所以手機只顯示日期，靠顏色＋下方圖例說明；有體驗課／Party 的日子
+                    多一個小白點，跟深一階的底色一起提示。桌機格子夠大才顯示標籤。
                     whitespace-pre-line：label 裡的換行是刻意指定的斷行位置
                     （中文可以斷在任何字之間，不指定就會出現「Hustle 體驗 / 課」）。 */}
-                <span
-                  className={`w-full whitespace-pre-line break-words text-center leading-[1.05] md:text-xs md:leading-tight ${
-                    hl.label.length > 10 ? 'text-[8px]' : 'text-[9px]'
-                  }`}
-                >
+                {hl.emphasis && (
+                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white md:hidden" />
+                )}
+                <span className="hidden w-full whitespace-pre-line break-words text-center text-xs leading-tight md:block">
                   {hl.label}
                 </span>
               </a>
@@ -92,6 +93,7 @@ export default function MonthOverview({ config }: { config: MonthConfig }) {
 
       {/* 圖例 */}
       <div className="mt-5 flex flex-col gap-2.5">
+        <h3 className="text-sm font-bold text-gray-800 md:text-base">時間和地點</h3>
         {legend.map((item) => {
           const theme = THEMES[item.theme];
           return (
@@ -106,6 +108,19 @@ export default function MonthOverview({ config }: { config: MonthConfig }) {
             </div>
           );
         })}
+        {/* 手機的月曆格子不顯示文字，只靠深色＋白點標出特別場次，所以要說明白點的意思；
+            桌機格子裡直接寫著是什麼課，不需要這行。 */}
+        {Object.values(highlights).some((hl) => hl.emphasis) && (
+          <div className="flex items-center gap-2.5 md:hidden">
+            <span
+              aria-hidden
+              className="flex h-3.5 w-3.5 flex-shrink-0 items-center justify-center rounded-full bg-gray-700"
+            >
+              <span className="h-1 w-1 rounded-full bg-white" />
+            </span>
+            <p className="text-sm text-gray-600">深色＋白點＝體驗課／特別場次</p>
+          </div>
+        )}
         <p className="mt-1 text-xs text-gray-500 md:text-sm">{footnote}</p>
       </div>
     </section>

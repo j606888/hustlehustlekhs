@@ -9,9 +9,9 @@ export default function NotFound() {
       <p className="text-gray-500 max-w-sm">
         你要找的頁面不存在，可能已被移除或連結有誤。
       </p>
-      <Link href="/">
-        <Button size="lg">回到首頁</Button>
-      </Link>
+      <Button asChild size="lg">
+        <Link href="/">回到首頁</Link>
+      </Button>
     </div>
   );
 }
