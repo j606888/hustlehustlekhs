@@ -5,12 +5,19 @@ import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { LINKS } from '@/constants/links';
 import { getVenue } from '@/data/venues';
-import { getSessionStatus, THEMES, type SessionStatus, type Track } from './data';
+import {
+  getSessionStatus,
+  MONTH,
+  SHOW_MONTH_EVENT,
+  THEMES,
+  type SessionStatus,
+  type ShowMonthDetail,
+  type Track,
+} from './data';
 
 export default function TrackCard({ track }: { track: Track }) {
   const theme = THEMES[track.theme];
   const venue = getVenue(track.venueSlug);
-  const weekdayEn = track.sessionLabelEn.slice(0, 3);
   // 頁面是預先產生的靜態 HTML，build 當下的日期會過期；
   // 掛載後再用瀏覽器當下時間重算「已結束」狀態，避免 hydration mismatch。
   const [now, setNow] = useState<Date | null>(null);
@@ -108,20 +115,53 @@ export default function TrackCard({ track }: { track: Track }) {
           <p className="font-bold text-[#2d3a5e]">{track.datesTitle}</p>
           <p className="text-xs text-gray-500 md:text-sm">{track.datesNote}</p>
         </div>
-        {/* 場次數量會變（3～6 堂），所以不用固定欄數的 grid：固定 6 欄時只有 3 堂
-            會把每張卡擠成 1/6 寬，note 被折成三行。改用 flex-wrap，手機一列三張，
-            桌機讓卡片長到 max-w 為止。 */}
-        <div className="mt-2 flex flex-wrap gap-2">
-          {track.dates.map((d) => (
-            <DateChip
-              key={d.label}
-              date={d}
-              status={now ? getSessionStatus(d, now) : d.upcoming ? 'upcoming' : 'active'}
-              weekdayEn={weekdayEn}
-              accentBg={theme.accentBg}
-            />
+        {/* 依月份分列：月份只寫一次，每一堂是一個圓點，只有特別場次／停課在圓點下寫字。
+            星期已經寫在上方圓章與 datesNote，這裡不再重複。 */}
+        <div className="mt-2 flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-sm">
+          {groupByMonth(track.dates).map(({ month, dates }) => (
+            <div key={month} className="flex items-start gap-3">
+              <span
+                className={cn(
+                  'w-11 flex-shrink-0 pt-3 text-[13px] font-bold md:text-sm',
+                  theme.monthText
+                )}
+              >
+                {month}月
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {dates.map((d) => (
+                  <DateDot
+                    key={d.label}
+                    date={d}
+                    status={now ? getSessionStatus(d, now) : d.upcoming ? 'upcoming' : 'active'}
+                    dotSoft={theme.dotSoft}
+                    dotStrong={theme.dotStrong}
+                    labelText={theme.monthText}
+                    weekdayZh={track.dayZh}
+                  />
+                ))}
+              </div>
+            </div>
           ))}
         </div>
+        {/* 圖例：只列這張卡實際用到的狀態 */}
+        <div className="mt-3 flex flex-wrap gap-x-3.5 gap-y-1.5 text-xs text-gray-600">
+          <LegendItem className={cn('border-[1.5px]', theme.dotSoft)} label="常態課" />
+          {track.dates.some((d) => d.note && !d.off) && (
+            <LegendItem className={theme.dotStrong} label="體驗課／特別場次" />
+          )}
+          {track.dates.some((d) => d.off) && (
+            <LegendItem className="border-[1.5px] border-dashed border-gray-500" label="停課" />
+          )}
+        </div>
+        {/* 圓點下放不下的補充說明（例如 Lambada 扣兩堂），那天過了就不顯示 */}
+        {track.dates
+          .filter((d) => d.detail && (!now || getSessionStatus(d, now) !== 'done'))
+          .map((d) => (
+            <p key={d.label} className="mt-2 text-xs text-gray-700 md:text-sm">
+              ※ {d.detail}
+            </p>
+          ))}
       </div>
 
       {/* 費用摘要 */}
@@ -129,11 +169,12 @@ export default function TrackCard({ track }: { track: Track }) {
         <span className={cn('font-bold', theme.accentText)}>
           💲 {track.priceSummary}
         </span>
+        {/* 文字連結用深一階的 monthText：accentText 太淡，小字過不了 4.5:1 */}
         <a
           href={`/courses?tab=pricing#${track.pricePlanId}`}
           className={cn(
             'text-sm font-medium underline-offset-2 hover:underline',
-            theme.accentText
+            theme.monthText
           )}
         >
           查看費用 →
@@ -143,7 +184,7 @@ export default function TrackCard({ track }: { track: Track }) {
           href={LINKS.ENROLL}
           className={cn(
             'text-sm font-medium underline-offset-2 hover:underline',
-            theme.accentText
+            theme.monthText
           )}
         >
           立即報名 →
@@ -158,7 +199,7 @@ export default function TrackCard({ track }: { track: Track }) {
           className="font-medium underline-offset-2 hover:underline"
         >
           {venue.addressFull}（{venue.shortName}）
-          <span className={cn('ml-1 whitespace-nowrap', theme.accentText)}>
+          <span className={cn('ml-1 whitespace-nowrap', theme.monthText)}>
             看地點 →
           </span>
         </Link>
@@ -167,51 +208,96 @@ export default function TrackCard({ track }: { track: Track }) {
   );
 }
 
-function DateChip({
+type SessionDate = Track['dates'][number];
+
+/** 依 label 的月份分組，保留原本順序（'11/12' → 11 月）。 */
+function groupByMonth(dates: SessionDate[]): { month: number; dates: SessionDate[] }[] {
+  const groups: { month: number; dates: SessionDate[] }[] = [];
+  for (const d of dates) {
+    const month = Number(d.label.split('/')[0]);
+    const last = groups[groups.length - 1];
+    if (last && last.month === month) last.dates.push(d);
+    else groups.push({ month, dates: [d] });
+  }
+  return groups;
+}
+
+function DateDot({
   date,
   status,
-  weekdayEn,
-  accentBg,
+  dotSoft,
+  dotStrong,
+  labelText,
+  weekdayZh,
 }: {
-  date: Track['dates'][number];
+  date: SessionDate;
   status: SessionStatus;
-  weekdayEn: string;
-  accentBg: string;
+  dotSoft: string;
+  dotStrong: string;
+  labelText: string;
+  weekdayZh: string;
 }) {
+  const [month, day] = date.label.split('/');
   const isDone = status === 'done';
-  const isUpcoming = status === 'upcoming';
-  const bar = isDone || isUpcoming ? 'bg-gray-300' : accentBg;
+  const isSpecial = !!date.note && !date.off;
 
+  // 已結束的一律灰掉（不管原本是哪一種），其餘依 停課 / 特別場次 / 常態課 上色
+  const circle = isDone
+    ? 'bg-gray-100 text-gray-400 line-through'
+    : date.off
+      ? 'border-[1.5px] border-dashed border-gray-500 text-gray-500'
+      : isSpecial
+        ? cn(dotStrong, 'text-white')
+        : cn('border-[1.5px] text-[#2d3a5e]', dotSoft);
+  const label = isDone ? '' : (date.note ?? '');
+  const srText = `${date.label}（${weekdayZh}）${
+    isDone ? '已結束' : date.off ? date.note ?? '停課' : date.note ?? '常態課'
+  }`;
+
+  // 圓點長得像按鈕，就讓它真的能點：跳到上方那個月的月曆（跟月曆格子點了跳到課表卡互相對應）
   return (
-    <div
+    <button
+      type="button"
+      onClick={() =>
+        window.dispatchEvent(
+          new CustomEvent<ShowMonthDetail>(SHOW_MONTH_EVENT, {
+            detail: { year: MONTH.year, month: Number(month) },
+          })
+        )
+      }
       className={cn(
-        'flex basis-[calc((100%-1rem)/3)] flex-col overflow-hidden rounded-xl text-center shadow-sm sm:grow sm:basis-24 sm:max-w-48',
-        (isDone || isUpcoming) && 'opacity-70'
+        'group flex w-12 cursor-pointer flex-col items-center gap-1 rounded-xl',
+        status === 'upcoming' && 'opacity-60'
       )}
     >
-      <div
+      <span
+        aria-hidden
         className={cn(
-          'py-0.5 font-poppins text-[10px] font-bold tracking-widest text-white md:text-xs',
-          bar
+          'flex h-11 w-11 items-center justify-center rounded-full font-poppins text-base font-bold transition-transform group-hover:scale-105',
+          circle
         )}
       >
-        {weekdayEn}
-      </div>
-      <div className="flex flex-1 flex-col bg-white px-1.5 py-2">
-        <span
-          className={cn(
-            'font-poppins text-base font-bold leading-tight text-[#2d3a5e] md:text-lg',
-            isDone && 'text-gray-400 line-through'
-          )}
-        >
-          {date.label}
-        </span>
-        {(isDone || date.note) && (
-          <span className="mt-0.5 text-balance break-words text-[10px] leading-tight text-gray-500 md:text-xs">
-            {isDone ? '已結束' : date.note}
-          </span>
+        {day}
+      </span>
+      <span
+        aria-hidden
+        className={cn(
+          'min-h-3 text-center text-[10px] leading-tight',
+          isSpecial ? labelText : 'text-gray-500'
         )}
-      </div>
-    </div>
+      >
+        {label}
+      </span>
+      <span className="sr-only">{srText}，看{Number(month)}月月曆</span>
+    </button>
+  );
+}
+
+function LegendItem({ className, label }: { className: string; label: string }) {
+  return (
+    <span className="flex items-center gap-1.5">
+      <span className={cn('h-3 w-3 rounded-full', className)} aria-hidden />
+      {label}
+    </span>
   );
 }

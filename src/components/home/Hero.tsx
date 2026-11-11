@@ -30,16 +30,12 @@ const Hero = ({ media }: Props) => {
           來試一次體驗課。
         </p>
         <div className="flex flex-wrap gap-4">
-          <Link href={LINKS.ENROLL}>
-            <Button size="lg" className="hover:cursor-pointer">
-              馬上報名
-            </Button>
-          </Link>
-          <Link href={LINKS.PRICING}>
-            <Button className="hover:cursor-pointer" size="lg" variant="outline">
-              了解費用
-            </Button>
-          </Link>
+          <Button asChild size="lg">
+            <Link href={LINKS.ENROLL}>馬上報名</Link>
+          </Button>
+          <Button asChild size="lg" variant="outline">
+            <Link href={LINKS.PRICING}>了解費用</Link>
+          </Button>
         </div>
       </div>
       <div className="w-full h-full">

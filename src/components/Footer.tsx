@@ -9,9 +9,10 @@ const Footer = () => {
       <div className="px-6 py-10 md:max-w-7xl md:mx-auto">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
-          <div className="flex flex-col gap-3">
+          {/* 手機上 logo 與標語一起置中；桌機是四欄並排，跟其他欄一樣靠左 */}
+          <div className="flex flex-col items-center gap-3 md:items-start">
             <Image src="/logo.svg" alt="HustleHustle KHS" width={340} height={56} className="brightness-0 invert w-auto h-8" />
-            <p className="text-sm text-gray-400">
+            <p className="text-center text-sm text-gray-400 md:text-left">
               高雄 Hustle・Brazilian Zouk 雙人舞教室
             </p>
           </div>

@@ -3,7 +3,7 @@
 //
 // 地址不寫在這裡：據點資料集中於 src/data/venues.ts，track 只存 venueSlug。
 //
-// 課表與價目已是實際內容（2026/10）；每個月要更新 MONTHS 與各 track 的 dates。
+// 課表與價目已是實際內容（2026/11–12）；每個月要更新 MONTHS 與各 track 的 dates。
 
 import type { VenueSlug } from '@/data/venues';
 
@@ -22,7 +22,17 @@ export interface TimeSlot {
 
 export interface SessionDate {
   label: string; // "8/5"
-  note?: string; // "體驗課" / "第一堂"
+  /**
+   * 特別場次的說明（"體驗課" / "Lambada"）。有寫就是特別場次：圓點用深色，字寫在圓點下方。
+   * 一般常態課不要寫。圓點只有約 48px 寬，請控制在 6 個字左右。
+   */
+  note?: string;
+  /**
+   * 圓點下放不下的補充說明（例如「Lambada Fast Track 19:30–22:00，扣兩堂 Zouk 課卡」）。
+   * 會列在課表卡的圖例下方，那一天過了就自動不顯示。
+   */
+  detail?: string;
+  off?: boolean; // 這週停課：虛線圓點，note 一律寫「停課」
   upcoming?: boolean; // 下一期（尚未開放/預告）場次，顯示為淡色
 }
 
@@ -88,9 +98,12 @@ export interface ThemeStyle {
   accentText: string; // 時間 / 重點文字色
   accentBg: string; // 圓章 / active chip 底色
   highlightCell: string; // 月曆 highlight 方塊底色
-  highlightCellStrong: string; // 同色系但深一階：那天除了固定課程還有體驗課／Party
+  highlightCellStrong: string; // 同色系但深一階：那天有體驗課／特別場次（跟 dotStrong 同色，月曆與課表卡一致）
   legendDot: string; // 圖例圓點
   blob: string; // 卡片裝飾色塊
+  dotSoft: string; // 課表卡場次：常態課圓點（淺底＋主色框）
+  dotStrong: string; // 課表卡場次：特別場次圓點（深底白字，要過 4.5:1 對比）
+  monthText: string; // 深一階的文字色（過 4.5:1）：課表卡月份標籤、文字連結
 }
 
 // TODO: 這三組色沿用自參考站，可依 HustleHustle KHS 的品牌調性重配。
@@ -100,9 +113,12 @@ export const THEMES: Record<ThemeKey, ThemeStyle> = {
     accentText: 'text-[#d4796e]',
     accentBg: 'bg-[#d4796e]',
     highlightCell: 'bg-[#d98b82]',
-    highlightCellStrong: 'bg-[#c2685c]',
+    highlightCellStrong: 'bg-[#a8554a]',
     legendDot: 'bg-[#d98b82]',
     blob: 'bg-[#c9bfe0]',
+    dotSoft: 'bg-[#fbe9e4] border-[#d4796e]',
+    dotStrong: 'bg-[#a8554a]',
+    monthText: 'text-[#a8554a]',
   },
   trackB: {
     pageFrom: 'bg-[#cfe0f5]',
@@ -112,15 +128,21 @@ export const THEMES: Record<ThemeKey, ThemeStyle> = {
     highlightCellStrong: 'bg-[#3a68b8]',
     legendDot: 'bg-[#5b8dd9]',
     blob: 'bg-[#c7e36a]',
+    dotSoft: 'bg-[#e6eefa] border-[#5b8dd9]',
+    dotStrong: 'bg-[#3a68b8]',
+    monthText: 'text-[#3a68b8]',
   },
   trackC: {
     pageFrom: 'bg-[#f7ead4]',
     accentText: 'text-[#d28e2a]',
     accentBg: 'bg-[#e0a23c]',
     highlightCell: 'bg-[#e0a23c]',
-    highlightCellStrong: 'bg-[#c8861f]',
+    highlightCellStrong: 'bg-[#94600f]',
     legendDot: 'bg-[#e0a23c]',
     blob: 'bg-[#f0c878]',
+    dotSoft: 'bg-[#fbf0dc] border-[#e0a23c]',
+    dotStrong: 'bg-[#94600f]',
+    monthText: 'text-[#94600f]',
   },
 };
 
@@ -130,7 +152,7 @@ export interface MonthConfig {
   titleEn: string;
   titleZh: string;
   // 日 -> { theme（決定顏色）, label（小字，\n 是刻意指定的斷行位置）, trackId（錨點目標）,
-  //          emphasis（那天除了固定課程還有體驗課／Party，方塊用深一階的顏色）}
+  //          emphasis（那天是體驗課／Party／Lambada 等特別場次，方塊用深一階的顏色＋手機上的白點）}
   highlights: Record<
     number,
     { theme: ThemeKey; label: string; trackId: string; emphasis?: boolean }
@@ -139,61 +161,18 @@ export interface MonthConfig {
   footnote: string;
 }
 
+// 月曆下方的「時間和地點」與星號備註，每個月都一樣，所以集中寫一份。
+// 某個月有特殊狀況時，該月的 legend / footnote 可以改成自己的內容。
+const TIME_AND_PLACE: MonthConfig['legend'] = [
+  { theme: 'trackA', title: 'Hustle', desc: '19:30–22:00・職人棧' },
+  { theme: 'trackB', title: 'Zouk', desc: '19:30–23:00・Social Hub' },
+];
+const FOOTNOTE = '★ 實際場次以 Instagram 公告為準';
+
 // TODO: 每個月要更新這一塊 —— 新的月份 push 到 MONTHS 後面（或替換掉過期的），
 //       highlights 的 key 是「幾號」，值決定那一格的顏色與點下去跳到哪張課表卡。
 // 陣列順序就是月曆在 /courses 課表 tab 的顯示順序（由近到遠）。
 export const MONTHS: MonthConfig[] = [
-  {
-    year: 2026,
-    month: 10,
-    titleEn: 'OCTOBER',
-    titleZh: '十月',
-    highlights: {
-      1: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
-      2: { theme: 'trackB', label: 'Zouk', trackId: 'zouk-fri' },
-      8: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
-      9: {
-        theme: 'trackB',
-        label: '體驗課\n+Party',
-        trackId: 'zouk-fri',
-        emphasis: true,
-      },
-      15: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
-      16: { theme: 'trackB', label: 'Zouk', trackId: 'zouk-fri' },
-      22: {
-        theme: 'trackA',
-        // ★ 對應下方 footnote：這一場改在 Social Hub。
-        // 格子只有約 42px 寬，塞不下場地名，細節寫在圖例與 footnote。
-        label: 'Hustle\n體驗課★',
-        trackId: 'hustle-thu',
-        emphasis: true,
-      },
-      23: { theme: 'trackB', label: 'Zouk', trackId: 'zouk-fri' },
-      24: { theme: 'trackC', label: 'Zouk\nWorkshop', trackId: 'zouk-fri' },
-      25: { theme: 'trackC', label: 'Zouk\nWorkshop', trackId: 'zouk-fri' },
-      29: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
-      30: { theme: 'trackB', label: 'Zouk', trackId: 'zouk-fri' },
-    },
-    legend: [
-      {
-        theme: 'trackA',
-        title: '週四・Hustle',
-        desc: '進階 / 中階 · 19:30–22:00・職人棧（10/22 是體驗課，改在 Social Hub）',
-      },
-      {
-        theme: 'trackB',
-        title: '週五・Zouk',
-        desc: '初階 / 進階 · 19:30–23:00・Social Hub（10/9 是體驗課，課後接 Zouk/Hustle Party）',
-      },
-      {
-        theme: 'trackC',
-        title: '10/24–10/25',
-        desc: 'Matheus & Cozyyi Workshop',
-      },
-    ],
-    footnote:
-      '★ 10/22 Hustle 體驗課改在 Social Hub 上（不在職人棧）；實際場次以 Instagram 公告為準', // TODO: 有停課／加開時記得更新
-  },
   {
     year: 2026,
     month: 11,
@@ -216,24 +195,56 @@ export const MONTHS: MonthConfig[] = [
         trackId: 'hustle-thu',
         emphasis: true,
       },
-      27: { theme: 'trackB', label: 'Lambada', trackId: 'zouk-fri' },
-      // 11/5、11/6 沒課，所以不 highlight。
-    },
-    legend: [
-      {
-        theme: 'trackA',
-        title: '週四・Hustle',
-        desc: '初中階 · 19:30–20:30・職人棧（11/26 是體驗課）',
-      },
-      {
+      // Lambada 是特別場次（不是一般 Zouk 課），所以也用深色＋白點
+      27: {
         theme: 'trackB',
-        title: '週五・Social Hub',
-        desc: '11/13 Zouk 體驗課＋Zouk/Hustle Party・11/27 Lambada Fast Track 19:30–22:00（扣兩堂 Zouk 課卡）・十一月沒有 Zouk 正式課',
+        label: 'Lambada',
+        trackId: 'zouk-fri',
+        emphasis: true,
       },
-    ],
-    footnote: '★ 11/5、11/6 沒課；十一月週五沒有 Zouk 正式課；實際場次以 Instagram 公告為準', // TODO: 有停課／加開時記得更新
+      // 11/5、11/6、11/20 沒課，所以不 highlight。
+    },
+    legend: TIME_AND_PLACE,
+    footnote: FOOTNOTE,
+  },
+  {
+    year: 2026,
+    month: 12,
+    titleEn: 'DECEMBER',
+    titleZh: '十二月',
+    highlights: {
+      3: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
+      4: { theme: 'trackB', label: 'Zouk', trackId: 'zouk-fri' },
+      10: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
+      11: {
+        theme: 'trackB',
+        label: '體驗課\n+Party',
+        trackId: 'zouk-fri',
+        emphasis: true,
+      },
+      17: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
+      // 12/18 Zouk 停課，所以不 highlight。
+      24: {
+        theme: 'trackA',
+        label: '體驗課\n+Party',
+        trackId: 'hustle-thu',
+        emphasis: true,
+      },
+      25: { theme: 'trackB', label: 'Zouk', trackId: 'zouk-fri' },
+      // 12/31 Hustle 停課，所以不 highlight。
+    },
+    legend: TIME_AND_PLACE,
+    footnote: FOOTNOTE,
   },
 ];
+
+/**
+ * 課表卡的場次圓點點下去 → 月曆切到那個月並捲回月曆。
+ * 不用瀏覽器原生的 #錨點：目標在橫向輪播裡，原生跳轉的落點不穩（會被導覽列蓋住、有時不捲），
+ * 所以圓點發這個事件，由 MonthCarousel 自己切月份、捲動。
+ */
+export const SHOW_MONTH_EVENT = 'schedule:show-month';
+export type ShowMonthDetail = { year: number; month: number };
 
 /** 目前月份（getSessionStatus 用它補上場次 label 缺少的年份）。 */
 export const MONTH: MonthConfig = MONTHS[0];
@@ -252,19 +263,20 @@ export const TRACKS: Track[] = [
     dayZh: '週四',
     slots: [
       { time: '19:30–20:30', title: 'Hustle 初中階課' },
+      // Practica＝課後練習，報名頁不列（見 TrackEnrollCard 的 classSlots）
+      { time: '20:30–22:00', title: 'Hustle Practica' },
     ],
     datesTitle: '場次',
-    datesNote: '每週四・10/22 改在 Social Hub',
+    datesNote: '每週四',
     dates: [
-      { label: '10/1' },
-      { label: '10/8' },
-      { label: '10/15' },
-      // 這一場換到 Social Hub（見 MONTHS 十月的 footnote 與 EVENTS 的 hustle-trial-1022）
-      { label: '10/22', note: '體驗課・改在 Social Hub' },
-      { label: '10/29' },
       { label: '11/12' },
       { label: '11/19' },
       { label: '11/26', note: '體驗課' },
+      { label: '12/3' },
+      { label: '12/10' },
+      { label: '12/17' },
+      { label: '12/24', note: '體驗＋Party' },
+      { label: '12/31', off: true, note: '停課' },
     ],
     venueSlug: 'zhirenzhan',
     pricePlanId: 'hustle-card',
@@ -285,16 +297,20 @@ export const TRACKS: Track[] = [
       { time: '22:00–23:00', title: '課後練習' },
     ],
     datesTitle: '場次',
-    datesNote: '每週五・十一月沒有 Zouk 正式課',
+    // 不寫「某個月沒課」這類會過期的句子：哪幾週有課看下面的圓點就知道。
+    datesNote: '每週五',
     dates: [
-      { label: '10/2' },
-      { label: '10/9', note: 'Zouk 體驗課 + Zouk/Hustle Party' },
-      { label: '10/16' },
-      { label: '10/23' },
-      { label: '10/30' },
-      // 十一月沒有 Zouk 正式課，週五只有這兩場；Lambada Fast Track（19:30–22:00）沿用這張卡，扣兩堂 Zouk 課卡。
-      { label: '11/13', note: 'Zouk 體驗課 + Zouk/Hustle Party' },
-      { label: '11/27', note: 'Lambada Fast Track・扣兩堂' },
+      // 十一月沒有 Zouk 正式課，週五只有這兩場。
+      { label: '11/13', note: '體驗＋Party' },
+      {
+        label: '11/27',
+        note: 'Lambada',
+        detail: '11/27 Lambada Fast Track 19:30–22:00，扣兩堂 Zouk 課卡',
+      },
+      { label: '12/4' },
+      { label: '12/11', note: '體驗＋Party' },
+      { label: '12/18', off: true, note: '停課' },
+      { label: '12/25' },
     ],
     venueSlug: 'social-hub',
     pricePlanId: 'zouk-card',

@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import IGIcon from '@/components/icons/IGIcon';
 import SectionHeading from '@/components/SectionHeading';
 import { Button } from '@/components/ui/button';
 import { LINKS } from '@/constants/links';
@@ -109,33 +108,25 @@ export default function VenueDetail({
       <section className="flex w-full flex-col items-center gap-3 rounded-xl bg-slate-50 px-4 py-8 text-center">
         <h2 className="text-xl font-bold md:text-2xl">想來上課？</h2>
         <p className="max-w-md text-sm text-gray-600 md:text-base">
-          不需舞伴、零基礎都可以報名。直接{' '}
+          不需舞伴、零基礎都可以報名。直接報名體驗課，也歡迎{' '}
           <Link
             href={LINKS.INSTAGRAM_DM}
             target="_blank"
             rel="noopener noreferrer"
             className="text-brand underline"
           >
-            Instagram 私訊我們
+            Instagram 私訊詢問
           </Link>
-          ，或在上課時間到教室現場體驗。
+          。
         </p>
+        {/* asChild：讓連結本身長成按鈕，不要 <a><button> 巢狀（鍵盤會停兩次） */}
         <div className="mt-2 flex flex-wrap justify-center gap-4">
-          <Link
-            href={LINKS.INSTAGRAM_DM}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button size="lg" className="hover:cursor-pointer">
-              <IGIcon className="h-6 w-6" color="#ffffff" />
-              IG 私訊報名
-            </Button>
-          </Link>
-          <Link href={LINKS.PRICING}>
-            <Button size="lg" variant="outline" className="hover:cursor-pointer">
-              了解費用
-            </Button>
-          </Link>
+          <Button asChild size="lg">
+            <Link href={LINKS.ENROLL}>報名體驗課</Link>
+          </Button>
+          <Button asChild size="lg" variant="outline">
+            <Link href={LINKS.PRICING}>了解費用</Link>
+          </Button>
         </div>
       </section>
     </div>
