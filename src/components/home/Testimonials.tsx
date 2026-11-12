@@ -60,7 +60,7 @@ const Testimonial = ({ testimonial }: { testimonial: TestimonialType }) => {
         <div
           ref={contentRef}
           className={`space-y-3 overflow-hidden text-left text-sm text-gray-700 leading-relaxed transition-[max-height] duration-300 md:text-base ${
-            expanded ? 'max-h-[200rem]' : 'max-h-48'
+            expanded ? 'max-h-[200rem]' : 'max-h-72'
           }`}
         >
           {testimonial.content.map((paragraph, index) => (
@@ -76,7 +76,8 @@ const Testimonial = ({ testimonial }: { testimonial: TestimonialType }) => {
           type="button"
           onClick={() => setExpanded((prev) => !prev)}
           aria-expanded={expanded}
-          className="mt-3 inline-flex cursor-pointer items-center gap-1 self-start text-sm font-medium text-brand hover:underline"
+          // min-h-11（44px）：手機上要好按，之前只有文字本身約 20px 高
+          className="mt-1 inline-flex min-h-11 cursor-pointer items-center gap-1 self-start text-sm font-medium text-brand hover:underline"
         >
           {expanded ? '收合' : '看更多'}
           <ChevronDown
@@ -315,17 +316,23 @@ const Testimonials = ({ testimonials }: { testimonials: TestimonialType[] }) => 
             <ChevronLeft size={20} />
           </button>
 
-          <div className="flex gap-2">
+          {/* 點點本身只有 8px，按鈕外框放大到 44×44 讓手指好按，看起來的大小不變 */}
+          <div className="flex">
             {Array.from({ length: pageCount }, (_, index) => (
               <button
                 key={index}
                 type="button"
                 onClick={() => scrollToIndex(index)}
                 aria-label={`看第 ${index + 1} 則心得`}
-                className={`h-2 rounded-full transition-all duration-300 ease-in-out cursor-pointer ${
-                  index === activeIndex ? 'bg-brand w-6' : 'bg-gray-300 w-2 hover:w-4'
-                }`}
-              />
+                aria-current={index === activeIndex}
+                className="group flex h-11 min-w-8 cursor-pointer items-center justify-center"
+              >
+                <span
+                  className={`block h-2 rounded-full transition-all duration-300 ease-in-out ${
+                    index === activeIndex ? 'bg-brand w-6' : 'bg-gray-300 w-2 group-hover:w-4'
+                  }`}
+                />
+              </button>
             ))}
           </div>
 

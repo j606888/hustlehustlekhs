@@ -14,6 +14,7 @@ export interface Testimonial {
   published: boolean;
 }
 
+// 排序：第一次跳舞的上班族放最前面（首頁主要對象），有其他舞種經驗的放後面。
 // 以下都是學員本人提供的心得，請勿自行改寫內容。
 // 照片放在 public/testimonials/ 底下，imageUrl 指過去即可。
 export const TESTIMONIALS: Testimonial[] = [
@@ -29,7 +30,7 @@ export const TESTIMONIALS: Testimonial[] = [
       'Zouk 非常講究細節。在老師細心的指導下，修正了許多跳舞的習慣，從身體控制、重心轉移到 Connection 都變得更加精準。',
       '最棒的福利是，因為 Zouk 對細緻度的要求很高，所以學到的技巧不只適用於 Zouk，連帶讓我跳其他社交舞時，也變得更加流暢與自在。',
     ],
-    sortOrder: 0,
+    sortOrder: 3,
     published: true,
   },
   {
@@ -44,7 +45,7 @@ export const TESTIMONIALS: Testimonial[] = [
       '如果你已經有學習其他舞種的經驗，我非常推薦你來認識 Zouk。Zouk 的基礎雖然只有十多招，要跳得專精、展現出質感卻大有學問。在學習過程中，我改善了許多舞蹈的基礎觀念與細節。Zouk 是一種極具流動感的舞蹈，它能展現高張力，也能歸於沉靜，甚至帶來飛翔般的體感；它更強調雙人之間的對話與連結。當你進入某種狀態時，會覺得世界瞬間安靜了下來、時間被拉長，整個人專注於當下，體驗到前所未有的自由與神奇。',
       '最後，真的很感謝我的老師暘暘與又嘉。他們對舞蹈充滿熱情、理解深刻，而且極其大方地分享所學。教學時總是給人溫暖、專業又安心的感覺，能遇到他們真的很幸運！',
     ],
-    sortOrder: 3,
+    sortOrder: 0,
     published: true,
   },
   {
@@ -74,7 +75,7 @@ export const TESTIMONIALS: Testimonial[] = [
       '原本以為跳舞是 E 人的場合，但真正接觸之後才發現比想像的豐富，是好聽的 disco 音樂，和不同人互動，團體中也有 I 人。在跳舞的學習中，從跳舞的舞步、一些基本招，到進階，都是逐步熟悉整個過程，hustlehustlekhs 的老師能把整個過程變比較容易，還有和人互動，及邀舞都是在一種健康環境。重要的是，能更享受在舞蹈中就佷棒。',
       '最有感的是從舞步，到一些基本招，到和 Follower 間連結的拿捏，和舞步能夠與歌的節奏協調，真是以前沒見過的新世界（但大家也都在互相學習）。實際上去培養興趣，和同樣興趣的人一起，及一個放鬆的環境，很值得。',
     ],
-    sortOrder: 4,
+    sortOrder: 1,
     published: true,
   },
   {
@@ -86,7 +87,7 @@ export const TESTIMONIALS: Testimonial[] = [
     content: [
       '從 Bachata 踏入 Zouk 的世界，直接轉換成最喜歡的雙人舞 😝 好喜歡音樂間跟舞伴流動不停的感覺，也太謝謝又嘉跟暘超清楚的教學方式，讓我們更清楚腳步可以在 social 中跳出優美的舞步，在這邊真的可以很有成就感 😍 拜託一定要來！',
     ],
-    sortOrder: 1,
+    sortOrder: 4,
     published: true,
   },
 ];

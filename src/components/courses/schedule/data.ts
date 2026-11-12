@@ -263,8 +263,8 @@ export const TRACKS: Track[] = [
     dayZh: '週四',
     slots: [
       { time: '19:30–20:30', title: 'Hustle 初中階課' },
-      // Practica＝課後練習，報名頁不列（見 TrackEnrollCard 的 classSlots）
-      { time: '20:30–22:00', title: 'Hustle Practica' },
+      // 課後練習報名頁不列（見 TrackEnrollCard 的 classSlots）。全站統一叫「課後練習」，不寫 Practica。
+      { time: '20:30–22:00', title: 'Hustle 課後練習' },
     ],
     datesTitle: '場次',
     datesNote: '每週四',
@@ -468,7 +468,8 @@ export const EVENTS: EnrollEvent[] = [
     startTime: '19:30',
     venueSlug: 'zhirenzhan',
     price: 300,
-    priceNote: '單堂 $300',
+    // 體驗課價格寫法統一為「早鳥 $300・現場 $400」（業主 2026/11/12 指定）
+    priceNote: '早鳥 $300・現場 $400',
     // 同類型的報名表沿用（跟 10/22 Hustle 體驗課同一張）
     enrollUrl:
       'https://docs.google.com/forms/d/e/1FAIpQLSexxiaDuhCHwDUUWwoiKAG33ZZmdr8ztHYWVaVTnnSZs32ceA/viewform',
@@ -486,7 +487,7 @@ export const EVENTS: EnrollEvent[] = [
     venueSlug: 'social-hub',
     // 以報名表為準：11/12 23:59 前報名 $300，現場 $400
     price: 300,
-    priceNote: '預約 $300（11/12 前）・現場 $400',
+    priceNote: '早鳥 $300・現場 $400',
     // 同類型的報名表沿用（跟 10/9 Zouk 體驗課同一張）
     enrollUrl:
       'https://docs.google.com/forms/d/e/1FAIpQLSfz7KIFDnDoKzfAj4qvfd1TgqypqWxiiy_5vIkc5BB2F33dyw/viewform',

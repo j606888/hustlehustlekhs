@@ -9,6 +9,11 @@ export interface Teacher {
   name: string;
   title?: string; // 職稱小字，例如「創辦人」
   imageUrl: string; // /public 下的路徑或外部 URL
+  /**
+   * 首頁圓形大頭照要對準的臉部位置（照片寬、高的比例，0–1）與放大倍數。
+   * 照片都是直式全身照，不設定的話圓框會裁到身體中間、看不到臉。
+   */
+  avatarFocus?: { x: number; y: number; zoom: number };
   instagram?: string; // IG 帳號（不含 @）
   skills: string[]; // 專長標籤
   courses: string[]; // 授課項目
@@ -27,6 +32,7 @@ export const TEACHERS: Teacher[] = [
     name: '暘暘',
     title: '創辦人',
     imageUrl: '/teachers/yangyang.jpg',
+    avatarFocus: { x: 0.42, y: 0.4, zoom: 1.4 },
     instagram: undefined,
     skills: ['Hustle', 'Brazilian Zouk'],
     courses: ['Hustle', 'Brazilian Zouk'],
@@ -43,6 +49,7 @@ export const TEACHERS: Teacher[] = [
     name: '又嘉',
     title: '創辦人',
     imageUrl: '/teachers/youjia.jpg',
+    avatarFocus: { x: 0.52, y: 0.3, zoom: 1.4 },
     instagram: undefined,
     skills: ['Hustle', 'Brazilian Zouk'],
     courses: ['Hustle', 'Brazilian Zouk'],
