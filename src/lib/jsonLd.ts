@@ -293,8 +293,8 @@ export function faqPageJsonLd(faqs: Faq[]): JsonLd {
       name: faq.question,
       acceptedAnswer: {
         '@type': 'Answer',
-        // answer 是 Markdown，剝掉連結語法只留文字
-        text: faq.answer.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1'),
+        // answer 是 Markdown，剝掉連結與粗體語法只留文字
+        text: faq.answer.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').replace(/\*\*/g, ''),
       },
     })),
   };

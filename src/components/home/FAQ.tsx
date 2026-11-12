@@ -9,6 +9,7 @@ type FAQItem = {
   id: string;
   question: string;
   answer: string; // Markdown
+  defaultOpen?: boolean;
 };
 
 const FAQItem = ({ faq, isOpen, onToggle }: {
@@ -19,8 +20,11 @@ const FAQItem = ({ faq, isOpen, onToggle }: {
   return (
     <div className="bg-white rounded-sm border border-gray-200 overflow-hidden">
       <button
+        type="button"
         className="w-full px-6 py-4 flex justify-between items-center text-left hover:cursor-pointer"
         onClick={onToggle}
+        aria-expanded={isOpen}
+        aria-controls={`faq-${faq.id}`}
       >
         <span className="text-lg font-medium text-gray-900">{faq.question}</span>
         <span className="ml-6 flex-shrink-0">
@@ -36,6 +40,7 @@ const FAQItem = ({ faq, isOpen, onToggle }: {
         </span>
       </button>
       <div
+        id={`faq-${faq.id}`}
         className={`grid transition-all duration-200 ease-in-out ${
           isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
         }`}
@@ -72,7 +77,10 @@ const FAQItem = ({ faq, isOpen, onToggle }: {
 };
 
 const FAQ = ({ faqs }: { faqs: FAQItem[] }) => {
-  const [openIds, setOpenIds] = useState<Set<string>>(new Set());
+  // 第一次來的人最在意的幾題（faq.ts 的 defaultOpen）預設展開，不用一題一題點
+  const [openIds, setOpenIds] = useState<Set<string>>(
+    () => new Set(faqs.filter((f) => f.defaultOpen).map((f) => f.id))
+  );
 
   const toggleFAQ = (id: string) => {
     setOpenIds(prev => {
@@ -91,7 +99,7 @@ const FAQ = ({ faqs }: { faqs: FAQItem[] }) => {
       <div className="max-w-4xl mx-auto px-4 md:px-6">
         <SectionHeading
           eyebrow="報名前先看這裡"
-          title="常見 Q&A"
+          title="第一次來上課，你可能會想問"
           className="mb-8"
         />
         <div className="flex flex-col gap-4">

@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react';
+import { DANCE_VIDEO_IDS } from '@/data/danceVideos';
 
 interface DanceTheme {
   pageBg: string;   // 卡片背景
@@ -55,7 +56,7 @@ const DANCE_STYLES: DanceStyle[] = [
     nameEn: 'HUSTLE',
     nameZh: '哈梭',
     origin: '源自 1970 年代的紐約 disco 舞廳',
-    youtubeId: '3gT-KXXdOsw',
+    youtubeId: DANCE_VIDEO_IDS.hustle,
     tagline: '明快、好玩，跟著 disco 節奏轉起來',
     description: [
       'Hustle 是 1970 年代從紐約 disco 場景長出來的雙人社交舞。節奏明快、旋轉多，配 disco、funk 或現在的流行音樂都很合，是那種一聽到音樂就會想動起來的舞。',
@@ -69,7 +70,7 @@ const DANCE_STYLES: DanceStyle[] = [
     nameEn: 'BRAZILIAN ZOUK',
     nameZh: '巴西祖克舞',
     origin: '源自巴西的雙人社交舞',
-    youtubeId: 'smGRd1Exxo4',
+    youtubeId: DANCE_VIDEO_IDS.zouk,
     tagline: '柔和、流動，跟著音樂自在律動',
     description: [
       'Brazilian Zouk 是源自巴西的雙人社交舞，融合 Lambada 的流動感與豐富的身體律動，發展出獨特的旋轉、波浪與身體延伸。舞蹈不只講究步伐，更重視兩個人之間的連結、引導與回應。',

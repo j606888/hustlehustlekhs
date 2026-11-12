@@ -4,6 +4,8 @@ import DanceStyles from '@/components/home/DanceStyles';
 import WhoWeAre from '@/components/home/WhoWeAre';
 import Testimonials from '@/components/home/Testimonials';
 import FAQ from '@/components/home/FAQ';
+import FirstClass from '@/components/home/FirstClass';
+import BottomCta from '@/components/home/BottomCta';
 import JsonLd from '@/components/JsonLd';
 import { getPublishedTestimonials } from '@/data/testimonials';
 import { getPublishedFaqs } from '@/data/faq';
@@ -49,17 +51,22 @@ export default function Home() {
     id: f.id,
     question: f.question,
     answer: f.answer,
+    defaultOpen: f.defaultOpen,
   }));
 
   return (
     <>
       <JsonLd data={websiteJsonLd()} />
       <JsonLd data={faqPageJsonLd(faqs)} />
+      {/* 順序照第一次來的人往下滑時心裡的問題排：
+          這是什麼 → 這兩種舞是什麼 → 第一堂課會怎樣 → 上過的人怎麼說 → 誰在教 → 細節問題 → 報名 */}
       <Hero media={HERO_MEDIA} />
       <DanceStyles />
-      <WhoWeAre />
+      <FirstClass />
       <Testimonials testimonials={testimonialsData} />
+      <WhoWeAre />
       <FAQ faqs={faqsData} />
+      <BottomCta />
     </>
   );
 }
