@@ -8,6 +8,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: { path: string; priority: number }[] = [
     { path: '/', priority: 1 },
     { path: '/courses', priority: 0.9 },
+    // 新手班頁是「高雄 學跳舞 新手」類搜尋與廣告的落地頁
+    { path: '/beginners', priority: 0.9 },
     // 報名頁是轉換的落地頁（IG bio 也指這裡），優先度與課程頁同級
     { path: '/enroll', priority: 0.9 },
     // 據點頁是「高雄 Hustle」關鍵字的落地頁，優先度拉高

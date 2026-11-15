@@ -4,18 +4,21 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Introduction from '@/components/courses/Introduction';
 import ScheduleBoard from '@/components/courses/schedule/ScheduleBoard';
 import PricingBoard from '@/components/courses/schedule/PricingBoard';
+import EventsBoard from '@/components/courses/EventsBoard';
 import SectionHeading from '@/components/SectionHeading';
 
 const TABS = [
   { label: '課表', query: 'schedule' },
   { label: '費用', query: 'pricing' },
   { label: '風格介紹', query: 'introduction' },
+  // 客座 Workshop 的完整介紹（EventsBoard）；一月月曆的 Workshop 格子會連到這裡
+  { label: '活動', query: 'events' },
 ]
 
 const DEFAULT_TAB = TABS[0].query;
 
-// 這兩個 tab 的內容有帶 id 的錨點區塊（價目方案、舞風介紹），網址帶 hash 進來要能捲過去。
-const HASH_TABS = ['pricing', 'introduction'];
+// 這幾個 tab 的內容有帶 id 的錨點區塊（價目方案、舞風介紹、每一場活動），網址帶 hash 進來要能捲過去。
+const HASH_TABS = ['pricing', 'introduction', 'events'];
 
 function tabFromSearch(search: string): string {
   const tab = new URLSearchParams(search).get('tab');
@@ -65,18 +68,17 @@ export default function CoursesContent() {
           as="h1"
           size="lg"
           eyebrow="課表・費用・風格"
-          title="高雄 Hustle / Zouk 課程資訊"
-          subtitle="高雄唯一同時教 Hustle 與 Brazilian Zouk 兩種雙人舞的教室，課表、費用與舞風介紹都在這裡"
+          title="高雄 Hustle / Zouk 課表選課"
         />
       </div>
-      <div className="flex justify-center px-3 border-b border-[#E3E3E3] md:px-6">
+      <div className="flex justify-center px-3 border-b border-ink-200 md:px-6">
         {TABS.map(tab => (
           <div
             key={tab.query}
             className={`px-4 py-4 relative hover:cursor-pointer ${tab.query === activeTab ? 'after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-brand' : ''}`}
             onClick={() => handleTabClick(tab.query)}
           >
-            <div className={`text-sm md:text-base ${tab.query === activeTab ? 'text-brand font-bold' : 'text-gray-600'}`}>{tab.label}</div>
+            <div className={`text-sm md:text-base ${tab.query === activeTab ? 'text-brand font-bold' : 'text-ink-600'}`}>{tab.label}</div>
           </div>
         ))}
       </div>
@@ -90,6 +92,9 @@ export default function CoursesContent() {
       </div>
       <div className={activeTab === 'introduction' ? undefined : 'hidden'}>
         <Introduction />
+      </div>
+      <div className={activeTab === 'events' ? undefined : 'hidden'}>
+        <EventsBoard />
       </div>
     </>
   );

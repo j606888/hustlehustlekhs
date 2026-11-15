@@ -19,10 +19,10 @@ export default function MonthOverview({ config }: { config: MonthConfig }) {
   return (
     <section className="w-full">
       {/* 頁首 */}
-      <h2 className="flex items-end gap-2 font-poppins font-bold leading-none text-[#2d3a5e]">
+      <h2 className="flex items-end gap-2 font-poppins font-bold leading-none text-heading">
         <span
           className="text-[clamp(2.25rem,11.5vw,3.75rem)] md:text-7xl"
-          style={{ textShadow: '3px 3px 0 rgba(212,121,110,0.45)' }}
+          style={{ textShadow: '3px 3px 0 color-mix(in srgb, var(--calendar-sunday) 45%, transparent)' }}
         >
           {titleEn}
         </span>
@@ -32,13 +32,13 @@ export default function MonthOverview({ config }: { config: MonthConfig }) {
       {/* 月曆 */}
       {/* ring-inset：這張卡在輪播裡的寬度等於捲動容器寬度，
           外擴的 ring 會被 overflow 裁掉（左右兩側的線會不見），所以畫在框內。 */}
-      <div className="mt-5 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-inset ring-gray-200 md:p-5">
+      <div className="mt-5 rounded-2xl bg-card p-3 shadow-sm ring-1 ring-inset ring-ink-200 md:p-5">
         <div className="grid grid-cols-7 gap-1 md:gap-2">
           {WEEKDAYS.map((w, i) => (
             <div
               key={w}
               className={`pb-1 text-center text-sm font-semibold md:text-base ${
-                i === 0 ? 'text-[#d4796e]' : 'text-gray-400'
+                i === 0 ? 'text-calendar-sunday' : 'text-ink-400'
               }`}
             >
               {w}
@@ -52,7 +52,7 @@ export default function MonthOverview({ config }: { config: MonthConfig }) {
               return (
                 <div
                   key={day}
-                  className="flex aspect-square items-center justify-center text-sm text-gray-400 md:text-base"
+                  className="flex aspect-square items-center justify-center text-sm text-ink-400 md:text-base"
                 >
                   {day}
                 </div>
@@ -66,7 +66,7 @@ export default function MonthOverview({ config }: { config: MonthConfig }) {
             return (
               <a
                 key={day}
-                href={`#${hl.trackId}`}
+                href={hl.href ?? `#${hl.trackId}`}
                 // 手機上看不到標籤文字，用 aria-label 讓讀屏軟體還是念得出那天是什麼課
                 aria-label={`${month}/${day} ${hl.label.replace(/\n/g, ' ')}`}
                 className={`flex aspect-square flex-col items-center justify-center overflow-hidden rounded-xl px-0.5 text-white shadow-sm transition-transform hover:scale-[1.04] ${cellColor}`}
@@ -80,7 +80,7 @@ export default function MonthOverview({ config }: { config: MonthConfig }) {
                     whitespace-pre-line：label 裡的換行是刻意指定的斷行位置
                     （中文可以斷在任何字之間，不指定就會出現「Hustle 體驗 / 課」）。 */}
                 {hl.emphasis && (
-                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white md:hidden" />
+                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-card md:hidden" />
                 )}
                 <span className="hidden w-full whitespace-pre-line break-words text-center text-xs leading-tight md:block">
                   {hl.label}
@@ -93,7 +93,7 @@ export default function MonthOverview({ config }: { config: MonthConfig }) {
 
       {/* 圖例 */}
       <div className="mt-5 flex flex-col gap-2.5">
-        <h3 className="text-sm font-bold text-gray-800 md:text-base">時間和地點</h3>
+        <h3 className="text-sm font-bold text-ink-800 md:text-base">時間和地點</h3>
         {legend.map((item) => {
           const theme = THEMES[item.theme];
           return (
@@ -102,8 +102,8 @@ export default function MonthOverview({ config }: { config: MonthConfig }) {
                 className={`h-3.5 w-3.5 flex-shrink-0 rounded-full ${theme.legendDot}`}
               />
               <p className="text-sm md:text-base">
-                <span className="font-bold text-gray-800">{item.title}</span>
-                <span className="ml-2 text-gray-500">{item.desc}</span>
+                <span className="font-bold text-ink-800">{item.title}</span>
+                <span className="ml-2 text-ink-500">{item.desc}</span>
               </p>
             </div>
           );
@@ -114,14 +114,14 @@ export default function MonthOverview({ config }: { config: MonthConfig }) {
           <div className="flex items-center gap-2.5 md:hidden">
             <span
               aria-hidden
-              className="flex h-3.5 w-3.5 flex-shrink-0 items-center justify-center rounded-full bg-gray-700"
+              className="flex h-3.5 w-3.5 flex-shrink-0 items-center justify-center rounded-full bg-ink-700"
             >
-              <span className="h-1 w-1 rounded-full bg-white" />
+              <span className="h-1 w-1 rounded-full bg-card" />
             </span>
-            <p className="text-sm text-gray-600">深色＋白點＝體驗課／特別場次</p>
+            <p className="text-sm text-ink-600">深色＋白點＝體驗課／特別場次</p>
           </div>
         )}
-        <p className="mt-1 text-xs text-gray-500 md:text-sm">{footnote}</p>
+        <p className="mt-1 text-xs text-ink-500 md:text-sm">{footnote}</p>
       </div>
     </section>
   );

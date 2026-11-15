@@ -5,7 +5,7 @@ import { LINKS } from '@/constants/links';
 
 // 「第一堂課會發生什麼」：一個人來、沒跳過舞的人最怕的是未知，
 // 把當天的流程講清楚，比再多形容詞都更讓人安心。流程已跟業主確認（2026/11）。
-// 課後練習的時段要跟 schedule/data.ts 的 slots 一致。
+// 第三步刻意不寫課後練習的時間（業主要求），時間看課表就好，這裡不用跟著改。
 const STEPS = [
   {
     title: '下班直接來教室',
@@ -17,7 +17,7 @@ const STEPS = [
   },
   {
     title: '下課後留下來練習',
-    body: '週四有 Hustle 課後練習（20:30–22:00），週五有 Zouk 課後練習（22:00–23:00），剛學的動作馬上就能多練幾次。',
+    body: '週四有 Hustle 課後練習，週五有 Zouk 課後練習，剛學的動作馬上就能多練幾次。',
   },
 ];
 
@@ -34,13 +34,13 @@ const FirstClass = () => {
           {STEPS.map((step, index) => (
             <li
               key={step.title}
-              className="flex flex-col gap-2 rounded-2xl bg-white p-5 ring-1 ring-gray-200"
+              className="flex flex-col gap-2 rounded-2xl bg-card p-5 ring-1 ring-ink-200"
             >
               <span className="flex size-9 items-center justify-center rounded-full bg-brand font-poppins text-base font-bold text-white">
                 {index + 1}
               </span>
-              <h3 className="text-lg font-bold text-gray-900">{step.title}</h3>
-              <p className="text-base leading-relaxed text-gray-700">{step.body}</p>
+              <h3 className="text-lg font-bold text-ink-900">{step.title}</h3>
+              <p className="text-base leading-relaxed text-ink-700">{step.body}</p>
             </li>
           ))}
         </ol>

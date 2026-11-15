@@ -8,8 +8,8 @@ const BottomCta = () => {
   return (
     <section className="px-5 py-12 md:py-16">
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 rounded-2xl bg-brand-light px-6 py-10 text-center ring-1 ring-brand/15">
-        <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">準備好下班來動一動了嗎？</h2>
-        <p className="max-w-xl text-base text-gray-700 text-balance">
+        <h2 className="text-2xl font-bold text-ink-900 md:text-3xl">準備好下班來動一動了嗎？</h2>
+        <p className="max-w-xl text-base text-ink-700 text-balance">
           不用帶舞伴、不用有經驗，選一堂體驗課開始就好。
           因為場地大小有限，每堂課都有名額限制，建議先報名預約。
         </p>

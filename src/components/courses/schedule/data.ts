@@ -18,6 +18,11 @@ export type SessionStatus = 'done' | 'active' | 'upcoming';
 export interface TimeSlot {
   time: string; // "19:30–20:30"（注意是 en dash「–」，jsonLd 的營業時間靠它切字串）
   title: string; // "Hustle Lv1"
+  /**
+   * 時段旁的小標籤，給「還沒開始的班」用，例如 '12/3 開課'。
+   * 課表卡與據點頁會顯示成一個小 chip；開課後記得把這行刪掉。
+   */
+  note?: string;
 }
 
 export interface SessionDate {
@@ -88,6 +93,20 @@ export interface Track {
    * 目前兩條 track 共用同一張 Google 表單，之後要分開收就各自換掉這一行。
    */
   enrollUrl: string;
+  /**
+   * 這條線的體驗課預設資料。dates 裡 note 含「體驗」的場次，會自動用這組資料
+   * 產生一筆體驗課（首頁「近期體驗課」、報名頁、課表圓點的報名連結都會出現），
+   * 不用再到 EVENTS 手動加一筆。某一場要不一樣（換表單、換價格、換場地），
+   * 就在 EVENTS 寫一筆同日期的體驗課，EVENTS 的那筆會優先。
+   */
+  trial: {
+    title: string;
+    note?: string;
+    startTime: string;
+    price: number;
+    priceNote: string;
+    enrollUrl: string;
+  };
 }
 
 // 每個 theme 對應一組完整字面 Tailwind class（讓 v4 JIT 掃得到），集中於此方便調色。
@@ -106,43 +125,45 @@ export interface ThemeStyle {
   monthText: string; // 深一階的文字色（過 4.5:1）：課表卡月份標籤、文字連結
 }
 
+// 實際色值在 src/app/globals.css 的 --track-a-* / --track-b-* / --track-c-*，
+// 要重配色改那裡，這裡只決定「哪個欄位用哪個角色」。
 // TODO: 這三組色沿用自參考站，可依 HustleHustle KHS 的品牌調性重配。
 export const THEMES: Record<ThemeKey, ThemeStyle> = {
   trackA: {
-    pageFrom: 'bg-[#f5e7d8]',
-    accentText: 'text-[#d4796e]',
-    accentBg: 'bg-[#d4796e]',
-    highlightCell: 'bg-[#d98b82]',
-    highlightCellStrong: 'bg-[#a8554a]',
-    legendDot: 'bg-[#d98b82]',
-    blob: 'bg-[#c9bfe0]',
-    dotSoft: 'bg-[#fbe9e4] border-[#d4796e]',
-    dotStrong: 'bg-[#a8554a]',
-    monthText: 'text-[#a8554a]',
+    pageFrom: 'bg-track-a-page',
+    accentText: 'text-track-a-accent-text',
+    accentBg: 'bg-track-a-accent',
+    highlightCell: 'bg-track-a-cell',
+    highlightCellStrong: 'bg-track-a-strong',
+    legendDot: 'bg-track-a-cell',
+    blob: 'bg-track-a-blob',
+    dotSoft: 'bg-track-a-soft border-track-a-accent',
+    dotStrong: 'bg-track-a-strong',
+    monthText: 'text-track-a-strong',
   },
   trackB: {
-    pageFrom: 'bg-[#cfe0f5]',
-    accentText: 'text-[#4d7fc4]',
-    accentBg: 'bg-[#5b8dd9]',
-    highlightCell: 'bg-[#5b8dd9]',
-    highlightCellStrong: 'bg-[#3a68b8]',
-    legendDot: 'bg-[#5b8dd9]',
-    blob: 'bg-[#c7e36a]',
-    dotSoft: 'bg-[#e6eefa] border-[#5b8dd9]',
-    dotStrong: 'bg-[#3a68b8]',
-    monthText: 'text-[#3a68b8]',
+    pageFrom: 'bg-track-b-page',
+    accentText: 'text-track-b-accent-text',
+    accentBg: 'bg-track-b-accent',
+    highlightCell: 'bg-track-b-cell',
+    highlightCellStrong: 'bg-track-b-strong',
+    legendDot: 'bg-track-b-cell',
+    blob: 'bg-track-b-blob',
+    dotSoft: 'bg-track-b-soft border-track-b-accent',
+    dotStrong: 'bg-track-b-strong',
+    monthText: 'text-track-b-strong',
   },
   trackC: {
-    pageFrom: 'bg-[#f7ead4]',
-    accentText: 'text-[#d28e2a]',
-    accentBg: 'bg-[#e0a23c]',
-    highlightCell: 'bg-[#e0a23c]',
-    highlightCellStrong: 'bg-[#94600f]',
-    legendDot: 'bg-[#e0a23c]',
-    blob: 'bg-[#f0c878]',
-    dotSoft: 'bg-[#fbf0dc] border-[#e0a23c]',
-    dotStrong: 'bg-[#94600f]',
-    monthText: 'text-[#94600f]',
+    pageFrom: 'bg-track-c-page',
+    accentText: 'text-track-c-accent-text',
+    accentBg: 'bg-track-c-accent',
+    highlightCell: 'bg-track-c-cell',
+    highlightCellStrong: 'bg-track-c-strong',
+    legendDot: 'bg-track-c-cell',
+    blob: 'bg-track-c-blob',
+    dotSoft: 'bg-track-c-soft border-track-c-accent',
+    dotStrong: 'bg-track-c-strong',
+    monthText: 'text-track-c-strong',
   },
 };
 
@@ -152,10 +173,11 @@ export interface MonthConfig {
   titleEn: string;
   titleZh: string;
   // 日 -> { theme（決定顏色）, label（小字，\n 是刻意指定的斷行位置）, trackId（錨點目標）,
+  //          href（不是常態課的日子，例如 Workshop，點下去要去別的地方時用，優先於 trackId）,
   //          emphasis（那天是體驗課／Party／Lambada 等特別場次，方塊用深一階的顏色＋手機上的白點）}
   highlights: Record<
     number,
-    { theme: ThemeKey; label: string; trackId: string; emphasis?: boolean }
+    { theme: ThemeKey; label: string; trackId?: string; href?: string; emphasis?: boolean }
   >;
   legend: { theme: ThemeKey; title: string; desc: string }[];
   footnote: string;
@@ -191,7 +213,7 @@ export const MONTHS: MonthConfig[] = [
       19: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
       26: {
         theme: 'trackA',
-        label: 'Hustle\n體驗課',
+        label: '體驗課\n+Party',
         trackId: 'hustle-thu',
         emphasis: true,
       },
@@ -236,6 +258,35 @@ export const MONTHS: MonthConfig[] = [
     legend: TIME_AND_PLACE,
     footnote: FOOTNOTE,
   },
+  {
+    year: 2027,
+    month: 1,
+    titleEn: 'JANUARY',
+    titleZh: '一月',
+    // TODO: 一月的常態課日期還沒排，排好後把 Hustle / Zouk 的日子加進 highlights，
+    //       並拿掉 footnote 裡「確認後更新」那句。
+    // 1/23–24 Olga & Fernando 台南 Zouk Weekender：用 trackC（金色）跟常態課的藍、粉分開，
+    // 點下去到「活動」分頁看完整資訊（EVENTS 的 id 要跟這裡的錨點一致）。
+    highlights: {
+      23: {
+        theme: 'trackC',
+        label: 'Zouk\nWorkshop',
+        href: '/courses?tab=events#zouk-atoms-tainan-0123',
+        emphasis: true,
+      },
+      24: {
+        theme: 'trackC',
+        label: 'Zouk\nWorkshop',
+        href: '/courses?tab=events#zouk-atoms-tainan-0123',
+        emphasis: true,
+      },
+    },
+    legend: [
+      ...TIME_AND_PLACE,
+      { theme: 'trackC', title: 'Workshop', desc: '1/23–24・台南 Zouk Weekender' },
+    ],
+    footnote: '★ 一月常態課日期確認後更新・實際場次以 Instagram 公告為準',
+  },
 ];
 
 /**
@@ -262,16 +313,19 @@ export const TRACKS: Track[] = [
     sessionLabelEn: 'THURSDAY',
     dayZh: '週四',
     slots: [
-      { time: '19:30–20:30', title: 'Hustle 初中階課' },
-      // 課後練習報名頁不列（見 TrackEnrollCard 的 classSlots）。全站統一叫「課後練習」，不寫 Practica。
-      { time: '20:30–22:00', title: 'Hustle 課後練習' },
+      { time: '19:30–20:30', title: 'Hustle 中階班' },
+      // 新手班 12/3 才開，11 月週四只有中階班。開課後把 note 刪掉。
+      // 新手班頁的資料在 src/data/beginners.ts，時間要跟這裡一致。
+      { time: '20:30–21:30', title: 'Hustle 新手班', note: '12/3 開課' },
+      // 課後練習報名頁不列（見 TrackEnrollCard 的 classSlots）。全站統一叫「課後練習」，不寫 Practica，也不加舞種名。
+      { time: '21:30–22:00', title: '課後練習' },
     ],
     datesTitle: '場次',
     datesNote: '每週四',
     dates: [
       { label: '11/12' },
       { label: '11/19' },
-      { label: '11/26', note: '體驗課' },
+      { label: '11/26', note: '體驗課+Party' },
       { label: '12/3' },
       { label: '12/10' },
       { label: '12/17' },
@@ -280,8 +334,18 @@ export const TRACKS: Track[] = [
     ],
     venueSlug: 'zhirenzhan',
     pricePlanId: 'hustle-card',
-    priceSummary: '課卡制・單堂 $450・8 堂 $3200',
+    priceSummary: '課卡制・單堂 $450・4 堂 $1700・8 堂 $3200',
     enrollUrl: 'https://forms.gle/SYm2SMxnT8PoEjFr5',
+    trial: {
+      title: 'Hustle 體驗課 ＋ Party',
+      note: '課後接 Party，可以留下來看大家跳，也可以自己下場',
+      startTime: '19:30',
+      price: 300,
+      priceNote: '早鳥 $300・現場 $400',
+      // 沿用 10/22、11/26 Hustle 體驗課同一張報名表
+      enrollUrl:
+        'https://docs.google.com/forms/d/e/1FAIpQLSexxiaDuhCHwDUUWwoiKAG33ZZmdr8ztHYWVaVTnnSZs32ceA/viewform',
+    },
   },
   {
     id: 'zouk-fri',
@@ -292,7 +356,8 @@ export const TRACKS: Track[] = [
     sessionLabelEn: 'FRIDAY',
     dayZh: '週五',
     slots: [
-      { time: '19:30–20:30', title: 'Zouk 初階班' },
+      // 11 月沒有 Zouk 正式課，新手班 12/4 開。開課後把 note 刪掉。
+      { time: '19:30–20:30', title: 'Zouk 新手班', note: '12/4 開課' },
       { time: '20:45–21:45', title: 'Zouk 進階班' },
       { time: '22:00–23:00', title: '課後練習' },
     ],
@@ -314,8 +379,18 @@ export const TRACKS: Track[] = [
     ],
     venueSlug: 'social-hub',
     pricePlanId: 'zouk-card',
-    priceSummary: '課卡制・單堂 $450・8 堂 $3200',
+    priceSummary: '課卡制・單堂 $450・4 堂 $1700・8 堂 $3200',
     enrollUrl: 'https://forms.gle/SYm2SMxnT8PoEjFr5',
+    trial: {
+      title: 'Zouk 體驗課 ＋ Zouk / Hustle Party',
+      note: '課後直接接派對，可以留下來看大家跳，也可以自己下場',
+      startTime: '19:30',
+      price: 300,
+      priceNote: '早鳥 $300・現場 $400',
+      // 沿用 10/9、11/13 Zouk 體驗課同一張報名表
+      enrollUrl:
+        'https://docs.google.com/forms/d/e/1FAIpQLSfz7KIFDnDoKzfAj4qvfd1TgqypqWxiiy_5vIkc5BB2F33dyw/viewform',
+    },
   },
 ];
 
@@ -492,7 +567,89 @@ export const EVENTS: EnrollEvent[] = [
     enrollUrl:
       'https://docs.google.com/forms/d/e/1FAIpQLSfz7KIFDnDoKzfAj4qvfd1TgqypqWxiiy_5vIkc5BB2F33dyw/viewform',
   },
+  {
+    // 課程資訊頁「活動」分頁的完整介紹在 src/data/workshops.ts（用同一個 id 對應）；
+    // 一月月曆 1/23、1/24 的格子也連到這個 id。
+    id: 'zouk-atoms-tainan-0123',
+    kind: 'workshop',
+    theme: 'trackB',
+    danceStyle: 'Brazilian Zouk',
+    title: 'Olga & Fernando Tainan Zouk Weekender',
+    note: '外師 Olga & Fernando・兩天工作坊＋晚上派對・台南 Baila\'more 舞蹈教室',
+    year: 2027,
+    dateLabel: '1/23',
+    endDateLabel: '1/24',
+    weekdayEn: 'SAT',
+    // 場地在台南的合作教室，不是我們的據點，所以不填 venueSlug（也就不輸出 Event 結構化資料，
+    // 避免 Google 把台南的地址當成我們的教室）。
+    price: 3200,
+    // TODO: 12/31 早鳥結束後改成「Full Pass $3600・單日 $2200」（活動分頁的方案卡會自動切換，這行要手動改）
+    priceNote: '早鳥 Full Pass $3200・單日 $2000（12/31 前）',
+    enrollUrl: 'https://sd-event.vercel.app/e/uwhs0v7w',
+  },
 ];
+
+const WEEKDAY_EN_SHORT: Record<string, string> = {
+  SUNDAY: 'SUN',
+  MONDAY: 'MON',
+  TUESDAY: 'TUE',
+  WEDNESDAY: 'WED',
+  THURSDAY: 'THU',
+  FRIDAY: 'FRI',
+  SATURDAY: 'SAT',
+};
+
+function isTrialDate(date: SessionDate): boolean {
+  return !date.off && !!date.note?.includes('體驗');
+}
+
+/** 某條線某一天的體驗課：EVENTS 有手寫的那筆就用它，沒有就用 Track.trial 自動產生。 */
+function trialFor(track: Track, date: SessionDate): EnrollEvent {
+  const manual = EVENTS.find(
+    (e) => e.kind === 'trial' && e.theme === track.theme && e.dateLabel === date.label
+  );
+  if (manual) return manual;
+  const [month, day] = date.label.split('/');
+  return {
+    id: `${track.id}-trial-${month}${day?.padStart(2, '0')}`,
+    kind: 'trial',
+    theme: track.theme === 'trackB' ? 'trackB' : 'trackA',
+    danceStyle: track.danceStyle,
+    title: track.trial.title,
+    note: track.trial.note,
+    dateLabel: date.label,
+    weekdayEn: WEEKDAY_EN_SHORT[track.sessionLabelEn] ?? track.sessionLabelEn.slice(0, 3),
+    startTime: track.trial.startTime,
+    venueSlug: track.venueSlug,
+    price: track.trial.price,
+    priceNote: track.trial.priceNote,
+    enrollUrl: track.trial.enrollUrl,
+  };
+}
+
+/**
+ * EVENTS ＋ 課表上標了「體驗」但 EVENTS 沒寫的場次。
+ * 首頁、報名頁、結構化資料都讀這個，課表加一個體驗課日期，其他地方就自動同步。
+ */
+export const ALL_EVENTS: EnrollEvent[] = [
+  ...EVENTS,
+  ...TRACKS.flatMap((track) =>
+    track.dates
+      .filter(isTrialDate)
+      .map((date) => trialFor(track, date))
+      .filter((event) => !EVENTS.includes(event))
+  ),
+];
+
+/**
+ * 課表卡的日期圓點點下去要去的報名表：體驗課那天 → 體驗課表單，
+ * 一般上課日 → 常態課卡表單，停課 → 沒有連結。
+ */
+export function getDateEnrollUrl(track: Track, date: SessionDate): string | null {
+  if (date.off) return null;
+  if (isTrialDate(date)) return trialFor(track, date).enrollUrl || null;
+  return track.enrollUrl || null;
+}
 
 /** 活動的年份：沒寫就用目前月份的年份。 */
 export function getEventYear(event: EnrollEvent): number {
@@ -510,7 +667,7 @@ export function getUpcomingEvents(
   kind: EventKind,
   now: Date = new Date()
 ): EnrollEvent[] {
-  return EVENTS.filter((event) => {
+  return ALL_EVENTS.filter((event) => {
     if (event.kind !== kind) return false;
     if (!event.enrollUrl) return false;
     const lastDay = event.endDateLabel ?? event.dateLabel;
@@ -569,10 +726,12 @@ export const PRICE_PLANS: PricePlan[] = [
         title: 'Hustle 課卡',
         subtitle: '適用週四職人棧的 Hustle 課程',
         courses: [
-          { name: 'Hustle 初中階課', theme: 'trackA' },
+          { name: 'Hustle 中階班', theme: 'trackA' },
+          { name: 'Hustle 新手班', theme: 'trackA' },
         ],
         options: [
           { name: '單堂', price: 450 },
+          { name: '4 堂課卡', price: 1700 },
           { name: '8 堂課卡', price: 3200 },
         ],
       },
@@ -588,11 +747,12 @@ export const PRICE_PLANS: PricePlan[] = [
         title: 'Zouk 課卡',
         subtitle: '適用週五 Social Hub 的 Zouk 課程',
         courses: [
-          { name: 'Zouk 初階班', theme: 'trackB' },
+          { name: 'Zouk 新手班', theme: 'trackB' },
           { name: 'Zouk 進階班', theme: 'trackB' },
         ],
         options: [
           { name: '單堂', price: 450 },
+          { name: '4 堂課卡', price: 1700 },
           { name: '8 堂課卡', price: 3200 },
         ],
       },

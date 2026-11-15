@@ -1,22 +1,37 @@
 import type { Metadata, Viewport } from "next";
-import { Roboto, Poppins } from "next/font/google";
+import { Bebas_Neue, Noto_Sans_TC, Poppins } from "next/font/google";
 import { Analytics } from '@vercel/analytics/next';
 import JsonLd from '@/components/JsonLd';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_NAME_SERP, SITE_URL } from '@/constants/site';
 import { organizationJsonLd } from '@/lib/jsonLd';
 import "./globals.css";
 
-const roboto = Roboto({
-  weight: ['300', '400', '500', '700'],
+// 中文字體：思源黑體（Noto Sans TC，SIL OFL，可商用）。沒有指定中文字體時，
+// 每台裝置會用自己內建的字（蘋方／微軟正黑體…），同一頁在不同手機上長得不一樣。
+// 英文與數字由 Poppins 負責（它排在字體清單前面），中文字才落到這裡。
+// CJK 字體沒有可預載的 subset，所以 preload: false；Google Fonts 會依頁面用到的字
+// 分塊下載，不會整套幾 MB 一次載入。
+const notoSansTC = Noto_Sans_TC({
+  weight: ['400', '500', '700', '900'],
   subsets: ['latin'],
-  variable: '--font-roboto',
+  variable: '--font-noto-tc',
   display: 'swap',
+  preload: false,
 });
 
 const poppins = Poppins({
   weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
   variable: '--font-poppins',
+  display: 'swap',
+});
+
+// 英文展示字：呼應 IG 海報上 HUSTLE／ZOUK 的瘦長粗體。只用在照片上的大字（.font-display），
+// 不要拿來排內文或中文。
+const bebasNeue = Bebas_Neue({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-bebas',
   display: 'swap',
 });
 
@@ -61,7 +76,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-TW">
-      <body className={`${roboto.variable} ${poppins.variable} font-poppins antialiased`}>
+      <body className={`${notoSansTC.variable} ${poppins.variable} ${bebasNeue.variable} font-poppins antialiased`}>
         <JsonLd data={organizationJsonLd()} />
         {children}
         <Analytics />

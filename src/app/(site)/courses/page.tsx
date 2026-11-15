@@ -13,14 +13,14 @@ import { breadcrumbJsonLd, courseJsonLd } from '@/lib/jsonLd';
 // CoursesContent 也因此不能用 useSearchParams —— 詳見該檔案的註解。
 
 const DESCRIPTION =
-  '高雄唯一同時教 Hustle 與 Brazilian Zouk 的雙人舞課程：週四晚上在左營區職人棧上 Hustle、週五晚上在三民區 Social Hub 上 Zouk。單堂 $450、8 堂課卡 $3200，零基礎歡迎、不需舞伴。';
+  '高雄教 Hustle 與 Brazilian Zouk 的雙人舞課程：週四晚上在左營區職人棧上 Hustle、週五晚上在三民區 Social Hub 上 Zouk。單堂 $450、4 堂 $1700、8 堂 $3200，零基礎歡迎、不需舞伴。';
 
 export const metadata: Metadata = {
-  title: '課程資訊・高雄 Hustle / Zouk 雙人舞課表',
+  title: '課表選課・高雄 Hustle / Zouk 雙人舞課程',
   description: DESCRIPTION,
   alternates: { canonical: '/courses' },
   openGraph: {
-    title: '課程資訊・高雄 Hustle / Zouk 雙人舞課表 | Hustlehustlekhs',
+    title: '課表選課・高雄 Hustle / Zouk 雙人舞課程 | Hustlehustlekhs',
     description: DESCRIPTION,
     url: '/courses',
   },
@@ -34,7 +34,7 @@ export default function CoursesPage() {
           ...TRACKS.map(courseJsonLd),
           breadcrumbJsonLd([
             { name: '首頁', path: '/' },
-            { name: '課程資訊', path: '/courses' },
+            { name: '課表選課', path: '/courses' },
           ]),
         ]}
       />

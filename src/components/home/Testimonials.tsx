@@ -47,19 +47,19 @@ const Testimonial = ({ testimonial }: { testimonial: TestimonialType }) => {
             alt={testimonial.name}
             fill
             sizes="96px"
-            className="rounded-full object-cover ring-4 ring-white"
+            className="rounded-full object-cover ring-4 ring-card"
           />
         </div>
-        <h3 className="text-xl font-bold text-gray-900">{testimonial.name}</h3>
-        <p className="text-sm text-gray-500">{testimonial.title}</p>
-        <span className="mt-3 rounded-full bg-white px-3 py-1 text-xs font-medium text-brand-strong ring-1 ring-brand/15">{testimonial.danceStyle} 學員</span>
+        <h3 className="text-xl font-bold text-ink-900">{testimonial.name}</h3>
+        <p className="text-sm text-ink-500">{testimonial.title}</p>
+        <span className="mt-3 rounded-full bg-card px-3 py-1 text-xs font-medium text-brand-strong ring-1 ring-brand/15">{testimonial.danceStyle} 學員</span>
       </div>
       {/* 引號當作心得段落的起點，內文改左對齊以利長段閱讀 */}
       <Quote className="mt-6 mb-3 shrink-0 text-brand/25 fill-brand/25" size={28} />
       <div className="relative">
         <div
           ref={contentRef}
-          className={`space-y-3 overflow-hidden text-left text-sm text-gray-700 leading-relaxed transition-[max-height] duration-300 md:text-base ${
+          className={`space-y-3 overflow-hidden text-left text-sm text-ink-700 leading-relaxed transition-[max-height] duration-300 md:text-base ${
             expanded ? 'max-h-[200rem]' : 'max-h-72'
           }`}
         >
@@ -311,7 +311,7 @@ const Testimonials = ({ testimonials }: { testimonials: TestimonialType[] }) => 
             onClick={() => scrollByPage(-1)}
             disabled={atStart}
             aria-label="上一則心得"
-            className="hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full text-gray-600 ring-1 ring-gray-200 transition hover:bg-gray-50 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent md:flex"
+            className="hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full text-ink-600 ring-1 ring-ink-200 transition hover:bg-ink-50 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent md:flex"
           >
             <ChevronLeft size={20} />
           </button>
@@ -329,7 +329,7 @@ const Testimonials = ({ testimonials }: { testimonials: TestimonialType[] }) => 
               >
                 <span
                   className={`block h-2 rounded-full transition-all duration-300 ease-in-out ${
-                    index === activeIndex ? 'bg-brand w-6' : 'bg-gray-300 w-2 group-hover:w-4'
+                    index === activeIndex ? 'bg-brand w-6' : 'bg-ink-300 w-2 group-hover:w-4'
                   }`}
                 />
               </button>
@@ -341,7 +341,7 @@ const Testimonials = ({ testimonials }: { testimonials: TestimonialType[] }) => 
             onClick={() => scrollByPage(1)}
             disabled={atEnd}
             aria-label="下一則心得"
-            className="hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full text-gray-600 ring-1 ring-gray-200 transition hover:bg-gray-50 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent md:flex"
+            className="hidden h-10 w-10 cursor-pointer items-center justify-center rounded-full text-ink-600 ring-1 ring-ink-200 transition hover:bg-ink-50 disabled:cursor-default disabled:opacity-30 disabled:hover:bg-transparent md:flex"
           >
             <ChevronRight size={20} />
           </button>

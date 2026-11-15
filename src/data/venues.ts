@@ -39,10 +39,6 @@ export interface Venue {
   trackIds: string[];
 }
 
-function mapLink(query: string): string {
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
-}
-
 // TODO: geo 座標尚未填。要填的話請從 Google 地圖上該場地的位置取
 //       （右鍵 → 複製座標），填錯會讓結構化資料指錯位置，不確定就整個 geo 欄位不要加。
 export const VENUES: Venue[] = [
@@ -56,7 +52,8 @@ export const VENUES: Venue[] = [
     streetAddress: '至聖路171號2樓',
     postalCode: '813',
     addressFull: '高雄市左營區至聖路171號2樓',
-    mapLink: mapLink('高雄市左營區至聖路171號'),
+    // 業主指定的 Google 地圖分享連結（直接指到職人棧這個地點，比用地址搜尋準）
+    mapLink: 'https://maps.app.goo.gl/WdCRCNXMAqYFVCvp6',
     trackIds: ['hustle-thu'],
   },
   {
@@ -69,7 +66,8 @@ export const VENUES: Venue[] = [
     streetAddress: '大昌二路67號3樓之2',
     postalCode: '807',
     addressFull: '高雄市三民區大昌二路67號3樓之2',
-    mapLink: mapLink('高雄市三民區大昌二路67號'),
+    // 業主指定的 Google 地圖分享連結（直接指到 Social Hub 這個地點，比用地址搜尋準）
+    mapLink: 'https://maps.app.goo.gl/TADF5CutZ9nXDxXq6',
     trackIds: ['zouk-fri'],
   },
 ];

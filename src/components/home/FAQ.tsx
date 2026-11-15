@@ -18,7 +18,7 @@ const FAQItem = ({ faq, isOpen, onToggle }: {
   onToggle: () => void;
 }) => {
   return (
-    <div className="bg-white rounded-sm border border-gray-200 overflow-hidden">
+    <div className="bg-card rounded-sm border border-ink-200 overflow-hidden">
       <button
         type="button"
         className="w-full px-6 py-4 flex justify-between items-center text-left hover:cursor-pointer"
@@ -26,14 +26,14 @@ const FAQItem = ({ faq, isOpen, onToggle }: {
         aria-expanded={isOpen}
         aria-controls={`faq-${faq.id}`}
       >
-        <span className="text-lg font-medium text-gray-900">{faq.question}</span>
+        <span className="text-lg font-medium text-ink-900">{faq.question}</span>
         <span className="ml-6 flex-shrink-0">
           {isOpen ? (
-            <svg className="h-6 w-6 text-gray-500 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="h-6 w-6 text-ink-500 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
             </svg>
           ) : (
-            <svg className="h-6 w-6 text-gray-500 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="h-6 w-6 text-ink-500 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
           )}
@@ -63,7 +63,7 @@ const FAQItem = ({ faq, isOpen, onToggle }: {
                   );
                 },
                 p: ({ children }) => (
-                  <p className="text-gray-700 mb-2 last:mb-0">{children}</p>
+                  <p className="text-ink-700 mb-2 last:mb-0">{children}</p>
                 ),
               }}
             >
@@ -95,7 +95,7 @@ const FAQ = ({ faqs }: { faqs: FAQItem[] }) => {
   };
 
   return (
-    <section id="faq" className="scroll-mt-20 py-8 bg-slate-50">
+    <section id="faq" className="scroll-mt-20 py-8 bg-section">
       <div className="max-w-4xl mx-auto px-4 md:px-6">
         <SectionHeading
           eyebrow="報名前先看這裡"

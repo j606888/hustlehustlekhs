@@ -64,7 +64,8 @@ but it has been reduced to a single venue and single dance style.
   Note the schedule/introduction cards (`THEMES` in `schedule/data.ts` and `Introduction.tsx`)
   deliberately use their own hardcoded palette: they need several mutually-distinguishable
   colors, which is a different job from the brand color.
-- Fonts: Poppins (`font-poppins`) and Roboto, loaded via `next/font/google` in `layout.tsx`
+- Fonts: Poppins (`font-poppins`, Latin/digits) with Noto Sans TC as the Chinese fallback in the
+  same stack, both loaded via `next/font/google` in `layout.tsx`
 - UI primitives: shadcn/ui (`src/components/ui/`) backed by Radix UI
 - Icons: SVGs in `public/icons/`, lucide-react for inline icons
 - Analytics: `@vercel/analytics` injected in root layout

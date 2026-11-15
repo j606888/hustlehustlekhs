@@ -55,7 +55,7 @@ export default async function TeacherPage({ params }: { params: Promise<{ slug: 
           ]),
         ]}
       />
-      <Link href="/teachers" className='text-sm text-[#4B5563] underline flex items-center gap-1'>
+      <Link href="/teachers" className='text-sm text-ink-600 underline flex items-center gap-1'>
         <Image src="/icons/chevron-left.svg" alt="chevron-left" width={16} height={16} />
         返回教師列表
       </Link>
@@ -66,7 +66,7 @@ export default async function TeacherPage({ params }: { params: Promise<{ slug: 
         <div className='flex flex-col gap-1.5 md:items-center'>
           <div className='flex items-baseline gap-1'>
             <h1 className='text-2xl font-bold md:text-4xl'>{teacher.name}</h1>
-            {teacher.title && <span className='text-sm text-gray-500 font-bold md:text-xl'>({teacher.title})</span>}
+            {teacher.title && <span className='text-sm text-ink-500 font-bold md:text-xl'>({teacher.title})</span>}
           </div>
           <div className='flex flex-wrap gap-2 md:justify-center'>
             {teacher.skills.map((skill) => (
@@ -74,23 +74,23 @@ export default async function TeacherPage({ params }: { params: Promise<{ slug: 
             ))}
           </div>
           {teacher?.instagram && (
-            <Link href={`https://www.instagram.com/${teacher.instagram}`} target='_blank' rel='noopener noreferrer' className='text-sm text-[#666666] underline flex items-center gap-1 md:text-lg'>
-              <IGIcon className='w-4 h-4 md:w-6 md:h-6' color='#666666' />
+            <Link href={`https://www.instagram.com/${teacher.instagram}`} target='_blank' rel='noopener noreferrer' className='text-sm text-ink-500 underline flex items-center gap-1 md:text-lg'>
+              <IGIcon className='w-4 h-4 md:w-6 md:h-6' />
               @{teacher.instagram}
             </Link>
           )}
         </div>
       </div>
-      <div className='w-full max-w-[350px] bg-gray-100 rounded-lg p-3 md:max-w-full md:p-6'>
+      <div className='w-full max-w-[350px] bg-ink-100 rounded-lg p-3 md:max-w-full md:p-6'>
         <div className='hidden md:block text-xl font-bold mb-3'>
           關於{teacher.name}
         </div>
         {teacher.description.map((desc, index) => (
-          <p key={index} className='text-[#373737]'>{desc}</p>
+          <p key={index} className='text-ink-700'>{desc}</p>
         ))}
       </div>
       <div className='w-full max-w-[350px]'>
-        <p className='text-[#373737] mb-2 font-bold'>授課項目</p>
+        <p className='text-ink-700 mb-2 font-bold'>授課項目</p>
         <div className='flex flex-wrap gap-2'>
           {teacher.courses.map((course) => (
             <div key={course} className='text-xs text-white bg-brand px-3 py-2 rounded-md'>{course}</div>
@@ -99,7 +99,7 @@ export default async function TeacherPage({ params }: { params: Promise<{ slug: 
       </div>
       {teacher.videos.length > 0 && (
         <div className='w-full max-w-[350px]'>
-          <p className='text-[#373737] mb-2 font-bold'>舞蹈展示</p>
+          <p className='text-ink-700 mb-2 font-bold'>舞蹈展示</p>
           <div className='flex flex-wrap gap-2'>
             {teacher.videos.map((video, index) => (
               // 上傳的影片多為直式（9:16），YouTube embed 維持正方形
