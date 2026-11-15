@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { LINKS } from '@/constants/links';
 import { getVenue } from '@/data/venues';
 import {
+  getDateEnrollUrl,
   getSessionStatus,
   MONTH,
   SHOW_MONTH_EVENT,
@@ -45,11 +46,11 @@ export default function TrackCard({ track }: { track: Track }) {
         <div className="flex flex-col leading-none">
           <span
             className={cn('font-poppins text-4xl font-bold md:text-6xl', theme.accentText)}
-            style={{ textShadow: '3px 3px 0 rgba(45,58,94,0.18)' }}
+            style={{ textShadow: '3px 3px 0 color-mix(in srgb, var(--heading) 18%, transparent)' }}
           >
             {track.cityEn}
           </span>
-          <span className="mt-2 font-poppins text-2xl font-bold text-[#2d3a5e] md:text-3xl">
+          <span className="mt-2 font-poppins text-2xl font-bold text-heading md:text-3xl">
             {track.cityZh}
           </span>
         </div>
@@ -80,7 +81,7 @@ export default function TrackCard({ track }: { track: Track }) {
             {track.badge}
           </span>
           {track.badgeNote && (
-            <span className="text-xs font-medium text-gray-600 md:text-sm">
+            <span className="text-xs font-medium text-ink-600 md:text-sm">
               {track.badgeNote}
             </span>
           )}
@@ -92,7 +93,7 @@ export default function TrackCard({ track }: { track: Track }) {
         {track.slots.map((slot) => (
           <div
             key={slot.time}
-            className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3.5 shadow-sm md:gap-5 md:px-6 md:py-4"
+            className="flex items-center gap-3 rounded-2xl bg-card px-4 py-3.5 shadow-sm md:gap-5 md:px-6 md:py-4"
           >
             <span
               className={cn(
@@ -102,9 +103,20 @@ export default function TrackCard({ track }: { track: Track }) {
             >
               {slot.time}
             </span>
-            <span className="text-base font-medium text-[#2d3a5e] md:text-xl">
+            <span className="text-base font-medium text-heading md:text-xl">
               {slot.title}
             </span>
+            {/* 還沒開始的班（例如 11 月還沒開的新手班）：時段照列，旁邊標開課日。 */}
+            {slot.note && (
+              <span
+                className={cn(
+                  'ml-auto shrink-0 rounded-full px-2.5 py-1 text-xs font-bold text-white md:text-sm',
+                  theme.accentBg
+                )}
+              >
+                {slot.note}
+              </span>
+            )}
           </div>
         ))}
       </div>
@@ -112,12 +124,12 @@ export default function TrackCard({ track }: { track: Track }) {
       {/* 場次 strip */}
       <div className="relative mt-6">
         <div className="flex items-baseline gap-2">
-          <p className="font-bold text-[#2d3a5e]">{track.datesTitle}</p>
-          <p className="text-xs text-gray-500 md:text-sm">{track.datesNote}</p>
+          <p className="font-bold text-heading">{track.datesTitle}</p>
+          <p className="text-xs text-ink-500 md:text-sm">{track.datesNote}</p>
         </div>
         {/* 依月份分列：月份只寫一次，每一堂是一個圓點，只有特別場次／停課在圓點下寫字。
             星期已經寫在上方圓章與 datesNote，這裡不再重複。 */}
-        <div className="mt-2 flex flex-col gap-4 rounded-2xl bg-white p-4 shadow-sm">
+        <div className="mt-2 flex flex-col gap-4 rounded-2xl bg-card p-4 shadow-sm">
           {groupByMonth(track.dates).map(({ month, dates }) => (
             <div key={month} className="flex items-start gap-3">
               <span
@@ -138,6 +150,7 @@ export default function TrackCard({ track }: { track: Track }) {
                     dotStrong={theme.dotStrong}
                     labelText={theme.monthText}
                     weekdayZh={track.dayZh}
+                    enrollUrl={getDateEnrollUrl(track, d)}
                   />
                 ))}
               </div>
@@ -145,41 +158,32 @@ export default function TrackCard({ track }: { track: Track }) {
           ))}
         </div>
         {/* 圖例：只列這張卡實際用到的狀態 */}
-        <div className="mt-3 flex flex-wrap gap-x-3.5 gap-y-1.5 text-xs text-gray-600">
+        <div className="mt-3 flex flex-wrap gap-x-3.5 gap-y-1.5 text-xs text-ink-600">
           <LegendItem className={cn('border-[1.5px]', theme.dotSoft)} label="常態課" />
           {track.dates.some((d) => d.note && !d.off) && (
             <LegendItem className={theme.dotStrong} label="體驗課／特別場次" />
           )}
           {track.dates.some((d) => d.off) && (
-            <LegendItem className="border-[1.5px] border-dashed border-gray-500" label="停課" />
+            <LegendItem className="border-[1.5px] border-dashed border-ink-500" label="停課" />
           )}
         </div>
         {/* 圓點下放不下的補充說明（例如 Lambada 扣兩堂），那天過了就不顯示 */}
         {track.dates
           .filter((d) => d.detail && (!now || getSessionStatus(d, now) !== 'done'))
           .map((d) => (
-            <p key={d.label} className="mt-2 text-xs text-gray-700 md:text-sm">
+            <p key={d.label} className="mt-2 text-xs text-ink-700 md:text-sm">
               ※ {d.detail}
             </p>
           ))}
       </div>
 
       {/* 費用摘要 */}
-      <div className="relative mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-2xl bg-white/70 px-4 py-3">
+      <div className="relative mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-2xl bg-card/70 px-4 py-3">
         <span className={cn('font-bold', theme.accentText)}>
           💲 {track.priceSummary}
         </span>
-        {/* 文字連結用深一階的 monthText：accentText 太淡，小字過不了 4.5:1 */}
-        <a
-          href={`/courses?tab=pricing#${track.pricePlanId}`}
-          className={cn(
-            'text-sm font-medium underline-offset-2 hover:underline',
-            theme.monthText
-          )}
-        >
-          查看費用 →
-        </a>
-        {/* 看完課表想報名時要有路可走，報名連結集中在 /enroll */}
+        {/* 看完課表想報名時要有路可走，報名連結集中在 /enroll。
+            文字連結用深一階的 monthText：accentText 太淡，小字過不了 4.5:1 */}
         <Link
           href={LINKS.ENROLL}
           className={cn(
@@ -192,17 +196,20 @@ export default function TrackCard({ track }: { track: Track }) {
       </div>
 
       {/* 地點：連到據點頁該場地的錨點，順便把權重導過去 */}
-      <div className="relative mt-4 flex items-start gap-1.5 text-sm text-[#2d3a5e] md:text-base">
+      <div className="relative mt-4 flex items-start gap-1.5 text-sm text-heading md:text-base">
         <span aria-hidden>📍</span>
-        <Link
-          href={`/location#${venue.slug}`}
+        {/* 直接開 Google 地圖（業主要求），不先繞到上課地點頁 */}
+        <a
+          href={venue.mapLink}
+          target="_blank"
+          rel="noopener noreferrer"
           className="font-medium underline-offset-2 hover:underline"
         >
           {venue.addressFull}（{venue.shortName}）
           <span className={cn('ml-1 whitespace-nowrap', theme.monthText)}>
             看地點 →
           </span>
-        </Link>
+        </a>
       </div>
     </section>
   );
@@ -229,6 +236,7 @@ function DateDot({
   dotStrong,
   labelText,
   weekdayZh,
+  enrollUrl,
 }: {
   date: SessionDate;
   status: SessionStatus;
@@ -236,6 +244,7 @@ function DateDot({
   dotStrong: string;
   labelText: string;
   weekdayZh: string;
+  enrollUrl: string | null;
 }) {
   const [month, day] = date.label.split('/');
   const isDone = status === 'done';
@@ -243,33 +252,23 @@ function DateDot({
 
   // 已結束的一律灰掉（不管原本是哪一種），其餘依 停課 / 特別場次 / 常態課 上色
   const circle = isDone
-    ? 'bg-gray-100 text-gray-400 line-through'
+    ? 'bg-ink-100 text-ink-400 line-through'
     : date.off
-      ? 'border-[1.5px] border-dashed border-gray-500 text-gray-500'
+      ? 'border-[1.5px] border-dashed border-ink-500 text-ink-500'
       : isSpecial
         ? cn(dotStrong, 'text-white')
-        : cn('border-[1.5px] text-[#2d3a5e]', dotSoft);
+        : cn('border-[1.5px] text-heading', dotSoft);
   const label = isDone ? '' : (date.note ?? '');
   const srText = `${date.label}（${weekdayZh}）${
     isDone ? '已結束' : date.off ? date.note ?? '停課' : date.note ?? '常態課'
   }`;
 
-  // 圓點長得像按鈕，就讓它真的能點：跳到上方那個月的月曆（跟月曆格子點了跳到課表卡互相對應）
-  return (
-    <button
-      type="button"
-      onClick={() =>
-        window.dispatchEvent(
-          new CustomEvent<ShowMonthDetail>(SHOW_MONTH_EVENT, {
-            detail: { year: MONTH.year, month: Number(month) },
-          })
-        )
-      }
-      className={cn(
-        'group flex w-12 cursor-pointer flex-col items-center gap-1 rounded-xl',
-        status === 'upcoming' && 'opacity-60'
-      )}
-    >
+  const className = cn(
+    'group flex w-12 cursor-pointer flex-col items-center gap-1 rounded-xl',
+    status === 'upcoming' && 'opacity-60'
+  );
+  const content = (
+    <>
       <span
         aria-hidden
         className={cn(
@@ -283,11 +282,38 @@ function DateDot({
         aria-hidden
         className={cn(
           'min-h-3 text-center text-[10px] leading-tight',
-          isSpecial ? labelText : 'text-gray-500'
+          isSpecial ? labelText : 'text-ink-500'
         )}
       >
         {label}
       </span>
+    </>
+  );
+
+  // 還沒過、有報名表的場次：點了直接開那一天的報名表（體驗課 → 體驗課表單，一般課 → 課卡表單）。
+  if (enrollUrl && !isDone) {
+    return (
+      <a href={enrollUrl} target="_blank" rel="noopener noreferrer" className={className}>
+        {content}
+        <span className="sr-only">{srText}，報名（另開新視窗）</span>
+      </a>
+    );
+  }
+
+  // 已結束或停課：沒有東西可報名，點了跳到上方那個月的月曆
+  return (
+    <button
+      type="button"
+      onClick={() =>
+        window.dispatchEvent(
+          new CustomEvent<ShowMonthDetail>(SHOW_MONTH_EVENT, {
+            detail: { year: MONTH.year, month: Number(month) },
+          })
+        )
+      }
+      className={className}
+    >
+      {content}
       <span className="sr-only">{srText}，看{Number(month)}月月曆</span>
     </button>
   );

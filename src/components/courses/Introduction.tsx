@@ -28,22 +28,22 @@ interface DanceStyle {
 // class 都寫成完整字面字串，讓 Tailwind v4 JIT 掃得到。
 const THEMES: Record<'coral' | 'gold' | 'blue', DanceTheme> = {
   coral: {
-    pageBg: 'bg-[#f5e7d8]',
-    accentText: 'text-[#d4796e]',
-    accentBg: 'bg-[#d4796e]',
-    chipText: 'text-[#d4796e]',
+    pageBg: 'bg-track-a-page',
+    accentText: 'text-track-a-accent-text',
+    accentBg: 'bg-track-a-accent',
+    chipText: 'text-track-a-accent-text',
   },
   gold: {
-    pageBg: 'bg-[#f7ead4]',
-    accentText: 'text-[#d28e2a]',
-    accentBg: 'bg-[#e0a23c]',
-    chipText: 'text-[#d28e2a]',
+    pageBg: 'bg-track-c-page',
+    accentText: 'text-track-c-accent-text',
+    accentBg: 'bg-track-c-accent',
+    chipText: 'text-track-c-accent-text',
   },
   blue: {
-    pageBg: 'bg-[#cfe0f5]',
-    accentText: 'text-[#4d7fc4]',
-    accentBg: 'bg-[#5b8dd9]',
-    chipText: 'text-[#4d7fc4]',
+    pageBg: 'bg-track-b-page',
+    accentText: 'text-track-b-accent-text',
+    accentBg: 'bg-track-b-accent',
+    chipText: 'text-track-b-accent-text',
   },
 };
 
@@ -83,19 +83,19 @@ const DANCE_STYLES: DanceStyle[] = [
 
 export default function Introduction() {
   return (
-    <div className="bg-white">
+    <div className="bg-card">
       <div className="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-8 md:gap-10 md:px-6 md:py-12">
         <div className="flex flex-col gap-3">
-          <h2 className="font-poppins text-2xl font-bold text-[#2d3a5e] md:text-3xl">
-            舞蹈風格介紹｜Hustle 與 Brazilian Zouk
+          <h2 className="font-poppins text-2xl font-bold text-heading md:text-3xl">
+            舞蹈風格介紹
           </h2>
-          <p className="text-sm text-gray-600 md:text-base">
-            我們在高雄教兩種雙人舞（社交舞）：明快好轉的 Hustle，和柔和流動的 Brazilian
-            Zouk。兩種都是兩人一組、透過牽引與回應即興互動的舞蹈。
+          <p className="text-sm text-ink-600 md:text-base">
+            我們在高雄教兩種雙人舞（社交舞）：旋轉律動的 Hustle，柔和流動的 Brazilian
+            Zouk。兩種都是兩人一組，即興互動的舞蹈。
           </p>
-          <div className="flex items-start gap-3 rounded-2xl border border-[#e8c9c3] bg-[#fbeae6] px-4 py-3.5">
+          <div className="flex items-start gap-3 rounded-2xl border border-callout-border bg-callout px-4 py-3.5">
             <span className="text-xl leading-none" aria-hidden>✨</span>
-            <p className="text-sm text-[#2d3a5e] md:text-base">
+            <p className="text-sm text-heading md:text-base">
               <strong>沒有任何舞蹈經驗？</strong>沒問題——我們的課程從零開始教，不需要舞伴，第一堂課就能跳起來。
             </p>
           </div>
@@ -121,14 +121,14 @@ function DanceCard({ dance }: { dance: DanceStyle }) {
       <div className="flex flex-col leading-none">
         <span
           className={`font-poppins text-4xl font-bold md:text-6xl ${theme.accentText}`}
-          style={{ textShadow: '3px 3px 0 rgba(45,58,94,0.18)' }}
+          style={{ textShadow: '3px 3px 0 color-mix(in srgb, var(--heading) 18%, transparent)' }}
         >
           {dance.nameEn}
         </span>
-        <span className="mt-2 font-poppins text-xl font-bold text-[#2d3a5e] md:text-2xl">
+        <span className="mt-2 font-poppins text-xl font-bold text-heading md:text-2xl">
           {dance.nameZh}
         </span>
-        <span className="mt-1 text-sm text-gray-600">{dance.origin}</span>
+        <span className="mt-1 text-sm text-ink-600">{dance.origin}</span>
       </div>
 
       {/* 新手入門 badge */}
@@ -167,7 +167,7 @@ function DanceCard({ dance }: { dance: DanceStyle }) {
       </p>
       <div className="mt-3 flex flex-col gap-3">
         {dance.description.map((para, i) => (
-          <p key={i} className="text-sm leading-relaxed text-[#2d3a5e] md:text-base">
+          <p key={i} className="text-sm leading-relaxed text-heading md:text-base">
             {para}
           </p>
         ))}
@@ -175,12 +175,12 @@ function DanceCard({ dance }: { dance: DanceStyle }) {
 
       {/* 風格特色 chips */}
       <div className="mt-5 flex flex-col gap-2">
-        <p className="text-xs font-medium text-gray-500">風格特色</p>
+        <p className="text-xs font-medium text-ink-500">風格特色</p>
         <div className="flex flex-wrap gap-1.5">
           {dance.traits.map((trait) => (
             <span
               key={trait}
-              className={`rounded-full border border-current bg-white px-3 py-1 text-xs font-medium md:text-sm ${theme.chipText}`}
+              className={`rounded-full border border-current bg-card px-3 py-1 text-xs font-medium md:text-sm ${theme.chipText}`}
             >
               {trait}
             </span>

@@ -41,10 +41,8 @@ export default function LocationPage() {
       />
       <VenueDetail
         venues={venues}
-        eyebrow="高雄據點"
         title="上課地點"
-        subtitle="高雄 Hustle 與 Brazilian Zouk 的固定上課場地"
-        intro="我們是高雄唯一同時教 Hustle 與 Brazilian Zouk 的雙人舞教室，兩個場地都在高雄市區：週四的 Hustle 在左營區的職人棧，週五的 Zouk 在三民區的 Social Hub，每週定期開課。不需要舞伴、零基礎也可以直接報名，歡迎先來體驗看看。"
+        intro="我們是高雄教 Hustle 與 Brazilian Zouk 的雙人舞教室，兩個場地都在高雄市區；不需要舞伴、零基礎也可以直接報名新手班，或是先來體驗課感覺看看。"
         // TODO: 拍一張場地／入口的照片放到 public/images/venue.jpg，再把下面的 photo 打開。
         // photo={{
         //   src: '/images/venue.jpg',

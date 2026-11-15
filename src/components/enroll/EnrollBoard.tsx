@@ -34,9 +34,9 @@ export default function EnrollBoard() {
   const workshops = useUpcoming('workshop', now);
 
   return (
-    <div className="bg-white">
+    <div className="bg-card">
       <div className="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-8 md:gap-10 md:px-6 md:py-12">
-        <p className="text-base text-gray-600 md:text-lg">
+        <p className="text-base text-ink-600 md:text-lg">
           第一次來就從體驗課開始，想固定上課再選常態課卡。
         </p>
 
@@ -76,9 +76,9 @@ export default function EnrollBoard() {
           </Section>
         )}
 
-        <div className="flex items-start gap-2.5 rounded-2xl border border-gray-100 bg-gray-50 px-4 py-4">
+        <div className="flex items-start gap-2.5 rounded-2xl border border-ink-100 bg-ink-50 px-4 py-4">
           <MessageCircle className="mt-0.5 size-5 flex-shrink-0 text-brand" />
-          <p className="text-sm leading-relaxed text-gray-600">
+          <p className="text-sm leading-relaxed text-ink-600">
             表單送出後會收到 Google 表單的回覆信。
             有任何問題（要不要帶舞伴、穿什麼鞋、課卡怎麼算）先看{' '}
             <Link
@@ -108,10 +108,10 @@ function Section({
   return (
     <section className="flex flex-col gap-3">
       <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-        <h2 className="font-poppins text-xl font-bold text-[#2d3a5e] md:text-2xl">
+        <h2 className="font-poppins text-xl font-bold text-heading md:text-2xl">
           {title}
         </h2>
-        {hint && <p className="text-sm text-gray-500">{hint}</p>}
+        {hint && <p className="text-sm text-ink-500">{hint}</p>}
       </div>
       {children}
     </section>
@@ -120,7 +120,7 @@ function Section({
 
 function EmptyNote({ children }: { children: React.ReactNode }) {
   return (
-    <p className="rounded-2xl border border-dashed border-gray-200 px-4 py-5 text-sm text-gray-500">
+    <p className="rounded-2xl border border-dashed border-ink-200 px-4 py-5 text-sm text-ink-500">
       {children}
     </p>
   );

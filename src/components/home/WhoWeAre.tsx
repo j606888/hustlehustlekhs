@@ -11,14 +11,14 @@ const WhoWeAre = () => {
   const teachers = getPublishedTeachers();
 
   return (
-    <section className="py-8 bg-slate-50 md:py-16">
+    <section className="py-8 bg-section md:py-16">
       <div className="max-w-5xl px-5 mx-auto">
         <SectionHeading
           eyebrow="關於 HustleHustle KHS"
           title="帶你踏出第一步的老師與夥伴"
           className="mb-6"
         />
-        <p className="mx-auto mb-8 max-w-2xl text-center text-base text-gray-700 text-balance">
+        <p className="mx-auto mb-8 max-w-2xl text-center text-base text-ink-700 text-balance">
           我們是暘暘與又嘉，2020 年在高雄創立 HustleHustle KHS，
           一路帶著零基礎的學員跳 Hustle 與 Zouk，用最好懂的方式陪你自在跳出第一支舞。
         </p>
@@ -28,17 +28,17 @@ const WhoWeAre = () => {
             <Link
               key={teacher.slug}
               href={`/teachers/${teacher.slug}`}
-              className="group flex items-start gap-4 rounded-2xl bg-white p-5 ring-1 ring-gray-200 transition hover:ring-brand/40"
+              className="group flex items-start gap-4 rounded-2xl bg-card p-5 ring-1 ring-ink-200 transition hover:ring-brand/40"
             >
               <Avatar src={teacher.imageUrl} alt={teacher.name} focus={teacher.avatarFocus} />
               <div className="flex flex-col gap-1">
-                <p className="text-lg font-bold text-gray-900">
+                <p className="text-lg font-bold text-ink-900">
                   {teacher.name}
                   {teacher.title && (
-                    <span className="ml-2 text-sm font-medium text-gray-600">{teacher.title}</span>
+                    <span className="ml-2 text-sm font-medium text-ink-600">{teacher.title}</span>
                   )}
                 </p>
-                <p className="text-sm leading-relaxed text-gray-700">{teacher.description[0]}</p>
+                <p className="text-sm leading-relaxed text-ink-700">{teacher.description[0]}</p>
                 <span className="mt-1 text-sm font-semibold text-brand group-hover:underline">
                   認識{teacher.name} →
                 </span>
@@ -47,7 +47,7 @@ const WhoWeAre = () => {
           ))}
         </div>
 
-        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-center text-base text-gray-700 text-balance">
+        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-center text-base text-ink-700 text-balance">
           <p>
             2018 年初次接觸 Hustle，被「不需言語就能心靈相通」的默契深深打動；2020
             年成立 hustlehustlekhs，正式在高雄推廣 Hustle。2022 年在台北遇到了 Zouk，
@@ -78,7 +78,7 @@ function Avatar({
 }) {
   const width = focus.zoom * 100;
   return (
-    <div className="relative size-[88px] shrink-0 overflow-hidden rounded-full bg-gray-100">
+    <div className="relative size-[88px] shrink-0 overflow-hidden rounded-full bg-ink-100">
       <Image
         src={src}
         alt={alt}

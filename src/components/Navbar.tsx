@@ -8,7 +8,8 @@ import IGIcon from '@/components/icons/IGIcon';
 import { Button } from './ui/button';
 
 const NAV_LINKS = [
-  { name: '課程資訊', href: '/courses' },
+  { name: '零基礎新手班', href: LINKS.BEGINNERS },
+  { name: '課表選課', href: '/courses' },
   { name: '課程報名', href: LINKS.ENROLL },
   { name: '師資介紹', href: '/teachers' },
   { name: '教室資訊', href: '/location' },
@@ -40,7 +41,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-white shadow-lg z-50" ref={menuRef}>
+    <nav className="fixed top-0 left-0 right-0 bg-card shadow-lg z-50" ref={menuRef}>
       <div className="mx-auto px-4 md:px-6">
         <div className="flex justify-between h-16">
           <div className="flex items-center flex-auto">
@@ -61,14 +62,14 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
+                className="text-ink-600 hover:text-ink-900 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200"
               >
                 {link.name}
               </Link>
             ))}
             <Button asChild className="ml-2">
               <Link href={LINKS.INSTAGRAM_DM} target="_blank" rel="noopener noreferrer">
-                <IGIcon className="w-6 h-6" color="#ffffff" />
+                <IGIcon className="w-6 h-6 text-white" />
                 IG 私訊詢問
               </Link>
             </Button>
@@ -76,7 +77,7 @@ const Navbar = () => {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+              className="inline-flex items-center justify-center p-2 rounded-md text-ink-400 hover:text-ink-500 hover:bg-ink-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-ring"
               aria-expanded="false"
             >
               <Image src="/menu.svg" alt="Menu" width={24} height={24} />
@@ -95,7 +96,7 @@ const Navbar = () => {
             <Link
               key={link.name}
               href={link.href}
-              className={`block px-1 py-2 text-base border-b border-gray-100 text-gray-800`}
+              className={`block px-1 py-2 text-base border-b border-ink-100 text-ink-800`}
               onClick={() => setIsMenuOpen(false)}
             >
               {link.name}
@@ -103,7 +104,7 @@ const Navbar = () => {
           ))}
           <Button asChild className="mt-3">
             <Link href={LINKS.INSTAGRAM_DM} target="_blank" rel="noopener noreferrer">
-              <IGIcon className="w-6 h-6" color="#ffffff" />
+              <IGIcon className="w-6 h-6 text-white" />
               IG 私訊詢問
             </Link>
           </Button>

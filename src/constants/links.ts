@@ -13,6 +13,8 @@ export const LINKS = {
   THREADS: `https://www.threads.net/@${IG_HANDLE}`,
   BIO_SITE: `https://bio.site/${IG_HANDLE}`,
   COURSES: '/courses',
+  // 零基礎新手班頁。首頁「查看即將開課」與導覽列都指這裡，也適合貼在 IG 限動／廣告。
+  BEGINNERS: '/beginners',
   PRICING: '/courses?tab=pricing',
   // 報名頁。IG bio 之後就指這裡，取代 bio.site 的連結頁。
   ENROLL: '/enroll',

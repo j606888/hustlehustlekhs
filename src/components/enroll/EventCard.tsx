@@ -28,7 +28,7 @@ export default function EventCard({ event }: { event: EnrollEvent }) {
         href={`/location#${venue.slug}`}
         className={cn(
           'underline-offset-2 hover:underline',
-          event.venueChanged && 'font-bold text-[#2d3a5e] underline'
+          event.venueChanged && 'font-bold text-heading underline'
         )}
       >
         {venue.shortName}
@@ -41,13 +41,13 @@ export default function EventCard({ event }: { event: EnrollEvent }) {
   return (
     <article
       id={event.id}
-      className="flex scroll-mt-20 flex-col gap-4 rounded-3xl bg-white p-4 shadow-sm ring-1 ring-gray-200 sm:flex-row sm:items-center sm:gap-5 sm:p-5"
+      className="flex scroll-mt-20 flex-col gap-4 rounded-3xl bg-card p-4 shadow-sm ring-1 ring-ink-200 sm:flex-row sm:items-center sm:gap-5 sm:p-5"
     >
       {/* 手機：日期章與文字並排，按鈕自己一列（sm:contents 讓這層在桌機消失，
           日期章與文字就直接變成外層 flex-row 的子元素）。 */}
       <div className="flex items-start gap-4 sm:contents">
         {/* 日期章：唯一帶舞種色的區塊 */}
-        <div className="flex w-16 flex-shrink-0 flex-col overflow-hidden rounded-xl text-center shadow-sm ring-1 ring-gray-100">
+        <div className="flex w-16 flex-shrink-0 flex-col overflow-hidden rounded-xl text-center shadow-sm ring-1 ring-ink-100">
           <div
             className={cn(
               'py-0.5 font-poppins text-[10px] font-bold tracking-widest text-white',
@@ -56,12 +56,12 @@ export default function EventCard({ event }: { event: EnrollEvent }) {
           >
             {event.weekdayEn}
           </div>
-          <div className="bg-gray-50 px-1 py-1.5">
-            <div className="font-poppins text-lg font-bold leading-tight text-[#2d3a5e]">
+          <div className="bg-ink-50 px-1 py-1.5">
+            <div className="font-poppins text-lg font-bold leading-tight text-heading">
               {event.dateLabel}
             </div>
             {event.endDateLabel && (
-              <div className="font-poppins text-xs font-bold leading-tight text-gray-500">
+              <div className="font-poppins text-xs font-bold leading-tight text-ink-500">
                 –{event.endDateLabel}
               </div>
             )}
@@ -70,7 +70,7 @@ export default function EventCard({ event }: { event: EnrollEvent }) {
 
         <div className="flex flex-grow flex-col gap-1.5">
           <div className="flex flex-wrap items-center gap-1.5">
-            <span className="rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-600">
+            <span className="rounded-full bg-ink-100 px-2.5 py-1 text-xs font-medium text-ink-600">
               {KIND_LABEL[event.kind]}
             </span>
             <span
@@ -84,18 +84,18 @@ export default function EventCard({ event }: { event: EnrollEvent }) {
             {/* 場地異動刻意不用品牌色也不用舞種色：那兩色在這頁各有職責
                 （CTA、舞種），警示要跳出來就得是第三種顏色。 */}
             {event.venueChanged && (
-              <span className="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-bold text-amber-900">
+              <span className="rounded-full bg-warning-bg px-2.5 py-1 text-xs font-bold text-warning-fg">
                 場地異動
               </span>
             )}
           </div>
-          <h3 className="text-base font-bold text-[#2d3a5e] md:text-lg">
+          <h3 className="text-base font-bold text-heading md:text-lg">
             {event.title}
           </h3>
           {/* 地點、時間、價格哪一項有就顯示哪一項；三項都還沒定（客座 workshop 常
               這樣）就整行不出現，不要留「待公布」之類的佔位字。 */}
           {meta.length > 0 && (
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-ink-600">
               {meta.map((node, index) => (
                 <Fragment key={index}>
                   {index > 0 && '・'}
@@ -104,7 +104,7 @@ export default function EventCard({ event }: { event: EnrollEvent }) {
               ))}
             </p>
           )}
-          {event.note && <p className="text-sm text-gray-500">{event.note}</p>}
+          {event.note && <p className="text-sm text-ink-500">{event.note}</p>}
         </div>
       </div>
 

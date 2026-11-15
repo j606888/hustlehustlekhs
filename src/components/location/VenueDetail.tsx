@@ -12,9 +12,9 @@ import { PRICE_PLANS, type Track } from '@/components/courses/schedule/data';
 // 刻意不放 Google Maps iframe：地圖大圖會把版面推長、拖慢載入，而手機上
 // 客人真正會做的動作是「點開 Google Maps 導航」，所以只留一個標明教室名稱的連結。
 type Props = {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   /** 每個據點 + 它的課程 track（順序就是頁面上的顯示順序） */
   venues: { venue: Venue; tracks: Track[] }[];
   /** 標題下方的一段話，承載該城市的關鍵字。保持精簡。 */
@@ -49,7 +49,7 @@ export default function VenueDetail({
       />
 
       {intro && (
-        <p className="w-full text-base leading-relaxed text-gray-700">{intro}</p>
+        <p className="w-full text-base leading-relaxed text-ink-700">{intro}</p>
       )}
 
       {photo && (
@@ -65,7 +65,7 @@ export default function VenueDetail({
             />
           </div>
           {photo.caption && (
-            <p className="text-center text-sm text-gray-600">{photo.caption}</p>
+            <p className="text-center text-sm text-ink-600">{photo.caption}</p>
           )}
         </div>
       )}
@@ -92,10 +92,10 @@ export default function VenueDetail({
             {notes.map((note) => (
               <div
                 key={note.question}
-                className="rounded-xl border border-gray-200 px-4 py-4"
+                className="rounded-xl border border-ink-200 px-4 py-4"
               >
-                <dt className="font-bold text-gray-900">{note.question}</dt>
-                <dd className="mt-1.5 text-sm leading-relaxed text-gray-700 md:text-base">
+                <dt className="font-bold text-ink-900">{note.question}</dt>
+                <dd className="mt-1.5 text-sm leading-relaxed text-ink-700 md:text-base">
                   {note.answer}
                 </dd>
               </div>
@@ -105,9 +105,9 @@ export default function VenueDetail({
       )}
 
       {/* 報名 CTA */}
-      <section className="flex w-full flex-col items-center gap-3 rounded-xl bg-slate-50 px-4 py-8 text-center">
+      <section className="flex w-full flex-col items-center gap-3 rounded-xl bg-section px-4 py-8 text-center">
         <h2 className="text-xl font-bold md:text-2xl">想來上課？</h2>
-        <p className="max-w-md text-sm text-gray-600 md:text-base">
+        <p className="max-w-md text-sm text-ink-600 md:text-base">
           不需舞伴、零基礎都可以報名。直接報名體驗課，也歡迎{' '}
           <Link
             href={LINKS.INSTAGRAM_DM}
@@ -143,21 +143,21 @@ function VenueCard({ venue, tracks }: { venue: Venue; tracks: Track[] }) {
   return (
     <div
       id={venue.slug}
-      className="flex scroll-mt-20 flex-col gap-4 rounded-xl border border-gray-200 px-4 py-5"
+      className="flex scroll-mt-20 flex-col gap-4 rounded-xl border border-ink-200 px-4 py-5"
     >
       <div className="flex flex-col gap-1">
         {days && (
           <p className="text-sm font-bold text-brand">每{days}</p>
         )}
-        <h2 className="text-xl font-bold text-gray-900 md:text-2xl">{heading}</h2>
-        <address className="not-italic text-sm text-gray-700 md:text-base">
+        <h2 className="text-xl font-bold text-ink-900 md:text-2xl">{heading}</h2>
+        <address className="not-italic text-sm text-ink-700 md:text-base">
           地址：{venue.addressFull}
         </address>
         {venue.navNote && (
-          <p className="text-sm text-gray-600">{venue.navNote}</p>
+          <p className="text-sm text-ink-600">{venue.navNote}</p>
         )}
         {venue.addressNote && (
-          <p className="text-xs text-gray-500">※ {venue.addressNote}</p>
+          <p className="text-xs text-ink-500">※ {venue.addressNote}</p>
         )}
         <a
           href={venue.mapLink}
@@ -182,23 +182,28 @@ function TrackSummary({ track }: { track: Track }) {
   const plan = PRICE_PLANS.find((p) => p.id === track.pricePlanId);
 
   return (
-    <div className="flex flex-col gap-3 border-t border-gray-100 pt-4">
+    <div className="flex flex-col gap-3 border-t border-ink-100 pt-4">
       {track.badge && (
         <span className="self-start rounded-full bg-brand px-2.5 py-0.5 text-xs font-bold text-white">
           {track.badge}
         </span>
       )}
-      <ul className="flex flex-col gap-1.5 text-sm text-gray-700 md:text-base">
+      <ul className="flex flex-col gap-1.5 text-sm text-ink-700 md:text-base">
         {track.slots.map((slot) => (
           <li key={slot.time} className="flex gap-3">
             <span className="font-poppins font-bold tabular-nums text-brand">
               {slot.time}
             </span>
             <span>{slot.title}</span>
+            {slot.note && (
+              <span className="self-center rounded-full bg-ink-100 px-2 py-0.5 text-xs font-medium text-ink-600">
+                {slot.note}
+              </span>
+            )}
           </li>
         ))}
       </ul>
-      <p className="text-sm text-gray-600">
+      <p className="text-sm text-ink-600">
         💲 {track.priceSummary}
         {plan && (
           <>

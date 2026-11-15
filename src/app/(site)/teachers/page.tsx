@@ -31,7 +31,8 @@ export default function TeachersPage() {
           as='h1'
           eyebrow='認識我們團隊'
           title='師資介紹'
-          subtitle='高雄 Hustle 與 Brazilian Zouk 的教學團隊，陪你從第一步跳到舞池中央'
+          subtitle='高雄資深的雙人舞教學團隊，讓你輕鬆學會雙人舞'
+          subtitleFit='nowrap'
           size='lg'
           className='py-2 md:py-4'
         />
@@ -43,7 +44,7 @@ export default function TeachersPage() {
             <Link
               key={teacher.slug}
               href={`/teachers/${teacher.slug}`}
-              className='group flex flex-col overflow-hidden rounded-lg bg-white ring-1 ring-black/5 shadow-sm transition-shadow hover:shadow-md'
+              className='group flex flex-col overflow-hidden rounded-lg bg-card ring-1 ring-black/5 shadow-sm transition-shadow hover:shadow-md'
             >
               <div className='relative aspect-[3/4] overflow-hidden md:aspect-[2/3]'>
                 <Image
@@ -58,7 +59,7 @@ export default function TeachersPage() {
               <div className='flex flex-1 flex-col p-3 md:p-4'>
                 <h3 className='text-base font-bold leading-tight md:text-xl'>{teacher.name}</h3>
                 {teacher.title && (
-                  <p className='mt-0.5 text-xs text-gray-500 md:text-sm'>{teacher.title}</p>
+                  <p className='mt-0.5 text-xs text-ink-500 md:text-sm'>{teacher.title}</p>
                 )}
                 <div className='mt-2 flex flex-wrap gap-1.5'>
                   {teacher.courses.map((item) => (
@@ -96,7 +97,7 @@ export default function TeachersPage() {
                 </div>
                 <div className='mt-2 text-center'>
                   <h3 className='text-sm font-bold md:text-base'>{assistant.name}</h3>
-                  <p className='text-xs text-gray-500'>助教</p>
+                  <p className='text-xs text-ink-500'>助教</p>
                 </div>
               </div>
             ))}

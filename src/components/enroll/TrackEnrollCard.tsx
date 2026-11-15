@@ -16,7 +16,7 @@ export default function TrackEnrollCard({ track }: { track: Track }) {
   );
 
   return (
-    <article className="flex flex-col gap-4 rounded-3xl bg-white p-4 shadow-sm ring-1 ring-gray-200 sm:p-5">
+    <article className="flex flex-col gap-4 rounded-3xl bg-card p-4 shadow-sm ring-1 ring-ink-200 sm:p-5">
       <div className="flex flex-wrap items-center gap-2">
         <span
           className={cn(
@@ -26,7 +26,7 @@ export default function TrackEnrollCard({ track }: { track: Track }) {
         >
           {track.dayZh} {track.sessionLabelEn.slice(0, 3)}
         </span>
-        <h3 className="text-base font-bold text-[#2d3a5e] md:text-lg">
+        <h3 className="text-base font-bold text-heading md:text-lg">
           {track.danceStyle} 常態課
         </h3>
       </div>
@@ -34,13 +34,13 @@ export default function TrackEnrollCard({ track }: { track: Track }) {
       <div className="flex flex-col gap-1">
         {classSlots.map((slot) => (
           <div key={slot.time} className="flex items-baseline gap-3 text-sm">
-            <span className="font-poppins font-bold tabular-nums text-[#2d3a5e]">
+            <span className="font-poppins font-bold tabular-nums text-heading">
               {slot.time}
             </span>
-            <span className="text-gray-600">{slot.title}</span>
+            <span className="text-ink-600">{slot.title}</span>
           </div>
         ))}
-        <p className="mt-1 text-sm text-gray-600">
+        <p className="mt-1 text-sm text-ink-600">
           <Link
             href={`/location#${venue.slug}`}
             className="underline-offset-2 hover:underline"

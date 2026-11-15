@@ -40,18 +40,63 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-heading: var(--heading);
+  --color-section: var(--section);
+  --color-ink-50: var(--ink-50);
+  --color-ink-100: var(--ink-100);
+  --color-ink-200: var(--ink-200);
+  --color-ink-300: var(--ink-300);
+  --color-ink-400: var(--ink-400);
+  --color-ink-500: var(--ink-500);
+  --color-ink-600: var(--ink-600);
+  --color-ink-700: var(--ink-700);
+  --color-ink-800: var(--ink-800);
+  --color-ink-900: var(--ink-900);
+  --color-eyebrow: var(--eyebrow);
+  --color-callout: var(--callout);
+  --color-callout-border: var(--callout-border);
+  --color-note: var(--note);
+  --color-warning-bg: var(--warning-bg);
+  --color-warning-fg: var(--warning-fg);
+  --color-event-accent: var(--event-accent);
+  --color-calendar-sunday: var(--calendar-sunday);
+  --color-track-a-page: var(--track-a-page);
+  --color-track-a-accent-text: var(--track-a-accent-text);
+  --color-track-a-accent: var(--track-a-accent);
+  --color-track-a-cell: var(--track-a-cell);
+  --color-track-a-strong: var(--track-a-strong);
+  --color-track-a-blob: var(--track-a-blob);
+  --color-track-a-soft: var(--track-a-soft);
+  --color-track-b-page: var(--track-b-page);
+  --color-track-b-accent-text: var(--track-b-accent-text);
+  --color-track-b-accent: var(--track-b-accent);
+  --color-track-b-cell: var(--track-b-cell);
+  --color-track-b-strong: var(--track-b-strong);
+  --color-track-b-blob: var(--track-b-blob);
+  --color-track-b-soft: var(--track-b-soft);
+  --color-track-c-page: var(--track-c-page);
+  --color-track-c-accent-text: var(--track-c-accent-text);
+  --color-track-c-accent: var(--track-c-accent);
+  --color-track-c-cell: var(--track-c-cell);
+  --color-track-c-strong: var(--track-c-strong);
+  --color-track-c-blob: var(--track-c-blob);
+  --color-track-c-soft: var(--track-c-soft);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-body {
-  font-family: var(--font-roboto), system-ui, sans-serif;
+/* 英文／數字用 Poppins，中文落到思源黑體（Noto Sans TC）。兩條規則同一組字，
+   body 是保底，.font-poppins 是 layout 掛在 body 上、元件也會用的 class。 */
+body,
+.font-poppins {
+  font-family: var(--font-poppins), var(--font-noto-tc), system-ui, sans-serif;
 }
 
-.font-poppins {
-  font-family: var(--font-poppins), system-ui, sans-serif;
+/* 英文展示字（Bebas Neue），呼應 IG 海報的瘦長粗體，只用在照片上的大字。 */
+.font-display {
+  font-family: var(--font-bebas), var(--font-poppins), sans-serif;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -81,6 +126,68 @@ body {
   --brand-hover: color-mix(in oklab, var(--brand) 85%, black);
   /* 極淡的品牌色底，用於 outline 按鈕的 hover 背景 */
   --brand-light: color-mix(in oklab, var(--brand) 6%, white);
+
+  /* ─────────────────────────────────────────────────────────────
+     全站中性色與語意色。元件一律用這些 token（text-ink-600、text-heading、
+     bg-section、bg-track-a-accent…），不要寫死 hex 或 Tailwind 的 gray/slate 色階，
+     這樣換配色時只要改這裡。目前的值與改成 token 之前完全相同。
+     ───────────────────────────────────────────────────────────── */
+  /* 標題深色（課表、價目、活動頁的大標） */
+  --heading: #2d3a5e;
+  /* 淺色區塊底（首頁、據點頁的分段背景） */
+  --section: oklch(98.4% 0.003 247.858);
+  /* 中性色階：內文、說明、邊框、淺底。數字越大越深，用法同 Tailwind 的 gray-* */
+  --ink-50: oklch(98.5% 0.002 247.839);
+  --ink-100: oklch(96.7% 0.003 264.542);
+  --ink-200: oklch(92.8% 0.006 264.531);
+  --ink-300: oklch(87.2% 0.01 258.338);
+  --ink-400: oklch(70.7% 0.022 261.325);
+  --ink-500: oklch(55.1% 0.027 264.364);
+  --ink-600: oklch(44.6% 0.03 256.802);
+  --ink-700: oklch(37.3% 0.034 259.733);
+  --ink-800: oklch(27.8% 0.033 256.848);
+  --ink-900: oklch(21% 0.034 264.665);
+  /* 課表頁頂端的「HUSTLEHUSTLE KHS」小抬頭 */
+  --eyebrow: #c47b5a;
+  /* 課程介紹頁的提示框 */
+  --callout: #fbeae6;
+  --callout-border: #e8c9c3;
+  /* 價目表方案下方的備註列 */
+  --note: #eaf5f4;
+  /* 警示標籤（例如「場地異動」），刻意不用品牌色與舞種色 */
+  --warning-bg: oklch(96.2% 0.059 95.617);
+  --warning-fg: oklch(41.4% 0.112 45.904);
+  /* 活動頁（工作坊）的重點色 */
+  --event-accent: #3a68b8;
+  /* 月曆的「日」 */
+  --calendar-sunday: var(--track-a-accent);
+
+  /* 課表三條線的配色（THEMES，見 src/components/courses/schedule/data.ts）。
+     三組要彼此分得出來，跟品牌主色是兩件事。
+     page＝卡片底、accent-text＝重點文字、accent＝圓章/active chip、
+     cell＝月曆方塊、strong＝深一階（白字要過 4.5:1）、blob＝裝飾色塊、soft＝淺底圓點 */
+  --track-a-page: #f5e7d8;
+  --track-a-accent-text: #d4796e;
+  --track-a-accent: #d4796e;
+  --track-a-cell: #d98b82;
+  --track-a-strong: #a8554a;
+  --track-a-blob: #c9bfe0;
+  --track-a-soft: #fbe9e4;
+  --track-b-page: #cfe0f5;
+  --track-b-accent-text: #4d7fc4;
+  --track-b-accent: #5b8dd9;
+  --track-b-cell: #5b8dd9;
+  --track-b-strong: #3a68b8;
+  --track-b-blob: #c7e36a;
+  --track-b-soft: #e6eefa;
+  --track-c-page: #f7ead4;
+  --track-c-accent-text: #d28e2a;
+  --track-c-accent: #e0a23c;
+  --track-c-cell: #e0a23c;
+  --track-c-strong: #94600f;
+  --track-c-blob: #f0c878;
+  --track-c-soft: #fbf0dc;
+
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);

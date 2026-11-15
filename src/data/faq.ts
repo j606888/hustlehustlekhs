@@ -47,7 +47,7 @@ export const FAQS: Faq[] = [
     // 價格要跟 schedule/data.ts 的 priceSummary、PRICE_PLANS 一致，改價時兩邊一起改。
     id: 'course-fee',
     question: '課程費用怎麼算？',
-    answer: `常態課是課卡制：**單堂 $450、8 堂 $3200**。體驗課的價格依場次而定。完整方案請看[課程費用](${LINKS.PRICING})。`,
+    answer: `常態課是課卡制：**單堂 $450、4 堂 $1700、8 堂 $3200**。體驗課的價格依場次而定。完整方案請看[課程費用](${LINKS.PRICING})。`,
     sortOrder: 4,
     published: true,
     defaultOpen: true,
@@ -64,7 +64,7 @@ export const FAQS: Faq[] = [
     id: 'experienced',
     question: '跳過其他社交舞，可以直接上進階班嗎？',
     answer:
-      '不行喔，所有人都從初階開始。Zouk 分初階班和進階班，在初階把基礎打好之後再升上進階，練起來會更扎實。',
+      '不行喔，所有人都從新手班開始。Zouk 分新手班和進階班，在新手班把基礎打好之後再升上進階班，練起來會更扎實。',
     sortOrder: 6,
     published: true,
   },
@@ -72,7 +72,7 @@ export const FAQS: Faq[] = [
     id: 'practice-party',
     question: '除了上課，有地方練習或跳舞嗎？',
     answer:
-      '有！週四有 Hustle 課後練習（20:30–22:00），週五有 Zouk 課後練習（22:00–23:00）。體驗課當天上完課會接著辦 Party，實際場次以 Instagram 公告為準。',
+      '有！週四有 Hustle 課後練習（21:30–22:00），週五有 Zouk 課後練習（22:00–23:00）。體驗課當天上完課會接著辦 Party，實際場次以 Instagram 公告為準。',
     sortOrder: 7,
     published: true,
   },
@@ -81,7 +81,7 @@ export const FAQS: Faq[] = [
     id: 'dance-styles',
     question: '我們有教什麼舞風？',
     answer:
-      '我們有教 [Hustle](/courses?tab=introduction#hustle) 跟 [Brazilian Zouk](/courses?tab=introduction#zouk)，想了解更多可以看[課程資訊](/courses?tab=introduction)裡的風格介紹。',
+      '我們有教 [Hustle](/courses?tab=introduction#hustle) 跟 [Brazilian Zouk](/courses?tab=introduction#zouk)，想了解更多可以看[課表選課](/courses?tab=introduction)裡的風格介紹。',
     sortOrder: 8,
     published: true,
   },

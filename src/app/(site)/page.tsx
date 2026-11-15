@@ -14,7 +14,7 @@ import { SITE_NAME_SERP } from '@/constants/site';
 import { faqPageJsonLd, websiteJsonLd } from '@/lib/jsonLd';
 
 const HOME_DESCRIPTION =
-  '高雄唯一同時教 Hustle 與 Brazilian Zouk 的社交舞・雙人舞教室。週四晚上在左營區、週五晚上在三民區開課，單堂 $450，零基礎歡迎、不需舞伴即可報名。';
+  '高雄教 Hustle 與 Brazilian Zouk 的社交舞・雙人舞教室。週四晚上在左營區、週五晚上在三民區開課，單堂 $450、4 堂 $1700、8 堂 $3200，零基礎歡迎、不需舞伴即可報名。';
 
 // <title> 在中文約 30 全形字就會被 Google 截斷，所以只留搜尋量最高的幾個詞：
 // 高雄社交舞 / 高雄雙人舞 / 舞蹈教室 / Hustle / Zouk / 品牌名。
