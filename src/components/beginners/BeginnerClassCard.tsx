@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, CalendarDays, Clock, MapPin, Tag } from 'lucide-react';
+import { ArrowRight, CalendarDays, Clock, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { getVenue } from '@/data/venues';
@@ -72,26 +72,27 @@ export default function BeginnerClassCard({ item }: { item: BeginnerClass }) {
               {venue.district} {venue.shortName}
             </Link>
           </li>
-          {track && (
-            <li className="flex items-start gap-2">
-              <Tag aria-hidden className="mt-0.5 size-4 shrink-0 text-brand" />
-              <Link
-                href={`/courses?tab=pricing#${track.pricePlanId}`}
-                className="underline-offset-2 hover:underline"
-              >
-                {track.priceSummary}
-              </Link>
-            </li>
-          )}
+          {/* 課卡價格不在卡片上重複：/beginners 上方的 STEP 2 卡已經寫了 */}
         </ul>
 
         {track?.enrollUrl && (
-          <Button asChild size="lg" className="mt-auto h-12 w-full">
-            <a href={track.enrollUrl} target="_blank" rel="noopener noreferrer">
-              購買 {item.danceStyle} 課卡
-              <ArrowRight className="size-4" />
+          <div className="mt-auto flex flex-col items-center gap-2">
+            {/* 課卡單堂就能買，不用一次買整期 —— 新手最常卡在「要先付一大筆嗎」 */}
+            <p className="w-full text-sm text-ink-600">單堂就能開始，不用一次買整期。</p>
+            <Button asChild size="lg" className="h-12 w-full">
+              <a href={track.enrollUrl} target="_blank" rel="noopener noreferrer">
+                購買 {item.danceStyle} 課卡
+                <ArrowRight className="size-4" />
+              </a>
+            </Button>
+            {/* 同一頁切到「體驗課」：用原生 <a href="#trial">，BeginnerSwitcher 聽 hashchange 切換並捲過去 */}
+            <a
+              href="#trial"
+              className="text-sm font-medium text-brand underline-offset-2 hover:underline"
+            >
+              還不確定？先上一次體驗課
             </a>
-          </Button>
+          </div>
         )}
       </div>
     </article>

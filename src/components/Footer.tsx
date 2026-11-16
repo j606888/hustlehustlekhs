@@ -22,7 +22,7 @@ const Footer = () => {
           <div className="flex flex-col gap-3">
             <h3 className="text-sm font-semibold text-ink-200 uppercase tracking-wider">快速連結</h3>
             <nav className="flex flex-col gap-2 text-sm">
-              <Link href={LINKS.BEGINNERS} className="hover:text-white transition-colors">零基礎新手班</Link>
+              <Link href={LINKS.BEGINNERS} className="hover:text-white transition-colors">新手入門</Link>
               <Link href="/courses" className="hover:text-white transition-colors">課表選課</Link>
               <Link href={LINKS.ENROLL} className="hover:text-white transition-colors">課程報名</Link>
               <Link href="/teachers" className="hover:text-white transition-colors">師資介紹</Link>

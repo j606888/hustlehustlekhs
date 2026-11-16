@@ -3,6 +3,7 @@ import Link from 'next/link';
 import JsonLd from '@/components/JsonLd';
 import SectionHeading from '@/components/SectionHeading';
 import BeginnerClassCard from '@/components/beginners/BeginnerClassCard';
+import BeginnerSwitcher from '@/components/beginners/BeginnerSwitcher';
 import { Button } from '@/components/ui/button';
 import { BEGINNER_CLASSES } from '@/data/beginners';
 import { LINKS } from '@/constants/links';
@@ -31,31 +32,36 @@ export default function BeginnersPage() {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: '首頁', path: '/' },
-          { name: '零基礎新手班', path: '/beginners' },
+          { name: '新手入門', path: '/beginners' },
         ])}
       />
       <div className="w-full px-4 py-10 flex flex-col items-center md:px-6">
         <SectionHeading
           as="h1"
           size="lg"
-          eyebrow="即將開課・Level 1"
-          title="零基礎新手班"
-          subtitle="沒跳過舞、沒有舞伴都可以，從第一步開始教。"
+          eyebrow="新手入門"
+          title="體驗課與零基礎新手班"
+          subtitle="沒跳過舞、沒有舞伴都可以。先來一次體驗課，喜歡再上每週的新手班。"
         />
       </div>
 
       <section className="mx-auto w-full max-w-4xl px-4 pb-16 md:px-6">
-        {BEGINNER_CLASSES.length > 0 ? (
-          <div className="grid gap-6 md:grid-cols-2">
-            {BEGINNER_CLASSES.map((item) => (
-              <BeginnerClassCard key={item.id} item={item} />
-            ))}
-          </div>
-        ) : (
-          <p className="text-center text-ink-600">
-            下一期新手班籌備中，想第一時間知道開課日期，歡迎私訊我們。
-          </p>
-        )}
+        {/* 上面兩張步驟卡可以點：體驗課 → 近期場次；新手班 → 海報卡 */}
+        <BeginnerSwitcher
+          level1Panel={
+            BEGINNER_CLASSES.length > 0 ? (
+              <div className="grid gap-6 md:grid-cols-2">
+                {BEGINNER_CLASSES.map((item) => (
+                  <BeginnerClassCard key={item.id} item={item} />
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-ink-600">
+                下一期新手班籌備中，想第一時間知道開課日期，歡迎私訊我們。
+              </p>
+            )
+          }
+        />
 
         <div className="mt-10 flex flex-col items-center gap-3 rounded-3xl bg-ink-50 px-5 py-6 text-center">
           <p className="text-sm text-ink-700">

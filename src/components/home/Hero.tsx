@@ -1,11 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
-import { CalendarDays, Tag, Users } from "lucide-react";
-import { Button } from "../ui/button";
-import { LINKS } from "@/constants/links";
-import { getVenue } from "@/data/venues";
-import { PRICE_PLANS, TRACKS } from "@/components/courses/schedule/data";
-import NextTrial from "./NextTrial";
 
 type Props = {
   /** 首頁右側的媒體，來自 src/data/site.ts 的 HERO_MEDIA。兩個都沒有就顯示佔位區塊。 */
@@ -14,8 +7,7 @@ type Props = {
 
 const Hero = ({ media }: Props) => {
   return (
-    // 桌機：md:items-stretch 讓右邊照片跟左欄一樣高，照片用 absolute 填滿，
-    // 所以照片的底邊會跟左欄最後一塊（近期體驗課）的底邊對齊。
+    // 桌機：左欄是標題＋標語，右邊照片用 absolute 填滿、至少 320px 高。
     <div className="px-5 py-10 flex flex-col items-center justify-center gap-6 md:flex-row md:items-stretch md:gap-6 md:max-w-7xl md:mx-auto">
       <div className="flex flex-col items-center justify-center gap-4 md:w-[460px] md:items-start md:flex-shrink-0">
         {/* h1 前半句帶「高雄／雙人社交舞」，讓只掃一眼標題的人也知道這是什麼、在哪裡；
@@ -31,48 +23,8 @@ const Hero = ({ media }: Props) => {
         <p className="whitespace-nowrap text-center text-[clamp(0.95rem,4.6vw,1.25rem)] font-bold text-ink-900 md:text-left md:text-2xl">
           不用舞蹈基礎，會走路就會跳的雙人舞
         </p>
-        <div className="flex flex-wrap justify-center gap-4 md:justify-start">
-          <Button asChild size="lg">
-            <Link href={LINKS.ENROLL}>報名體驗課</Link>
-          </Button>
-          <Button asChild size="lg" variant="outline">
-            <Link href={LINKS.BEGINNERS}>查看即將開課</Link>
-          </Button>
-        </div>
-
-        {/* 第一次來的人最想知道的三件事（哪天、在哪、多少錢）直接寫在按鈕下面，
-            不用點進課程頁才看得到。時間、場地、價格都從課表資料取，改課表這裡會跟著變。 */}
-        <ul className="flex w-full flex-col gap-1.5 text-sm text-ink-700">
-          {TRACKS.map((track) => {
-            const venue = getVenue(track.venueSlug);
-            return (
-              <li key={track.id} className="flex items-start gap-2">
-                <CalendarDays aria-hidden className="mt-0.5 size-4 shrink-0 text-brand" />
-                <span>
-                  <strong className="font-semibold text-ink-900">
-                    {track.dayZh} {track.slots[0]?.time.split('–')[0]}
-                  </strong>{' '}
-                  {track.danceStyle.replace('Brazilian ', '')}・{venue.district.replace(/區$/, '')} {venue.shortName}
-                </span>
-              </li>
-            );
-          })}
-          <li className="flex items-start gap-2">
-            <Users aria-hidden className="mt-0.5 size-4 shrink-0 text-brand" />
-            <span>不用舞伴，不用舞蹈基礎，自己就能參加</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <Tag aria-hidden className="mt-0.5 size-4 shrink-0 text-brand" />
-            {/* 從費用頁的課卡方案組出來（單堂・4 堂・8 堂），改價格只要改 PRICE_PLANS */}
-            <span>
-              常態課{' '}
-              {PRICE_PLANS[0]?.tiers[0]?.options
-                .map((o) => `${o.name.replace('課卡', '').trim()} $${o.price}`)
-                .join('・')}
-            </span>
-          </li>
-        </ul>
-        <NextTrial />
+        {/* 按鈕、近期體驗課、時間價格清單都拿掉了（業主 2026/11/16：首頁太複雜、資訊重複）。
+            標語後面直接接合照，再往下是「兩步驟開始跳舞」，報名入口都在那一塊。 */}
       </div>
       <div className="relative w-full md:min-h-[320px]">
         <HeroMedia media={media} />

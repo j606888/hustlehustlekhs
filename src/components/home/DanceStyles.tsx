@@ -49,10 +49,10 @@ const DanceStyles = () => {
           className="mb-6"
         />
         <p className="mb-8 text-base text-center text-ink-700 text-balance">
-          社交舞是兩個人一組、透過引導與回應即興互動的舞蹈，不用背固定套路，換一首歌、換一個舞伴，跳出來就不一樣。
+          社交舞是兩個人一組、透過引導與回應即興的舞蹈，換一首歌、換一個舞伴，跳出來都不一樣。
           <br />
-          我們是高雄的社交舞・雙人舞教室，專門教 Hustle 與 Brazilian Zouk
-          兩種舞蹈，從零基礎開始，不需要舞伴也能來跳舞。
+          我們主要教 Hustle 與 Brazilian Zouk
+          這兩種舞蹈，都從零基礎開始，不需要舞伴，一個人也能來跳舞。
         </p>
         <div className="grid gap-6 md:grid-cols-2">
           {DANCES.map((dance) => (

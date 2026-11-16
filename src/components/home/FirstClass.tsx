@@ -27,7 +27,7 @@ const FirstClass = () => {
       <div className="max-w-5xl px-5 mx-auto">
         <SectionHeading
           eyebrow="第一次來也不用擔心"
-          title="第一堂課會發生什麼？"
+          title="新手班的一堂課長這樣"
           className="mb-8"
         />
         <ol className="grid gap-4 md:grid-cols-3">
@@ -44,9 +44,12 @@ const FirstClass = () => {
             </li>
           ))}
         </ol>
-        <div className="mt-8 flex justify-center">
+        {/* 上面講的是每週新手班的流程；體驗課是課後接 Party 的單次活動，
+            所以按鈕前先說一句「想先試試看」，避免讀者以為兩者是同一件事。 */}
+        <div className="mt-8 flex flex-col items-center gap-3">
+          <p className="text-base text-ink-700">想先試試看？從一次體驗課開始。</p>
           <Button asChild size="lg">
-            <Link href={LINKS.ENROLL}>報名體驗課</Link>
+            <Link href={`${LINKS.ENROLL}#trial`}>報名體驗課</Link>
           </Button>
         </div>
       </div>

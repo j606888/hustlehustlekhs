@@ -8,7 +8,8 @@ import IGIcon from '@/components/icons/IGIcon';
 import { Button } from './ui/button';
 
 const NAV_LINKS = [
-  { name: '零基礎新手班', href: LINKS.BEGINNERS },
+  // /beginners 頂端先講「體驗課 → 新手班」兩步驟，所以叫「新手入門」而不是只寫新手班
+  { name: '新手入門', href: LINKS.BEGINNERS },
   { name: '課表選課', href: '/courses' },
   { name: '課程報名', href: LINKS.ENROLL },
   { name: '師資介紹', href: '/teachers' },
