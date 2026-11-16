@@ -16,7 +16,17 @@ const KIND_LABEL = {
   workshop: 'Workshop',
 } as const;
 
-export default function EventCard({ event }: { event: EnrollEvent }) {
+type Props = {
+  event: EnrollEvent;
+  /**
+   * 區塊標題已經寫了共同的開始時間／價格（getCommonEventInfo）時傳 true，
+   * 卡片就不再每張重複（業主 2026/11/16：價錢、時間不要一直重複出現）。
+   */
+  hideStartTime?: boolean;
+  hidePrice?: boolean;
+};
+
+export default function EventCard({ event, hideStartTime, hidePrice }: Props) {
   const theme = THEMES[event.theme];
   const venue = event.venueSlug ? getVenue(event.venueSlug) : null;
 
@@ -35,8 +45,8 @@ export default function EventCard({ event }: { event: EnrollEvent }) {
       </Link>
     );
   }
-  if (event.startTime) meta.push(`${event.startTime} 開始`);
-  if (event.priceNote) meta.push(event.priceNote);
+  if (event.startTime && !hideStartTime) meta.push(`${event.startTime} 開始`);
+  if (event.priceNote && !hidePrice) meta.push(event.priceNote);
 
   return (
     <article
@@ -105,6 +115,15 @@ export default function EventCard({ event }: { event: EnrollEvent }) {
             </p>
           )}
           {event.note && <p className="text-sm text-ink-500">{event.note}</p>}
+          {/* Workshop 的老師介紹、課程內容在 /courses 的「活動」分頁（錨點 = event.id） */}
+          {event.kind === 'workshop' && (
+            <Link
+              href={`/courses?tab=events#${event.id}`}
+              className="w-fit text-sm font-medium text-brand underline-offset-2 hover:underline"
+            >
+              看完整介紹
+            </Link>
+          )}
         </div>
       </div>
 

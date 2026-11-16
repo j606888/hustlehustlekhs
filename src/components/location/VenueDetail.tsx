@@ -4,7 +4,7 @@ import SectionHeading from '@/components/SectionHeading';
 import { Button } from '@/components/ui/button';
 import { LINKS } from '@/constants/links';
 import type { Venue } from '@/data/venues';
-import { PRICE_PLANS, type Track } from '@/components/courses/schedule/data';
+import type { Track } from '@/components/courses/schedule/data';
 
 // 據點頁的版面。目前兩個據點都在同一頁（/location），每個據點一張卡，
 // 卡片本身就是「哪一天、在哪間教室、上什麼、多少錢、怎麼去」的完整答案。
@@ -80,7 +80,7 @@ export default function VenueDetail({
           href="/courses?tab=schedule"
           className="text-sm font-medium text-brand underline-offset-2 hover:underline"
         >
-          查看完整月課表與場次日期 →
+          查看每月課表與上課時間 →
         </Link>
       </section>
 
@@ -170,53 +170,8 @@ function VenueCard({ venue, tracks }: { venue: Venue; tracks: Track[] }) {
           用 Google 地圖導航到「{venue.shortName}」→
         </a>
       </div>
-
-      {tracks.map((track) => (
-        <TrackSummary key={track.id} track={track} />
-      ))}
-    </div>
-  );
-}
-
-function TrackSummary({ track }: { track: Track }) {
-  const plan = PRICE_PLANS.find((p) => p.id === track.pricePlanId);
-
-  return (
-    <div className="flex flex-col gap-3 border-t border-ink-100 pt-4">
-      {track.badge && (
-        <span className="self-start rounded-full bg-brand px-2.5 py-0.5 text-xs font-bold text-white">
-          {track.badge}
-        </span>
-      )}
-      <ul className="flex flex-col gap-1.5 text-sm text-ink-700 md:text-base">
-        {track.slots.map((slot) => (
-          <li key={slot.time} className="flex gap-3">
-            <span className="font-poppins font-bold tabular-nums text-brand">
-              {slot.time}
-            </span>
-            <span>{slot.title}</span>
-            {slot.note && (
-              <span className="self-center rounded-full bg-ink-100 px-2 py-0.5 text-xs font-medium text-ink-600">
-                {slot.note}
-              </span>
-            )}
-          </li>
-        ))}
-      </ul>
-      <p className="text-sm text-ink-600">
-        💲 {track.priceSummary}
-        {plan && (
-          <>
-            {' '}
-            <Link
-              href={`/courses?tab=pricing#${plan.id}`}
-              className="font-medium text-brand underline-offset-2 hover:underline"
-            >
-              （{plan.name}）
-            </Link>
-          </>
-        )}
-      </p>
+      {/* 課程時段與課卡價格已移除（業主 2026/11/16）：這頁只放教室資訊，
+          時段看課表月曆、價格看費用頁，不在這裡重複一份容易過期的資料。 */}
     </div>
   );
 }

@@ -47,14 +47,9 @@ const WhoWeAre = () => {
           ))}
         </div>
 
-        <div className="mx-auto mt-8 max-w-2xl space-y-4 text-center text-base text-ink-700 text-balance">
+        <div className="mx-auto mt-8 max-w-2xl text-center text-base text-ink-700 text-balance">
           <p>
-            2018 年初次接觸 Hustle，被「不需言語就能心靈相通」的默契深深打動；2020
-            年成立 hustlehustlekhs，正式在高雄推廣 Hustle。2022 年在台北遇到了 Zouk，
-            深深被它變化多端的肢體與流暢的音樂感吸引，決定也把這門美麗的舞蹈帶回高雄。
-          </p>
-          <p>
-            我們不把舞蹈當成商品販售，而是因為自己曾被這兩門舞蹈深深打動，才想把這份純粹的感動，分享給高雄的大家 ❤️
+            我們因為被這兩種舞蹈深深打動，才想把這份純粹的感動，分享給高雄的大家 ❤️
           </p>
         </div>
       </div>

@@ -6,6 +6,7 @@ import Testimonials from '@/components/home/Testimonials';
 import FAQ from '@/components/home/FAQ';
 import FirstClass from '@/components/home/FirstClass';
 import BottomCta from '@/components/home/BottomCta';
+import BeginnerPath from '@/components/BeginnerPath';
 import JsonLd from '@/components/JsonLd';
 import { getPublishedTestimonials } from '@/data/testimonials';
 import { getPublishedFaqs } from '@/data/faq';
@@ -61,6 +62,8 @@ export default function Home() {
       {/* 順序照第一次來的人往下滑時心裡的問題排：
           這是什麼 → 這兩種舞是什麼 → 第一堂課會怎樣 → 上過的人怎麼說 → 誰在教 → 細節問題 → 報名 */}
       <Hero media={HERO_MEDIA} />
+      {/* 體驗課 vs 新手班：第一次來的人最容易搞混的地方，緊接在首圖後面講清楚 */}
+      <BeginnerPath />
       <DanceStyles />
       <FirstClass />
       <Testimonials testimonials={testimonialsData} />

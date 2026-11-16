@@ -39,6 +39,13 @@ export interface SessionDate {
   detail?: string;
   off?: boolean; // 這週停課：虛線圓點，note 一律寫「停課」
   upcoming?: boolean; // 下一期（尚未開放/預告）場次，顯示為淡色
+  /**
+   * 這一天的時段跟 track.slots 不一樣時才寫（體驗課、Lambada、少一堂課的週）。
+   * 月曆點了日期後出現的「當天課表」用它，照每月 IG 課表海報填。
+   */
+  slots?: TimeSlot[];
+  /** 這天用課卡上課但有特別規則時，寫在購買課卡按鈕上，例如「Lambada 扣兩堂」。 */
+  cardNote?: string;
 }
 
 /** '9/18' → Date（當地時區的當天 0 點）。label 只有月/日，年份要另外給。 */
@@ -181,6 +188,8 @@ export interface MonthConfig {
   >;
   legend: { theme: ThemeKey; title: string; desc: string }[];
   footnote: string;
+  /** 這個月的 IG 課表海報（public/images/schedule/），顯示在月曆下方，點了放大。沒有就不顯示。 */
+  poster?: { src: string; alt: string; width: number; height: number };
 }
 
 // 月曆下方的「時間和地點」與星號備註，每個月都一樣，所以集中寫一份。
@@ -257,6 +266,12 @@ export const MONTHS: MonthConfig[] = [
     },
     legend: TIME_AND_PLACE,
     footnote: FOOTNOTE,
+    poster: {
+      src: '/images/schedule/2026-12.webp',
+      alt: '12 月課表海報：週四 Hustle 職人棧 12/3、12/10、12/17 中階班＋新手班＋練習，12/24 體驗課＋練習；週五 Zouk Social Hub 12/4、12/25 新手班＋進階班＋練習，12/11 體驗課＋Party，12/18 停課',
+      width: 1080,
+      height: 1440,
+    },
   },
   {
     year: 2027,
@@ -322,23 +337,54 @@ export const TRACKS: Track[] = [
     ],
     datesTitle: '場次',
     datesNote: '每週四',
+    // 跟 track.slots 不一樣的日子寫 slots（照每月 IG 課表海報）；12 月一般週沒寫 = 用 track.slots。
     dates: [
-      { label: '11/12' },
-      { label: '11/19' },
-      { label: '11/26', note: '體驗課+Party' },
+      {
+        label: '11/12',
+        slots: [
+          { time: '19:30–20:30', title: 'Hustle 中階班' },
+          { time: '20:30–21:30', title: 'Hustle 體驗課' },
+          { time: '21:30–22:00', title: '課後練習' },
+        ],
+      },
+      {
+        label: '11/19',
+        slots: [
+          { time: '19:30–20:30', title: 'Hustle 中階班' },
+          { time: '20:30–22:00', title: '課後練習' },
+        ],
+      },
+      {
+        label: '11/26',
+        note: '體驗課+Party',
+        // 體驗課之後一律叫 Party（業主 2026/11/16：Social／練習新生看不懂）。職人棧最晚到 22:00。
+        slots: [
+          { time: '19:30–20:30', title: 'Hustle 體驗課' },
+          { time: '20:30–22:00', title: 'Party' },
+        ],
+      },
       { label: '12/3' },
       { label: '12/10' },
       { label: '12/17' },
-      { label: '12/24', note: '體驗＋Party' },
+      {
+        label: '12/24',
+        note: '體驗＋Party',
+        slots: [
+          { time: '19:30–20:30', title: 'Hustle 體驗課' },
+          { time: '20:30–22:00', title: 'Party' },
+        ],
+      },
       { label: '12/31', off: true, note: '停課' },
     ],
     venueSlug: 'zhirenzhan',
     pricePlanId: 'hustle-card',
     priceSummary: '課卡制・單堂 $450・4 堂 $1700・8 堂 $3200',
     enrollUrl: 'https://forms.gle/SYm2SMxnT8PoEjFr5',
+    // 體驗課卡片的說明一律寫「{開始時間} 開始・新生兩人同行一人免費」（業主 2026/11/16），
+    // 時間要跟 startTime、課表當天 slots 第一堂一致。
     trial: {
       title: 'Hustle 體驗課 ＋ Party',
-      note: '課後接 Party，可以留下來看大家跳，也可以自己下場',
+      note: '19:30 開始・新生兩人同行一人免費',
       startTime: '19:30',
       price: 300,
       priceNote: '早鳥 $300・現場 $400',
@@ -366,14 +412,33 @@ export const TRACKS: Track[] = [
     datesNote: '每週五',
     dates: [
       // 十一月沒有 Zouk 正式課，週五只有這兩場。
-      { label: '11/13', note: '體驗＋Party' },
+      {
+        label: '11/13',
+        note: '體驗＋Party',
+        slots: [
+          { time: '19:30–20:30', title: 'Zouk 體驗課' },
+          { time: '20:30–23:00', title: 'Party' },
+        ],
+      },
       {
         label: '11/27',
         note: 'Lambada',
         detail: '11/27 Lambada Fast Track 19:30–22:00，扣兩堂 Zouk 課卡',
+        slots: [
+          { time: '19:30–22:00', title: 'Lambada 新手班（Fast Track）' },
+          { time: '22:00–23:00', title: '課後練習' },
+        ],
+        cardNote: 'Lambada 扣兩堂',
       },
       { label: '12/4' },
-      { label: '12/11', note: '體驗＋Party' },
+      {
+        label: '12/11',
+        note: '體驗＋Party',
+        slots: [
+          { time: '19:30–20:30', title: 'Zouk 體驗課' },
+          { time: '20:30–23:00', title: 'Party' },
+        ],
+      },
       { label: '12/18', off: true, note: '停課' },
       { label: '12/25' },
     ],
@@ -383,7 +448,7 @@ export const TRACKS: Track[] = [
     enrollUrl: 'https://forms.gle/SYm2SMxnT8PoEjFr5',
     trial: {
       title: 'Zouk 體驗課 ＋ Zouk / Hustle Party',
-      note: '課後直接接派對，可以留下來看大家跳，也可以自己下場',
+      note: '19:30 開始・新生兩人同行一人免費',
       startTime: '19:30',
       price: 300,
       priceNote: '早鳥 $300・現場 $400',
@@ -462,7 +527,7 @@ export const EVENTS: EnrollEvent[] = [
     kind: 'trial',
     theme: 'trackA',
     danceStyle: 'Hustle',
-    title: 'Hustle 體驗課 ＋ social',
+    title: 'Hustle 體驗課 ＋ Party',
     note: '課後留下來練習，老師會在旁邊帶',
     dateLabel: '9/24',
     weekdayEn: 'THU',
@@ -506,7 +571,7 @@ export const EVENTS: EnrollEvent[] = [
     kind: 'trial',
     theme: 'trackA',
     danceStyle: 'Hustle',
-    title: 'Hustle 體驗課 ＋ social',
+    title: 'Hustle 體驗課 ＋ Party',
     note: '這一場不在職人棧，改到 Social Hub',
     dateLabel: '10/22',
     weekdayEn: 'THU',
@@ -537,7 +602,7 @@ export const EVENTS: EnrollEvent[] = [
     theme: 'trackA',
     danceStyle: 'Hustle',
     title: 'Hustle 體驗課 ＋ Party',
-    note: '19:30 體驗課，20:30 接 Party 到 22:30・兩人同行一人免費（限新生）',
+    note: '19:30 開始・新生兩人同行一人免費',
     dateLabel: '11/26',
     weekdayEn: 'THU',
     startTime: '19:30',
@@ -550,12 +615,29 @@ export const EVENTS: EnrollEvent[] = [
       'https://docs.google.com/forms/d/e/1FAIpQLSexxiaDuhCHwDUUWwoiKAG33ZZmdr8ztHYWVaVTnnSZs32ceA/viewform',
   },
   {
+    // 職人棧最晚到 22:00（業主 2026/11/16），說明寫清楚結束時間
+    id: 'hustle-trial-1224',
+    kind: 'trial',
+    theme: 'trackA',
+    danceStyle: 'Hustle',
+    title: 'Hustle 體驗課 ＋ Party',
+    note: '19:30 開始・新生兩人同行一人免費',
+    dateLabel: '12/24',
+    weekdayEn: 'THU',
+    startTime: '19:30',
+    venueSlug: 'zhirenzhan',
+    price: 300,
+    priceNote: '早鳥 $300・現場 $400',
+    enrollUrl:
+      'https://docs.google.com/forms/d/e/1FAIpQLSexxiaDuhCHwDUUWwoiKAG33ZZmdr8ztHYWVaVTnnSZs32ceA/viewform',
+  },
+  {
     id: 'zouk-trial-1113',
     kind: 'trial',
     theme: 'trackB',
     danceStyle: 'Brazilian Zouk',
     title: 'Zouk 體驗課 ＋ Zouk / Hustle Party',
-    note: '19:30 體驗課，20:30 接 Party 到 23:00・兩人同行一人免費（限新生）',
+    note: '19:30 開始・新生兩人同行一人免費',
     dateLabel: '11/13',
     weekdayEn: 'FRI',
     startTime: '19:30',
@@ -651,6 +733,67 @@ export function getDateEnrollUrl(track: Track, date: SessionDate): string | null
   return track.enrollUrl || null;
 }
 
+/**
+ * 月曆點某一天 → 「當天課表」要顯示的內容：時段、要按哪顆按鈕。
+ * 體驗課 → 報名那一場體驗課；一般上課日、Lambada → 購買該舞種課卡；停課 → 沒有按鈕。
+ */
+export function getDayPlan(
+  track: Track,
+  date: SessionDate
+): {
+  slots: TimeSlot[];
+  trial: EnrollEvent | null;
+  cta: { label: string; href: string; kind: 'trial' | 'card' } | null;
+} {
+  if (date.off) return { slots: [], trial: null, cta: null };
+  const style = track.danceStyle.replace('Brazilian ', '');
+  if (isTrialDate(date)) {
+    const trial = trialFor(track, date);
+    return {
+      slots: date.slots ?? [],
+      trial,
+      cta: trial.enrollUrl
+        ? { label: `報名 ${date.label} ${style} 體驗課`, href: trial.enrollUrl, kind: 'trial' }
+        : null,
+    };
+  }
+  const slots = date.slots ?? track.slots;
+  return {
+    slots,
+    trial: null,
+    cta: track.enrollUrl
+      ? {
+          label: `購買 ${style} 課卡${date.cardNote ? `（${date.cardNote}）` : ''}`,
+          href: track.enrollUrl,
+          kind: 'card',
+        }
+      : null,
+  };
+}
+
+const WEEKDAY_ZH = ['日', '一', '二', '三', '四', '五', '六'];
+
+/** '12/3' → '12/3（四）'。報名頁的「下一堂」用。 */
+export function formatSessionDate(date: SessionDate): string {
+  const d = toDate(date.label, MONTH.year);
+  return d ? `${date.label}（${WEEKDAY_ZH[d.getDay()]}）` : date.label;
+}
+
+/**
+ * 老手報名課卡時最想知道的兩件事：下一堂是哪天、接下來有沒有停課。
+ * now 由呼叫端給（掛載後才算），理由同 getUpcomingEvents。
+ */
+export function getTrackOutlook(
+  track: Track,
+  now: Date
+): { next: SessionDate | null; nextOff: SessionDate | null } {
+  const ahead = track.dates.filter((d) => getSessionStatus(d, now) !== 'done');
+  return {
+    next: ahead.find((d) => !d.off && !d.upcoming) ?? null,
+    nextOff: ahead.find((d) => d.off) ?? null,
+  };
+}
+
 /** 活動的年份：沒寫就用目前月份的年份。 */
 export function getEventYear(event: EnrollEvent): number {
   return event.year ?? MONTH.year;
@@ -673,6 +816,22 @@ export function getUpcomingEvents(
     const lastDay = event.endDateLabel ?? event.dateLabel;
     return !isPast(lastDay, getEventYear(event), now);
   }).sort((a, b) => sortKey(a) - sortKey(b));
+}
+
+/**
+ * 一串活動共同的開始時間與價格（每一場都一樣才算）。
+ * 報名頁、新手入門頁用它把「19:30 開始・早鳥 $300」寫在區塊標題一次，卡片不再每張重複；
+ * 某一場不一樣時對應欄位回傳 null，那就照舊每張卡各自顯示。
+ */
+export function getCommonEventInfo(events: EnrollEvent[]): {
+  startTime: string | null;
+  priceNote: string | null;
+} {
+  const same = (pick: (e: EnrollEvent) => string | undefined) => {
+    const first = events[0] ? pick(events[0]) : undefined;
+    return first && events.every((e) => pick(e) === first) ? first : null;
+  };
+  return { startTime: same((e) => e.startTime), priceNote: same((e) => e.priceNote) };
 }
 
 /** 排序用：把 '9/18' + 年份壓成可比較的數字，資料寫的順序就不重要了。 */
