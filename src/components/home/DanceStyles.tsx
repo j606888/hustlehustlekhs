@@ -48,12 +48,13 @@ const DanceStyles = () => {
           title="社交舞是什麼樣的舞蹈？"
           className="mb-6"
         />
-        <p className="mb-8 text-base text-center text-ink-700 text-balance">
-          社交舞是兩個人一組、透過引導與回應即興的舞蹈，換一首歌、換一個舞伴，跳出來都不一樣。
-          <br />
-          我們主要教 Hustle 與 Brazilian Zouk
-          這兩種舞蹈，都從零基礎開始，不需要舞伴，一個人也能來跳舞。
-        </p>
+        {/* 超過兩行的中文段落在手機上靠左排：置中會讓每行左右都參差不齊、很難讀。桌機行數少才置中。 */}
+        <div className="mx-auto mb-8 flex max-w-2xl flex-col gap-2 text-base leading-relaxed text-ink-700 md:text-center">
+          <p>社交舞是兩個人一組、透過引導與回應即興的舞蹈，換一首歌、換一個舞伴，跳出來都不一樣。</p>
+          <p>
+            我們主要教 Hustle 與 Brazilian Zouk 這兩種舞蹈，都從零基礎開始，不需要舞伴，一個人也能來跳舞。
+          </p>
+        </div>
         <div className="grid gap-6 md:grid-cols-2">
           {DANCES.map((dance) => (
             <Link

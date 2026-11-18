@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 import DayPanel from './DayPanel';
-import { THEMES, TRACKS, type MonthConfig } from './data';
+import { THEMES, TRACKS, isPast, type MonthConfig } from './data';
 
 const WEEKDAYS = ['日', '一', '二', '三', '四', '五', '六'];
 
@@ -35,15 +35,13 @@ export default function MonthOverview({ config, selectedDay, onSelectDay, now }:
 
   return (
     <section className="w-full">
-      {/* 頁首 */}
-      <h2 className="flex items-end gap-2 font-poppins font-bold leading-none text-heading">
-        <span
-          className="text-[clamp(2.25rem,11.5vw,3.75rem)] md:text-7xl"
-          style={{ textShadow: '3px 3px 0 color-mix(in srgb, var(--calendar-sunday) 45%, transparent)' }}
-        >
-          {titleEn}
+      {/* 月份標題：字級、字重、顏色跟全站區塊標題一致。
+          以前是 IG 海報風格的超大英文月份加粉紅陰影，跟其他頁看起來像不同網站，已改掉。 */}
+      <h2 className="flex items-baseline gap-2 text-heading">
+        <span className="text-2xl font-bold md:text-3xl">{titleZh}</span>
+        <span className="font-poppins text-sm font-semibold tracking-widest text-ink-500">
+          {titleEn} {year}
         </span>
-        <span className="pb-1 text-2xl md:text-3xl">{titleZh}</span>
       </h2>
 
       {/* 月曆 */}
@@ -81,9 +79,12 @@ export default function MonthOverview({ config, selectedDay, onSelectDay, now }:
               ? theme.highlightCellStrong
               : theme.highlightCell;
             const selected = selectedDay === day;
+            // 已經過去的日子調淡，免得看起來還能報名（now 要等掛載後才有，預渲染時一律不調淡）
+            const past = now !== null && isPast(`${month}/${day}`, year, now);
             const cellClass = cn(
               'flex aspect-square flex-col items-center justify-center overflow-hidden rounded-xl px-0.5 text-white shadow-sm transition-transform hover:scale-[1.04]',
               cellColor,
+              past && !selected && 'opacity-35 shadow-none',
               selected && 'scale-[1.04] ring-[3px] ring-heading ring-offset-2 ring-offset-card'
             );
             // 手機上看不到標籤文字，用 aria-label 讓讀屏軟體還是念得出那天是什麼課

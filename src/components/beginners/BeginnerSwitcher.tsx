@@ -16,7 +16,7 @@ import {
 //
 // 兩塊內容都會渲染、非選中的用 hidden 藏起來（同 courses/CoursesContent.tsx 的做法），
 // 靜態 HTML 裡兩邊的文字都在，搜尋引擎讀得到。
-// 網址帶 #trial／#level1 時預先選好那一塊（首頁的「看近期體驗課」「看新手班」就是這樣連過來）。
+// 網址帶 #trial／#level1 時預先選好那一塊（全站的「報名體驗課」、首頁的「看新手班」就是這樣連過來）。
 
 type Props = {
   /** 新手班卡片（server 端渲染好傳進來，裡面有 next/image 海報） */
@@ -24,6 +24,12 @@ type Props = {
 };
 
 const DEFAULT_STEP: BeginnerStepKey = 'trial';
+
+// 下方內容區塊的 id。trial 跟網址錨點同名（進來會自動捲到清單），level1 刻意不同名（進來不捲動）。
+const PANEL_ID: Record<BeginnerStepKey, string> = {
+  trial: BEGINNER_STEP_HASH.trial,
+  level1: 'panel-level1',
+};
 
 export default function BeginnerSwitcher({ level1Panel }: Props) {
   const [selected, setSelected] = useState<BeginnerStepKey>(DEFAULT_STEP);
@@ -37,7 +43,10 @@ export default function BeginnerSwitcher({ level1Panel }: Props) {
         (k) => BEGINNER_STEP_HASH[k] === hash
       );
     };
-    // 從別頁連進來：只選好那一塊，不捲動（讓人先看到上面兩張步驟卡）
+    // 從別頁連進來：選好那一塊。
+    // #trial 是全站「報名體驗課」按鈕（LINKS.TRIAL_SIGNUP）的目的地：近期體驗課清單的 id 就是 "trial"，
+    // 瀏覽器／Next 會照錨點直接捲過去。#level1 的區塊 id 是 panel-level1（刻意不同名），
+    // 只選好不捲動，讓人先看到上面兩張步驟卡。
     const initial = keyFromHash();
     if (initial) setSelected(initial);
     // 頁內連結（新手班卡片的「先上一次體驗課」）：切過去並捲到那一塊
@@ -47,7 +56,7 @@ export default function BeginnerSwitcher({ level1Panel }: Props) {
       setSelected(key);
       requestAnimationFrame(() =>
         document
-          .getElementById(`panel-${key}`)
+          .getElementById(PANEL_ID[key])
           ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
       );
     };
@@ -72,7 +81,7 @@ export default function BeginnerSwitcher({ level1Panel }: Props) {
       <BeginnerPath selectable={{ selected, onSelect: select }} />
 
       <div
-        id="panel-trial"
+        id={PANEL_ID.trial}
         className={selected === 'trial' ? 'flex scroll-mt-20 flex-col gap-3' : 'hidden'}
       >
         <h2 className="font-poppins text-xl font-bold text-heading md:text-2xl">近期體驗課</h2>
@@ -105,7 +114,7 @@ export default function BeginnerSwitcher({ level1Panel }: Props) {
       </div>
 
       <div
-        id="panel-level1"
+        id={PANEL_ID.level1}
         className={selected === 'level1' ? 'flex scroll-mt-20 flex-col gap-3' : 'hidden'}
       >
         <h2 className="font-poppins text-xl font-bold text-heading md:text-2xl">零基礎新手班</h2>

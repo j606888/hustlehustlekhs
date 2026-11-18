@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowDown, ArrowRight } from 'lucide-react';
 import SectionHeading from '@/components/SectionHeading';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { LINKS } from '@/constants/links';
 import { PRICE_PLANS, TRACKS } from '@/components/courses/schedule/data';
@@ -41,8 +42,10 @@ const STEPS: {
     title: '體驗課',
     price: trialPrice,
     points: ['單堂入門課，課後接 Party'],
-    href: `${LINKS.BEGINNERS}#${BEGINNER_STEP_HASH.trial}`,
-    cta: '看近期體驗課',
+    href: LINKS.TRIAL_SIGNUP,
+    // 首頁第一屏拿掉按鈕後，這裡是首頁第一個報名入口，所以首頁版的 STEP 1 做成實心主按鈕。
+    // 連到 /beginners#trial 的近期體驗課清單，在那裡選日期報名。
+    cta: '報名體驗課',
   },
   {
     key: 'level1',
@@ -100,6 +103,13 @@ export default function BeginnerPath({ selectable }: Props) {
                   >
                     {highlighted ? '▼ 下方是' + s.title + '資訊' : '點這裡看' + s.title}
                   </span>
+                ) : i === 0 ? (
+                  <Button asChild size="lg" className="mt-auto w-full md:w-fit" data-enroll-cta>
+                    <Link href={s.href}>
+                      {s.cta}
+                      <ArrowRight className="size-4" />
+                    </Link>
+                  </Button>
                 ) : (
                   <Link
                     href={s.href}

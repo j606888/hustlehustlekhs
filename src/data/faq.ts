@@ -56,7 +56,7 @@ export const FAQS: Faq[] = [
     // 說法要跟 src/components/BeginnerPath.tsx 一致（業主確認：先體驗課、再新手班）
     id: 'trial-vs-beginner',
     question: '體驗課和新手班差在哪？',
-    answer: `**體驗課**是只來一次的入門課，課後接 Party，適合想先感受看看的人。**零基礎新手班**是每週固定上的課，從基本步一步步往上教，上完一期課基本上都能完整即興跳完一首歌。想先瞭解的話建議先[報名體驗課](${LINKS.ENROLL}#trial)，或是參加單堂[新手班](${LINKS.BEGINNERS}#level1)課程，喜歡再買多堂優惠的課卡。`,
+    answer: `**體驗課**是只來一次的入門課，課後接 Party，適合想先感受看看的人。**零基礎新手班**是每週固定上的課，從基本步一步步往上教，上完一期課基本上都能完整即興跳完一首歌。想先瞭解的話建議先[報名體驗課](${LINKS.TRIAL_SIGNUP})，或是參加單堂[新手班](${LINKS.BEGINNERS}#level1)課程，喜歡再買多堂優惠的課卡。`,
     sortOrder: 4.5,
     published: true,
     defaultOpen: true,
@@ -98,7 +98,7 @@ export const FAQS: Faq[] = [
     id: 'how-to-join',
     question: '要怎麼報名？',
     answer:
-      `到[課程報名](${LINKS.ENROLL})頁面，選你想上的課、填表單就完成報名；第一次來建議從[體驗課](${LINKS.ENROLL}#trial)開始。因為場地大小有限，每堂課都有名額限制，建議先報名預約。體驗課、常態課卡與客座 Workshop 的報名連結都在那一頁；不確定該選哪一種，也可以直接 [Instagram 私訊我們](${LINKS.INSTAGRAM_DM})。`,
+      `到[課程報名](${LINKS.ENROLL})頁面，選你想上的課、填表單就完成報名；第一次來建議從[體驗課](${LINKS.TRIAL_SIGNUP})開始。因為場地大小有限，每堂課都有名額限制，建議先報名預約。體驗課、常態課卡與客座 Workshop 的報名連結都在那一頁；不確定該選哪一種，也可以直接 [Instagram 私訊我們](${LINKS.INSTAGRAM_DM})。`,
     sortOrder: 9,
     published: true,
   },

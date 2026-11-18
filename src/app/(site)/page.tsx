@@ -6,6 +6,7 @@ import Testimonials from '@/components/home/Testimonials';
 import FAQ from '@/components/home/FAQ';
 import FirstClass from '@/components/home/FirstClass';
 import BottomCta from '@/components/home/BottomCta';
+import MobileEnrollBar from '@/components/home/MobileEnrollBar';
 import BeginnerPath from '@/components/BeginnerPath';
 import JsonLd from '@/components/JsonLd';
 import { getPublishedTestimonials } from '@/data/testimonials';
@@ -70,6 +71,7 @@ export default function Home() {
       <WhoWeAre />
       <FAQ faqs={faqsData} />
       <BottomCta />
+      <MobileEnrollBar />
     </>
   );
 }

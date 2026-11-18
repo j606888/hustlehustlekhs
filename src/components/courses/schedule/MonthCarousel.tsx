@@ -130,22 +130,14 @@ export default function MonthCarousel({ months }: { months: MonthConfig[] }) {
 
   return (
     <section ref={sectionRef} className="w-full scroll-mt-24">
-      {/* 品牌抬頭固定在輪播外面，不隨月份切換 */}
-      <div className="flex flex-col">
-        <p className="font-poppins text-sm font-bold tracking-[0.2em] text-eyebrow md:text-base">
-          HUSTLEHUSTLE KHS
-        </p>
-        <p className="font-poppins text-xs font-medium tracking-[0.3em] text-ink-500 md:text-sm">
-          {/* 月份跨年（例如 11 月到隔年 1 月）就寫成 2026–2027 */}
-          {[...new Set(months.map((m) => m.year))].join('–')} SCHEDULE
-        </p>
-      </div>
+      {/* 原本這裡有「HUSTLEHUSTLE KHS / 2026–2027 SCHEDULE」的英文抬頭（土黃色、寬字距），
+          是 IG 海報的樣式，跟頁首的 SectionHeading 重複、配色也跟全站不一致，已移除。 */}
 
       {/* 月份分頁：把有哪幾個月直接攤開來，不用點也知道還有下個月可以看
           （之前只有兩顆箭頭，掃過去看不出來那是切換月份用的）。
           月份多到四、五個時這一列會塞不下，那時要改成可橫捲的月份列。 */}
       {showControls && (
-        <div className="mt-4 flex w-fit gap-1 rounded-full bg-ink-100 p-1">
+        <div className="flex w-fit gap-1 rounded-full bg-ink-100 p-1">
           {months.map((month, index) => {
             const active = index === activeIndex;
             return (

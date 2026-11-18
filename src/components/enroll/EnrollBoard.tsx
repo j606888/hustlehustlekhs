@@ -161,7 +161,7 @@ function Section({
   hint,
   children,
 }: {
-  /** 錨點：首頁、新手班頁的按鈕會連到 /enroll#trial、#regular */
+  /** 錨點（/enroll#trial、#regular）。站內的「報名體驗課」按鈕統一連到 LINKS.TRIAL_SIGNUP，不是這裡。 */
   id?: string;
   title: string;
   /** 一句話說明。沒有要補充的就不要硬寫（例如客座 Workshop）。 */

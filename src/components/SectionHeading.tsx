@@ -38,7 +38,8 @@ const SectionHeading = ({
           {eyebrow}
         </p>
       )}
-      <Tag className={`font-bold text-ink-900 ${titleSize}`}>{title}</Tag>
+      {/* text-balance：標題換行時讓每行一樣長，不會剩兩個字孤零零在第二行（例如「…課表 / 選課」） */}
+      <Tag className={`font-bold text-heading text-balance ${titleSize}`}>{title}</Tag>
       <span className="w-12 h-1 rounded-full bg-brand" />
       {subtitle && <p className={subtitleClass}>{subtitle}</p>}
     </div>
