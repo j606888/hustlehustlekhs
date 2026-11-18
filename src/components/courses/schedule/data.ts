@@ -125,6 +125,9 @@ export interface ThemeStyle {
   accentBg: string; // 圓章 / active chip 底色
   highlightCell: string; // 月曆 highlight 方塊底色
   highlightCellStrong: string; // 同色系但深一階：那天有體驗課／特別場次（跟 dotStrong 同色，月曆與課表卡一致）
+  // 月曆選中時：實心變成「同色外框」，外框和數字都用這個文字色（框線用 border-current 跟著它）
+  highlightCellSelected: string; // 對應 highlightCell
+  highlightCellStrongSelected: string; // 對應 highlightCellStrong
   legendDot: string; // 圖例圓點
   blob: string; // 卡片裝飾色塊
   dotSoft: string; // 課表卡場次：常態課圓點（淺底＋主色框）
@@ -142,6 +145,8 @@ export const THEMES: Record<ThemeKey, ThemeStyle> = {
     accentBg: 'bg-track-a-accent',
     highlightCell: 'bg-track-a-cell',
     highlightCellStrong: 'bg-track-a-strong',
+    highlightCellSelected: 'text-track-a-cell',
+    highlightCellStrongSelected: 'text-track-a-strong',
     legendDot: 'bg-track-a-cell',
     blob: 'bg-track-a-blob',
     dotSoft: 'bg-track-a-soft border-track-a-accent',
@@ -154,6 +159,8 @@ export const THEMES: Record<ThemeKey, ThemeStyle> = {
     accentBg: 'bg-track-b-accent',
     highlightCell: 'bg-track-b-cell',
     highlightCellStrong: 'bg-track-b-strong',
+    highlightCellSelected: 'text-track-b-cell',
+    highlightCellStrongSelected: 'text-track-b-strong',
     legendDot: 'bg-track-b-cell',
     blob: 'bg-track-b-blob',
     dotSoft: 'bg-track-b-soft border-track-b-accent',
@@ -166,6 +173,8 @@ export const THEMES: Record<ThemeKey, ThemeStyle> = {
     accentBg: 'bg-track-c-accent',
     highlightCell: 'bg-track-c-cell',
     highlightCellStrong: 'bg-track-c-strong',
+    highlightCellSelected: 'text-track-c-cell',
+    highlightCellStrongSelected: 'text-track-c-strong',
     legendDot: 'bg-track-c-cell',
     blob: 'bg-track-c-blob',
     dotSoft: 'bg-track-c-soft border-track-c-accent',

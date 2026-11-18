@@ -7,7 +7,7 @@ import { LINKS } from '@/constants/links';
 const BottomCta = () => {
   return (
     // data-enroll-cta：這一段在畫面上時，手機底部報名列（MobileEnrollBar）會收起來
-    <section className="px-5 py-12 md:py-16" data-enroll-cta>
+    <section className="bg-section px-5 py-12 md:py-16" data-enroll-cta>
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 rounded-2xl bg-brand-light px-6 py-10 text-center ring-1 ring-brand/15">
         <h2 className="text-2xl font-bold text-ink-900 md:text-3xl">準備好下班來動一動了嗎？</h2>
         <p className="max-w-xl text-base text-ink-700 text-balance">

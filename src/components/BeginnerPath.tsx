@@ -68,7 +68,7 @@ type Props = {
 
 export default function BeginnerPath({ selectable }: Props) {
   return (
-    <section className={cn(selectable ? 'w-full' : 'px-5 py-8 md:py-12')}>
+    <section className={cn(selectable ? 'w-full' : 'bg-section px-5 py-8 md:py-12')}>
       <div className={cn('mx-auto', selectable ? 'max-w-4xl' : 'max-w-5xl')}>
         {!selectable && (
           <SectionHeading
