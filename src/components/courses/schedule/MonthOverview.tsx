@@ -81,11 +81,27 @@ export default function MonthOverview({ config, selectedDay, onSelectDay, now }:
             const selected = selectedDay === day;
             // 已經過去的日子調淡，免得看起來還能報名（now 要等掛載後才有，預渲染時一律不調淡）
             const past = now !== null && isPast(`${month}/${day}`, year, now);
+            const selectedText = hl.emphasis
+              ? theme.highlightCellStrongSelected
+              : theme.highlightCellSelected;
             const cellClass = cn(
-              'flex aspect-square flex-col items-center justify-center overflow-hidden rounded-xl px-0.5 text-white shadow-sm transition-transform hover:scale-[1.04]',
-              cellColor,
-              past && !selected && 'opacity-35 shadow-none',
-              selected && 'scale-[1.04] ring-[3px] ring-heading ring-offset-2 ring-offset-card'
+              'flex aspect-square flex-col items-center justify-center overflow-hidden rounded-xl px-0.5 transition-transform',
+              // 選中：實心變成同色外框＋凹陷內陰影，像被按下去。框線畫在方塊內（border-box），
+              // 不放大、不往外長 —— 手機格距只有 4px，往外凸會壓到隔壁的方塊。
+              // 內陰影是擬物（neumorphism）的按壓效果：左上一層暗影、右下一層亮光。
+              // 底色用 bg-background（暖米白）而不是白色，右下的白色亮光才看得出來。
+              selected
+                ? cn(
+                    'border-[3px] border-current bg-background shadow-[inset_4px_4px_8px_rgba(0,0,0,0.22),inset_-4px_-4px_8px_rgba(255,255,255,1)]',
+                    selectedText
+                  )
+                : // 還沒過期的日子：右下的外陰影讓方塊浮起來，跟選中時的「凹下去」成對比，
+                  // 看起來就是「可以按」。過期的日子在下一行拿掉陰影，變成平的。
+                  cn(
+                    'text-white shadow-[3px_3px_6px_rgba(0,0,0,0.2),-1px_-1px_3px_rgba(255,255,255,0.8)] hover:scale-[1.04]',
+                    cellColor
+                  ),
+              past && !selected && 'opacity-35 shadow-none'
             );
             // 手機上看不到標籤文字，用 aria-label 讓讀屏軟體還是念得出那天是什麼課
             const ariaLabel = `${month}/${day} ${hl.label.replace(/\n/g, ' ')}`;
@@ -98,7 +114,8 @@ export default function MonthOverview({ config, selectedDay, onSelectDay, now }:
                     whitespace-pre-line：label 裡的換行是刻意指定的斷行位置
                     （中文可以斷在任何字之間，不指定就會出現「Hustle 體驗 / 課」）。 */}
                 {hl.emphasis && (
-                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-card md:hidden" />
+                  // bg-current：實心時是白點，選中變外框時跟著變成外框色
+                  <span className="mt-1 h-1.5 w-1.5 rounded-full bg-current md:hidden" />
                 )}
                 <span className="hidden w-full whitespace-pre-line break-words text-center text-xs leading-tight md:block">
                   {hl.label}

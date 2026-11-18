@@ -34,7 +34,7 @@ const SectionHeading = ({
   return (
     <div className={`flex flex-col items-center text-center gap-2 ${className}`}>
       {eyebrow && (
-        <p className="text-sm font-semibold tracking-widest text-brand md:text-base">
+        <p className="text-sm font-semibold tracking-widest text-brand-strong md:text-base">
           {eyebrow}
         </p>
       )}

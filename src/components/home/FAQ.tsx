@@ -95,7 +95,7 @@ const FAQ = ({ faqs }: { faqs: FAQItem[] }) => {
   };
 
   return (
-    <section id="faq" className="scroll-mt-20 py-8 bg-section">
+    <section id="faq" className="scroll-mt-20 py-8 md:py-16">
       <div className="max-w-4xl mx-auto px-4 md:px-6">
         <SectionHeading
           eyebrow="報名前先看這裡"

@@ -23,7 +23,7 @@ const STEPS = [
 
 const FirstClass = () => {
   return (
-    <section className="py-8 md:py-16">
+    <section className="bg-section py-8 md:py-16">
       <div className="max-w-5xl px-5 mx-auto">
         <SectionHeading
           eyebrow="第一次來也不用擔心"

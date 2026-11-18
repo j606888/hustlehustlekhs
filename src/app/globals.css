@@ -134,8 +134,8 @@ body,
   /* 標題深色。以前課表、價目、活動頁、步驟卡用藏青 #2d3a5e，首頁區塊標題用 ink-900，
      兩種深色混在同一頁看起來不統一，現在全站標題統一成 ink-900。 */
   --heading: var(--ink-900);
-  /* 淺色區塊底（首頁、據點頁的分段背景） */
-  --section: oklch(98.4% 0.003 247.858);
+  /* 第二底色。首頁區塊在 --background（暖米白）和這個之間交替，用來切出段落 */
+  --section: #fffffe;
   /* 中性色階：內文、說明、邊框、淺底。數字越大越深，用法同 Tailwind 的 gray-* */
   --ink-50: oklch(98.5% 0.002 247.839);
   --ink-100: oklch(96.7% 0.003 264.542);
@@ -187,7 +187,8 @@ body,
   --track-c-soft: #fbf0dc;
 
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  /* 全站主底色（暖米白）。首頁區塊在這個和 --section 之間交替 */
+  --background: #f8f5f2;
   --foreground: oklch(0.129 0.042 264.695);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);

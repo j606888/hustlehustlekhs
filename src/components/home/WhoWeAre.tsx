@@ -11,7 +11,7 @@ const WhoWeAre = () => {
   const teachers = getPublishedTeachers();
 
   return (
-    <section className="py-8 bg-section md:py-16">
+    <section className="bg-section py-8 md:py-16">
       <div className="max-w-5xl px-5 mx-auto">
         <SectionHeading
           eyebrow="關於 HustleHustle KHS"
