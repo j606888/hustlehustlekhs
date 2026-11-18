@@ -15,6 +15,9 @@ export const LINKS = {
   COURSES: '/courses',
   // 零基礎新手班頁。首頁「查看即將開課」與導覽列都指這裡，也適合貼在 IG 限動／廣告。
   BEGINNERS: '/beginners',
+  // 全站「報名體驗課」按鈕的唯一目的地：新手入門頁的「近期體驗課」清單（會自動捲到那一塊）。
+  // #trial 要跟 BeginnerPath.tsx 的 BEGINNER_STEP_HASH.trial 一致。
+  TRIAL_SIGNUP: '/beginners#trial',
   PRICING: '/courses?tab=pricing',
   // 報名頁。IG bio 之後就指這裡，取代 bio.site 的連結頁。
   ENROLL: '/enroll',

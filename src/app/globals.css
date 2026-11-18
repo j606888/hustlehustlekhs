@@ -52,7 +52,6 @@
   --color-ink-700: var(--ink-700);
   --color-ink-800: var(--ink-800);
   --color-ink-900: var(--ink-900);
-  --color-eyebrow: var(--eyebrow);
   --color-callout: var(--callout);
   --color-callout-border: var(--callout-border);
   --color-note: var(--note);
@@ -132,8 +131,9 @@ body,
      bg-section、bg-track-a-accent…），不要寫死 hex 或 Tailwind 的 gray/slate 色階，
      這樣換配色時只要改這裡。目前的值與改成 token 之前完全相同。
      ───────────────────────────────────────────────────────────── */
-  /* 標題深色（課表、價目、活動頁的大標） */
-  --heading: #2d3a5e;
+  /* 標題深色。以前課表、價目、活動頁、步驟卡用藏青 #2d3a5e，首頁區塊標題用 ink-900，
+     兩種深色混在同一頁看起來不統一，現在全站標題統一成 ink-900。 */
+  --heading: var(--ink-900);
   /* 淺色區塊底（首頁、據點頁的分段背景） */
   --section: oklch(98.4% 0.003 247.858);
   /* 中性色階：內文、說明、邊框、淺底。數字越大越深，用法同 Tailwind 的 gray-* */
@@ -147,8 +147,6 @@ body,
   --ink-700: oklch(37.3% 0.034 259.733);
   --ink-800: oklch(27.8% 0.033 256.848);
   --ink-900: oklch(21% 0.034 264.665);
-  /* 課表頁頂端的「HUSTLEHUSTLE KHS」小抬頭 */
-  --eyebrow: #c47b5a;
   /* 課程介紹頁的提示框 */
   --callout: #fbeae6;
   --callout-border: #e8c9c3;

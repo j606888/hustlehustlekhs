@@ -18,7 +18,8 @@ const WhoWeAre = () => {
           title="帶你踏出第一步的老師與夥伴"
           className="mb-6"
         />
-        <p className="mx-auto mb-8 max-w-2xl text-center text-base text-ink-700 text-balance">
+        {/* 手機上靠左排（理由同 DanceStyles 的介紹段落），桌機才置中 */}
+        <p className="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-ink-700 md:text-center">
           我們是暘暘與又嘉，2020 年在高雄創立 HustleHustle KHS，
           一路帶著零基礎的學員跳 Hustle 與 Zouk，用最好懂的方式陪你自在跳出第一支舞。
         </p>

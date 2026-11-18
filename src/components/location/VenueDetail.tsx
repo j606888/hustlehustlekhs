@@ -122,7 +122,7 @@ export default function VenueDetail({
         {/* asChild：讓連結本身長成按鈕，不要 <a><button> 巢狀（鍵盤會停兩次） */}
         <div className="mt-2 flex flex-wrap justify-center gap-4">
           <Button asChild size="lg">
-            <Link href={LINKS.ENROLL}>報名體驗課</Link>
+            <Link href={LINKS.TRIAL_SIGNUP}>報名體驗課</Link>
           </Button>
           <Button asChild size="lg" variant="outline">
             <Link href={LINKS.PRICING}>了解費用</Link>

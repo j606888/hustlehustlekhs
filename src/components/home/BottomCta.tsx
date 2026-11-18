@@ -6,7 +6,8 @@ import { LINKS } from '@/constants/links';
 // 不用捲回最上面或去找頁尾的小字連結。
 const BottomCta = () => {
   return (
-    <section className="px-5 py-12 md:py-16">
+    // data-enroll-cta：這一段在畫面上時，手機底部報名列（MobileEnrollBar）會收起來
+    <section className="px-5 py-12 md:py-16" data-enroll-cta>
       <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 rounded-2xl bg-brand-light px-6 py-10 text-center ring-1 ring-brand/15">
         <h2 className="text-2xl font-bold text-ink-900 md:text-3xl">準備好下班來動一動了嗎？</h2>
         <p className="max-w-xl text-base text-ink-700 text-balance">
@@ -15,7 +16,7 @@ const BottomCta = () => {
         </p>
         <div className="mt-2 flex flex-wrap justify-center gap-4">
           <Button asChild size="lg">
-            <Link href={LINKS.ENROLL}>報名體驗課</Link>
+            <Link href={LINKS.TRIAL_SIGNUP}>報名體驗課</Link>
           </Button>
           <Button asChild size="lg" variant="outline">
             <a href={LINKS.INSTAGRAM_DM} target="_blank" rel="noopener noreferrer">

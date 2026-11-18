@@ -49,7 +49,7 @@ const FirstClass = () => {
         <div className="mt-8 flex flex-col items-center gap-3">
           <p className="text-base text-ink-700">想先試試看？從一次體驗課開始。</p>
           <Button asChild size="lg">
-            <Link href={`${LINKS.ENROLL}#trial`}>報名體驗課</Link>
+            <Link href={LINKS.TRIAL_SIGNUP}>報名體驗課</Link>
           </Button>
         </div>
       </div>
