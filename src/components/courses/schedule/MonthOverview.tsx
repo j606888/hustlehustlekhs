@@ -41,7 +41,7 @@ export default function MonthOverview({ config, selectedDay, onSelectDay, now }:
           省下的高度讓整個月曆不用滑就看得到。 */}
       <h2 className="sr-only text-heading md:not-sr-only md:flex md:items-baseline md:gap-2">
         <span className="text-2xl font-bold md:text-3xl">{titleZh}</span>
-        <span className="font-poppins text-sm font-semibold tracking-widest text-ink-500">
+        <span className="eyebrow text-ink-500">
           {titleEn} {year}
         </span>
       </h2>
@@ -49,7 +49,7 @@ export default function MonthOverview({ config, selectedDay, onSelectDay, now }:
       {/* 月曆 */}
       {/* ring-inset：這張卡在輪播裡的寬度等於捲動容器寬度，
           外擴的 ring 會被 overflow 裁掉（左右兩側的線會不見），所以畫在框內。 */}
-      <div className="rounded-2xl bg-card p-2.5 md:mt-5 shadow-sm ring-1 ring-inset ring-ink-200 md:p-5">
+      <div className="rounded-lg bg-card p-2.5 md:mt-5 ring-1 ring-inset ring-ink-200 md:p-5">
         <div className="grid grid-cols-7 gap-1 md:gap-2">
           {WEEKDAYS.map((w, i) => (
             <div
@@ -88,20 +88,20 @@ export default function MonthOverview({ config, selectedDay, onSelectDay, now }:
               : theme.highlightCellSelected;
             const cellClass = cn(
               // 手機固定 40px 高（比正方形矮一點），六週的月份也能跟當天課表一起擠進一個畫面
-              'flex h-10 flex-col items-center md:aspect-square md:h-auto justify-center overflow-hidden rounded-xl px-0.5 transition-transform',
-              // 選中：實心變成同色外框＋凹陷內陰影，像被按下去。框線畫在方塊內（border-box），
+              'flex h-10 flex-col items-center md:aspect-square md:h-auto justify-center overflow-hidden rounded-md px-0.5 transition-transform',
+              // 選中：實心變成同色外框、拿掉陰影，看起來像「被按下去、攤平了」。框線畫在方塊內（border-box），
               // 不放大、不往外長 —— 手機格距只有 4px，往外凸會壓到隔壁的方塊。
-              // 內陰影是擬物（neumorphism）的按壓效果：左上一層暗影、右下一層亮光。
-              // 底色用 bg-background（暖米白）而不是白色，右下的白色亮光才看得出來。
+              // 以前用擬物（neumorphism）的雙層內外陰影，跟全站「只用一種淡陰影」的語言不一致，
+              // 改成全站共用的 shadow-sm：浮起 vs. 攤平的對比還在，只是收斂了。
               selected
                 ? cn(
-                    'border-[3px] border-current bg-background shadow-[inset_4px_4px_8px_rgba(0,0,0,0.22),inset_-4px_-4px_8px_rgba(255,255,255,1)]',
+                    'border-[3px] border-current bg-background',
                     selectedText
                   )
-                : // 還沒過期的日子：右下的外陰影讓方塊浮起來，跟選中時的「凹下去」成對比，
+                : // 還沒過期的日子：淡陰影讓方塊浮起來，跟選中時的「攤平」成對比，
                   // 看起來就是「可以按」。過期的日子在下一行拿掉陰影，變成平的。
                   cn(
-                    'text-white shadow-[3px_3px_6px_rgba(0,0,0,0.2),-1px_-1px_3px_rgba(255,255,255,0.8)] hover:scale-[1.04]',
+                    'text-white shadow-sm hover:scale-[1.04]',
                     cellColor
                   ),
               past && !selected && 'opacity-35 shadow-none'

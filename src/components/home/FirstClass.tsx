@@ -34,9 +34,9 @@ const FirstClass = () => {
           {STEPS.map((step, index) => (
             <li
               key={step.title}
-              className="flex flex-col gap-2 rounded-2xl bg-card p-5 ring-1 ring-ink-200"
+              className="flex flex-col gap-2 rounded-lg bg-card p-5 ring-1 ring-ink-200"
             >
-              <span className="flex size-9 items-center justify-center rounded-full bg-brand font-poppins text-base font-bold text-white">
+              <span className="flex size-9 items-center justify-center rounded-full bg-brand text-base font-bold text-white">
                 {index + 1}
               </span>
               <h3 className="text-lg font-bold text-ink-900">{step.title}</h3>

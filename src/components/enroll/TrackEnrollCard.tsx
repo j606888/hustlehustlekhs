@@ -35,11 +35,11 @@ export default function TrackEnrollCard({
   const classSlots = classSlotsOf(track);
 
   return (
-    <article className="flex flex-col gap-4 rounded-3xl bg-card p-4 shadow-sm ring-1 ring-ink-200 sm:p-5">
+    <article className="flex flex-col gap-4 rounded-lg bg-card p-4 ring-1 ring-ink-200 sm:p-5">
       <div className="flex flex-wrap items-center gap-2">
         <span
           className={cn(
-            'rounded-full px-2.5 py-1 font-poppins text-xs font-bold text-white',
+            'rounded-full px-2.5 py-1 text-xs font-bold text-white',
             theme.accentBg
           )}
         >
@@ -53,7 +53,7 @@ export default function TrackEnrollCard({
       <div className="flex flex-col gap-1">
         {classSlots.map((slot) => (
           <div key={slot.time} className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm">
-            <span className="font-poppins font-bold tabular-nums text-heading">
+            <span className="font-bold tabular-nums text-heading">
               {slot.time}
             </span>
             <span className="text-ink-600">{slot.title}</span>

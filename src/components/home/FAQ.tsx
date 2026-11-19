@@ -18,7 +18,7 @@ const FAQItem = ({ faq, isOpen, onToggle }: {
   onToggle: () => void;
 }) => {
   return (
-    <div className="bg-card rounded-sm border border-ink-200 overflow-hidden">
+    <div className="bg-card rounded-lg border border-ink-200 overflow-hidden">
       <button
         type="button"
         className="w-full px-6 py-4 flex justify-between items-center text-left hover:cursor-pointer"
@@ -55,7 +55,7 @@ const FAQItem = ({ faq, isOpen, onToggle }: {
                   return (
                     <a
                       href={href}
-                      className="text-brand underline"
+                      className="text-link"
                       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                     >
                       {children}

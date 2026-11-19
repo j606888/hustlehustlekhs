@@ -78,7 +78,7 @@
 |---|---|---|
 | 老師照片 | `public/teachers/名字.jpg` | `src/data/teachers.ts` 的 `imageUrl` |
 | 學員頭像 | `public/testimonials/名字.jpg` | `src/data/testimonials.ts` 的 `imageUrl` |
-| 首頁滿版大圖／影片（目前 `public/images/styles/hustle-hd.jpg`） | `public/images/` | `src/data/site.ts` 的 `HERO_MEDIA`；換照片後依人物位置調 `Hero.tsx` 的 `OBJECT_POSITION` |
+| 首頁滿版大圖／影片（目前 `public/images/hero/hero-couple.jpg`，從原檔輸出 3200px 寬才不會糊） | `public/images/` | `src/data/site.ts` 的 `HERO_MEDIA`；換照片後依人物位置調 `Hero.tsx` 的 `OBJECT_POSITION` |
 | 首頁舞風卡片照（Hustle／Zouk） | `public/images/styles/`，**用新檔名** | `src/components/home/DanceStyles.tsx` 的 `photo`；照片太亮可調 `overlay` |
 | 首頁「關於我們」大合照 | `public/images/about/group.jpg` | 直接換檔（建議換新檔名並改 `WhoWeAre.tsx` 裡的路徑） |
 | 教室場地照 | `public/images/venue.jpg` | `src/app/(site)/location/page.tsx` 裡被註解掉的 `photo={{...}}`，取消註解即可 |

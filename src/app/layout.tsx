@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bebas_Neue, Montserrat, Noto_Sans_TC, Poppins } from "next/font/google";
+import { Montserrat, Noto_Sans_TC } from "next/font/google";
 import { Analytics } from '@vercel/analytics/next';
 import JsonLd from '@/components/JsonLd';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_NAME_SERP, SITE_URL } from '@/constants/site';
@@ -8,7 +8,7 @@ import "./globals.css";
 
 // 中文字體：思源黑體（Noto Sans TC，SIL OFL，可商用）。沒有指定中文字體時，
 // 每台裝置會用自己內建的字（蘋方／微軟正黑體…），同一頁在不同手機上長得不一樣。
-// 英文與數字由 Poppins 負責（它排在字體清單前面），中文字才落到這裡。
+// 英文與數字由 Montserrat 負責（它排在字體清單前面），中文字才落到這裡。
 // CJK 字體沒有可預載的 subset，所以 preload: false；Google Fonts 會依頁面用到的字
 // 分塊下載，不會整套幾 MB 一次載入。
 const notoSansTC = Noto_Sans_TC({
@@ -19,28 +19,12 @@ const notoSansTC = Noto_Sans_TC({
   preload: false,
 });
 
-const poppins = Poppins({
+// 英文／數字：Montserrat。寬體幾何無襯線，同一套字兼做內文與 wordmark
+// （導覽列中央、頁尾的「HUSTLEHUSTLE KHS」與照片上的英文小標），全站只有這一套英文字。
+const montserrat = Montserrat({
   weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
-  variable: '--font-poppins',
-  display: 'swap',
-});
-
-// 英文展示字：呼應 IG 海報上 HUSTLE／ZOUK 的瘦長粗體。只用在照片上的大字（.font-display），
-// 不要拿來排內文或中文。
-const bebasNeue = Bebas_Neue({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-bebas',
-  display: 'swap',
-});
-
-// 品牌字（wordmark）：導覽列中央與頁尾的「HUSTLEHUSTLE KHS」。寬體幾何無襯線、全大寫加字距，
-// 參考精品官網置中 logo 的做法。只給 wordmark 和照片上的英文小標用（.font-wordmark），不排內文。
-const montserrat = Montserrat({
-  weight: ['500', '600'],
-  subsets: ['latin'],
-  variable: '--font-wordmark',
+  variable: '--font-montserrat',
   display: 'swap',
 });
 
@@ -85,7 +69,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-TW">
-      <body className={`${notoSansTC.variable} ${poppins.variable} ${bebasNeue.variable} ${montserrat.variable} font-poppins antialiased`}>
+      <body className={`${notoSansTC.variable} ${montserrat.variable} antialiased`}>
         <JsonLd data={organizationJsonLd()} />
         {children}
         <Analytics />

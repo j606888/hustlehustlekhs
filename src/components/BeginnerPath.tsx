@@ -85,7 +85,7 @@ export default function BeginnerPath({ selectable }: Props) {
             const highlighted = selectable ? selectable.selected === s.key : false;
             const body = (
               <>
-                <span className="font-poppins text-xs font-bold tracking-widest text-brand-strong">
+                <span className="eyebrow text-brand-strong">
                   {s.step}
                 </span>
                 <h3 className="text-xl font-bold text-heading">{s.title}</h3>
@@ -114,7 +114,7 @@ export default function BeginnerPath({ selectable }: Props) {
                 ) : (
                   <Link
                     href={s.href}
-                    className="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-brand underline-offset-2 hover:underline"
+                    className="mt-auto self-start text-link text-sm"
                   >
                     {s.cta}
                     <ArrowRight className="size-4" />
@@ -123,7 +123,7 @@ export default function BeginnerPath({ selectable }: Props) {
               </>
             );
             const cardClass = cn(
-              'flex flex-col gap-3 rounded-2xl p-5 text-left ring-1 transition',
+              'flex flex-col gap-3 rounded-lg p-5 text-left ring-1 transition',
               highlighted ? 'bg-brand-light ring-2 ring-brand' : 'bg-card ring-ink-200',
               selectable && !highlighted && 'cursor-pointer hover:ring-brand/50'
             );
@@ -155,7 +155,7 @@ export default function BeginnerPath({ selectable }: Props) {
             給他們一個直接去課表的出口，看得到中階／進階班。/beginners 不需要。 */}
         {!selectable && (
           <div className="mt-6 flex justify-center">
-            <Button asChild variant="outline" size="lg">
+            <Button asChild variant="link">
               <Link href="/courses?tab=schedule">
                 已經會跳了？
                 <ArrowRight className="size-4" />

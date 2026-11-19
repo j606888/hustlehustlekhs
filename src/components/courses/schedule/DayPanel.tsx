@@ -33,7 +33,7 @@ export default function DayPanel({ track, date, now }: Props) {
   return (
     <section
       aria-live="polite"
-      className="mt-4 flex flex-col gap-3 rounded-2xl bg-ink-50 p-4 ring-1 ring-inset ring-ink-200"
+      className="mt-4 flex flex-col gap-3 rounded-lg bg-ink-50 p-4 ring-1 ring-inset ring-ink-200"
     >
       <div className="flex flex-wrap items-center gap-2">
         <span
@@ -53,7 +53,7 @@ export default function DayPanel({ track, date, now }: Props) {
         <ul className="flex flex-col gap-1.5">
           {plan.slots.map((slot) => (
             <li key={slot.time} className="flex items-baseline gap-3 text-sm md:text-base">
-              <span className="font-poppins font-bold tabular-nums text-heading">{slot.time}</span>
+              <span className="font-bold tabular-nums text-heading">{slot.time}</span>
               <span className="text-ink-700">{slot.title}</span>
             </li>
           ))}

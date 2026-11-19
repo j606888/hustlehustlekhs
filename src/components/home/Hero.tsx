@@ -28,7 +28,7 @@ const Hero = ({ media }: Props) => {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/0 md:via-black/20" />
 
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-3 px-5 pb-8 text-center text-white md:gap-4 md:pb-16">
-          <p className="font-wordmark text-[11px] font-medium uppercase tracking-[0.3em] text-white/85 md:text-sm">
+          <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-white/85 md:text-sm">
             Hustle ・ Brazilian Zouk
           </p>
           {/* h1 前半句帶「高雄／雙人社交舞」，讓只掃一眼標題的人也知道這是什麼、在哪裡；
@@ -76,6 +76,8 @@ function HeroMedia({ media }: Props) {
         fill
         // 手機與桌機都是滿版，所以就是 100vw；沒寫 sizes 的話手機會去抓 3840px 的版本。
         sizes="100vw"
+        // 預設壓縮品質 75 在滿版大圖上看得出糊，首圖拉高一點
+        quality={85}
         priority
         className={`object-cover ${OBJECT_POSITION}`}
       />

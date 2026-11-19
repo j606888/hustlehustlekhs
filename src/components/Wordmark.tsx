@@ -12,7 +12,7 @@ export default function Wordmark({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        'font-wordmark font-semibold uppercase leading-none tracking-[0.16em] whitespace-nowrap',
+        'font-semibold uppercase leading-none tracking-[0.16em] whitespace-nowrap',
         className,
       )}
     >

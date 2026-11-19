@@ -27,13 +27,13 @@ export default function EventsBoard() {
             <WorkshopSection key={event.id} event={event} detail={getWorkshopDetail(event.id)} now={now} />
           ))
         ) : (
-          <p className="rounded-2xl border border-dashed border-ink-200 px-4 py-5 text-sm text-ink-600">
+          <p className="rounded-lg border border-dashed border-ink-200 px-4 py-5 text-sm text-ink-600">
             目前沒有開放報名的活動，追蹤{' '}
             <a
               href={LINKS.INSTAGRAM}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-brand underline-offset-2 hover:underline"
+              className="text-link"
             >
               Instagram
             </a>{' '}
@@ -85,11 +85,11 @@ function WorkshopSection({
             </span>
           )}
         </div>
-        <h2 className="font-poppins text-2xl font-bold text-heading md:text-3xl">{event.title}</h2>
+        <h2 className="text-2xl font-bold text-heading md:text-3xl">{event.title}</h2>
         {detail && <p className="text-base text-ink-700">{detail.subtitle}</p>}
       </div>
 
-      <div className="flex flex-col gap-2 rounded-2xl bg-ink-50 px-4 py-4 text-sm text-ink-800 md:text-base">
+      <div className="flex flex-col gap-2 rounded-lg bg-ink-50 px-4 py-4 text-sm text-ink-800 md:text-base">
         <p className="flex items-start gap-2">
           <CalendarDays aria-hidden className="mt-0.5 size-4 shrink-0 text-event-accent" />
           <span>{dateText}</span>
@@ -127,12 +127,12 @@ function WorkshopSection({
             <h3 className="text-lg font-bold text-ink-900">時間表</h3>
             <div className="grid gap-3 sm:grid-cols-2">
               {detail.schedule.map((day) => (
-                <div key={day.day} className="rounded-2xl p-4 ring-1 ring-ink-200">
+                <div key={day.day} className="rounded-lg p-4 ring-1 ring-ink-200">
                   <p className="mb-2 font-bold text-event-accent">{day.day}</p>
                   <ul className="flex flex-col gap-1 text-sm text-ink-800">
                     {day.items.map((item) => (
                       <li key={item.time} className="flex gap-3">
-                        <span className="font-poppins tabular-nums text-ink-600">{item.time}</span>
+                        <span className="tabular-nums text-ink-600">{item.time}</span>
                         <span>{item.title}</span>
                       </li>
                     ))}
@@ -147,21 +147,20 @@ function WorkshopSection({
               方案{early && earlyMonth ? `（早鳥價至 ${earlyMonth}/${earlyDay}）` : ''}
             </h3>
             <div className="flex flex-col gap-3">
-              {detail.passes.map((pass, index) => {
+              {/* 每個方案框一樣的細框線，不特別標出第一個（業主 2026/11/20） */}
+              {detail.passes.map((pass) => {
                 const price = early ? pass.price : pass.originalPrice ?? pass.price;
                 return (
                   <div
                     key={pass.name}
-                    className={`flex items-center justify-between rounded-2xl px-4 py-3.5 ${
-                      index === 0 ? 'ring-2 ring-event-accent' : 'ring-1 ring-ink-200'
-                    }`}
+                    className="flex items-center justify-between rounded-lg px-4 py-3.5 ring-1 ring-ink-200"
                   >
                     <div className="flex flex-col">
                       <span className="font-bold text-ink-900">{pass.name}</span>
                       <span className="text-sm text-ink-600">{pass.note}</span>
                     </div>
                     <div className="flex flex-col items-end">
-                      <span className="font-poppins text-xl font-bold text-heading">${price}</span>
+                      <span className="text-xl font-bold text-heading">${price}</span>
                       {early && pass.originalPrice && (
                         <span className="text-sm text-ink-500 line-through">${pass.originalPrice}</span>
                       )}

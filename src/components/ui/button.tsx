@@ -19,7 +19,8 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
         ghost:
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline",
+        // 次要動作：文字連結，樣式來自 globals.css 的 .text-link（尺寸的 padding/高度在下面 compoundVariants 歸零）
+        link: "text-link",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
@@ -28,6 +29,9 @@ const buttonVariants = cva(
         icon: "size-9",
       },
     },
+    compoundVariants: [
+      { variant: "link", class: "h-auto p-0 has-[>svg]:px-0 font-semibold shadow-none" },
+    ],
     defaultVariants: {
       variant: "default",
       size: "default",
