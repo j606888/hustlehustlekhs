@@ -1,6 +1,7 @@
 import React from 'react';
 
-// 全站共用的區塊／頁面標題：品牌色小標 → 標題 → 品牌色短線 → 灰色副標。
+// 全站共用的區塊／頁面標題：小標（.eyebrow，跟首圖同一種寬字距小字）→ 標題 → 1px 品牌色細線 → 灰色副標。
+// 以前是粗體品牌色小標＋4px 粉色圓角短線，跟首圖的精品風格不搭，改成細字細線。
 // size='md' 給首頁區塊，size='lg' 給頁面層級的頁首（如 /teachers）。
 // 小標與副標都可以不給（例如 /location 只留標題）。
 type Props = {
@@ -29,8 +30,11 @@ const SectionHeading = ({
     size === 'lg'
       ? 'text-3xl md:text-5xl'
       : size === 'page-compact'
-        ? 'text-2xl md:text-5xl'
+        ? // 手機要一行放完（例如「高雄 Hustle / Zouk 課表選課」），加字距會擠成兩行，所以字距只在桌機加
+          'text-2xl md:text-5xl md:tracking-[0.06em]'
         : 'text-2xl md:text-3xl';
+  // 標題字距跟首圖 h1 一樣（0.06em）
+  const titleTracking = size === 'page-compact' ? '' : 'tracking-[0.06em]';
   // nowrap：約 22 個全形字 × 4vw ≈ 88vw，320px 的小手機扣掉左右留白也放得下
   const subtitleClass =
     subtitleFit === 'nowrap'
@@ -38,15 +42,15 @@ const SectionHeading = ({
       : 'max-w-md text-base text-ink-600 md:text-lg';
 
   return (
-    <div className={`flex flex-col items-center text-center gap-2 ${className}`}>
+    <div className={`flex flex-col items-center text-center gap-3 ${className}`}>
       {eyebrow && (
-        <p className="text-sm font-semibold tracking-widest text-brand-strong md:text-base">
+        <p className="eyebrow text-brand-strong">
           {eyebrow}
         </p>
       )}
       {/* text-balance：標題換行時讓每行一樣長，不會剩兩個字孤零零在第二行（例如「…課表 / 選課」） */}
-      <Tag className={`font-bold text-heading text-balance ${titleSize}`}>{title}</Tag>
-      <span className="w-12 h-1 rounded-full bg-brand" />
+      <Tag className={`font-bold text-heading text-balance ${titleTracking} ${titleSize}`}>{title}</Tag>
+      <span aria-hidden className="h-px w-10 bg-brand" />
       {subtitle && <p className={subtitleClass}>{subtitle}</p>}
     </div>
   );

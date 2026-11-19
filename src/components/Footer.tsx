@@ -6,7 +6,7 @@ import Wordmark from '@/components/Wordmark'
 
 const Footer = () => {
   return (
-    <footer className="bg-ink-700 text-ink-300">
+    <footer className="bg-ink-900 text-ink-300">
       <div className="px-6 py-10 md:max-w-7xl md:mx-auto">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
@@ -23,7 +23,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="flex flex-col gap-3">
-            <h3 className="text-sm font-semibold text-ink-200 uppercase tracking-wider">快速連結</h3>
+            <h3 className="eyebrow text-ink-200">快速連結</h3>
             <nav className="flex flex-col gap-2 text-sm">
               <Link href={LINKS.BEGINNERS} className="hover:text-white transition-colors">新手入門</Link>
               <Link href="/courses" className="hover:text-white transition-colors">課表選課</Link>
@@ -36,7 +36,7 @@ const Footer = () => {
 
           {/* Contact：LINKS.LINE 還沒填時不渲染，避免留一個點了沒反應的連結 */}
           <div className="flex flex-col gap-3">
-            <h3 className="text-sm font-semibold text-ink-200 uppercase tracking-wider">聯絡我們</h3>
+            <h3 className="eyebrow text-ink-200">聯絡我們</h3>
             <div className="flex flex-col gap-2 text-sm">
               <a href={LINKS.INSTAGRAM_DM} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white transition-colors">
                 <Image src="/icons/instagram.svg" alt="Instagram" width={20} height={20} />
@@ -53,7 +53,7 @@ const Footer = () => {
 
           {/* 上課據點：地址以 src/data/venues.ts 為單一來源，避免站內地址不一致 */}
           <div className="flex flex-col gap-3">
-            <h3 className="text-sm font-semibold text-ink-200 uppercase tracking-wider">上課據點</h3>
+            <h3 className="eyebrow text-ink-200">上課據點</h3>
             <div className="flex flex-col gap-3 text-sm">
               {VENUES.map((venue) => (
                 <Link
@@ -72,7 +72,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-ink-600 pt-6 text-center text-sm text-ink-500">
+        <div className="mt-10 border-t border-ink-700 pt-6 text-center text-sm text-ink-400">
           HustleHustle KHS © {new Date().getFullYear()} Copyright
         </div>
       </div>

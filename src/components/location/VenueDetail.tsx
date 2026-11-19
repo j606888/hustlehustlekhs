@@ -54,7 +54,7 @@ export default function VenueDetail({
 
       {photo && (
         <div className="flex w-full flex-col gap-3">
-          <div className="relative aspect-[16/10] w-full overflow-hidden rounded-xl shadow-sm md:aspect-[16/9]">
+          <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg md:aspect-[16/9]">
             <Image
               src={photo.src}
               alt={photo.alt}
@@ -78,7 +78,7 @@ export default function VenueDetail({
         ))}
         <Link
           href="/courses?tab=schedule"
-          className="text-sm font-medium text-brand underline-offset-2 hover:underline"
+          className="text-link text-sm"
         >
           查看每月課表與上課時間 →
         </Link>
@@ -92,7 +92,7 @@ export default function VenueDetail({
             {notes.map((note) => (
               <div
                 key={note.question}
-                className="rounded-xl border border-ink-200 px-4 py-4"
+                className="rounded-lg border border-ink-200 px-4 py-4"
               >
                 <dt className="font-bold text-ink-900">{note.question}</dt>
                 <dd className="mt-1.5 text-sm leading-relaxed text-ink-700 md:text-base">
@@ -105,7 +105,7 @@ export default function VenueDetail({
       )}
 
       {/* 報名 CTA */}
-      <section className="flex w-full flex-col items-center gap-3 rounded-xl bg-section px-4 py-8 text-center">
+      <section className="flex w-full flex-col items-center gap-3 rounded-lg bg-section px-4 py-8 text-center">
         <h2 className="text-xl font-bold md:text-2xl">想來上課？</h2>
         <p className="max-w-md text-sm text-ink-600 md:text-base">
           不需舞伴、零基礎都可以報名。直接報名體驗課，也歡迎{' '}
@@ -113,7 +113,7 @@ export default function VenueDetail({
             href={LINKS.INSTAGRAM_DM}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-brand underline"
+            className="text-link"
           >
             Instagram 私訊詢問
           </Link>
@@ -124,7 +124,7 @@ export default function VenueDetail({
           <Button asChild size="lg">
             <Link href={LINKS.TRIAL_SIGNUP}>報名體驗課</Link>
           </Button>
-          <Button asChild size="lg" variant="outline">
+          <Button asChild variant="link">
             <Link href={LINKS.PRICING}>了解費用</Link>
           </Button>
         </div>
@@ -143,7 +143,7 @@ function VenueCard({ venue, tracks }: { venue: Venue; tracks: Track[] }) {
   return (
     <div
       id={venue.slug}
-      className="flex scroll-mt-20 flex-col gap-4 rounded-xl border border-ink-200 px-4 py-5"
+      className="flex scroll-mt-20 flex-col gap-4 rounded-lg border border-ink-200 px-4 py-5"
     >
       <div className="flex flex-col gap-1">
         {days && (
@@ -163,7 +163,7 @@ function VenueCard({ venue, tracks }: { venue: Venue; tracks: Track[] }) {
           href={venue.mapLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-1 self-start text-sm font-medium text-brand underline-offset-2 hover:underline"
+          className="mt-1 self-start text-link text-sm"
         >
           {/* 兩個場地，所以連結一定要帶教室名，不然客人不知道自己點的是哪一間。
               用「」包起來，中英文場地名的間距都不會怪。 */}

@@ -8,8 +8,10 @@ import { THEMES, type EnrollEvent } from '@/components/courses/schedule/data';
 
 // 報名頁的配色規則（跟課表卡刻意不同）：卡片一律白底，舞種色只出現在
 // 日期章的頂條與舞種 chip 這種小面積，CTA 全站統一用品牌色。
+// 例外：Workshop 的日期章頂條與「Workshop」chip 用 Event 的墨青綠（track-c-strong），
+// 跟月曆上的 Workshop 格子、「活動」分頁同一個顏色；舞種 chip 照樣依舞種上色。
 // 不要在這裡用 THEMES 的 pageFrom / accentText —— 前者是大色塊，
-// 後者（如 #d4796e）壓白底只有約 3.3:1，小字看不清楚。
+// 後者（如 track-a-accent）壓白底只有約 3.3:1，小字看不清楚。
 
 const KIND_LABEL = {
   trial: '體驗課',
@@ -28,6 +30,8 @@ type Props = {
 
 export default function EventCard({ event, hideStartTime, hidePrice }: Props) {
   const theme = THEMES[event.theme];
+  const isWorkshop = event.kind === 'workshop';
+  const stampBg = isWorkshop ? THEMES.trackC.highlightCellStrong : theme.accentBg;
   const venue = event.venueSlug ? getVenue(event.venueSlug) : null;
 
   const meta: React.ReactNode[] = [];
@@ -51,27 +55,27 @@ export default function EventCard({ event, hideStartTime, hidePrice }: Props) {
   return (
     <article
       id={event.id}
-      className="flex scroll-mt-20 flex-col gap-4 rounded-3xl bg-card p-4 shadow-sm ring-1 ring-ink-200 sm:flex-row sm:items-center sm:gap-5 sm:p-5"
+      className="flex scroll-mt-20 flex-col gap-4 rounded-lg bg-card p-4 ring-1 ring-ink-200 sm:flex-row sm:items-center sm:gap-5 sm:p-5"
     >
       {/* 手機：日期章與文字並排，按鈕自己一列（sm:contents 讓這層在桌機消失，
           日期章與文字就直接變成外層 flex-row 的子元素）。 */}
       <div className="flex items-start gap-4 sm:contents">
         {/* 日期章：唯一帶舞種色的區塊 */}
-        <div className="flex w-16 flex-shrink-0 flex-col overflow-hidden rounded-xl text-center shadow-sm ring-1 ring-ink-100">
+        <div className="flex w-16 flex-shrink-0 flex-col overflow-hidden rounded-md text-center ring-1 ring-ink-100">
           <div
             className={cn(
-              'py-0.5 font-poppins text-[10px] font-bold tracking-widest text-white',
-              theme.accentBg
+              'py-0.5 text-[10px] font-bold tracking-widest text-white',
+              stampBg
             )}
           >
             {event.weekdayEn}
           </div>
           <div className="bg-ink-50 px-1 py-1.5">
-            <div className="font-poppins text-lg font-bold leading-tight text-heading">
+            <div className="text-lg font-bold leading-tight text-heading">
               {event.dateLabel}
             </div>
             {event.endDateLabel && (
-              <div className="font-poppins text-xs font-bold leading-tight text-ink-500">
+              <div className="text-xs font-bold leading-tight text-ink-500">
                 –{event.endDateLabel}
               </div>
             )}
@@ -80,7 +84,14 @@ export default function EventCard({ event, hideStartTime, hidePrice }: Props) {
 
         <div className="flex flex-grow flex-col gap-1.5">
           <div className="flex flex-wrap items-center gap-1.5">
-            <span className="rounded-full bg-ink-100 px-2.5 py-1 text-xs font-medium text-ink-600">
+            <span
+              className={cn(
+                'rounded-full px-2.5 py-1 text-xs',
+                isWorkshop
+                  ? 'bg-track-c-strong font-bold text-white'
+                  : 'bg-ink-100 font-medium text-ink-600'
+              )}
+            >
               {KIND_LABEL[event.kind]}
             </span>
             <span
@@ -119,7 +130,7 @@ export default function EventCard({ event, hideStartTime, hidePrice }: Props) {
           {event.kind === 'workshop' && (
             <Link
               href={`/courses?tab=events#${event.id}`}
-              className="w-fit text-sm font-medium text-brand underline-offset-2 hover:underline"
+              className="w-fit text-link text-sm"
             >
               看完整介紹
             </Link>

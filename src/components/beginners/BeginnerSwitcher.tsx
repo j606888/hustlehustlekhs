@@ -84,7 +84,7 @@ export default function BeginnerSwitcher({ level1Panel }: Props) {
         id={PANEL_ID.trial}
         className={selected === 'trial' ? 'flex scroll-mt-20 flex-col gap-3' : 'hidden'}
       >
-        <h2 className="font-poppins text-xl font-bold text-heading md:text-2xl">近期體驗課</h2>
+        <h2 className="text-xl font-bold text-heading md:text-2xl">近期體驗課</h2>
         {/* 價格上方 STEP 1 卡已經寫了；開始時間寫在每張卡的說明裡。
             卡片內容跟報名頁的體驗課卡一模一樣（同一個 EventCard、同樣的 hide 設定）。 */}
         <p className="-mt-1 text-sm text-ink-600">零基礎、不用舞伴，只來一次也可以，課後接 Party。</p>
@@ -98,13 +98,13 @@ export default function BeginnerSwitcher({ level1Panel }: Props) {
             />
           ))
         ) : (
-          <p className="rounded-2xl border border-dashed border-ink-200 px-4 py-5 text-sm text-ink-500">
+          <p className="rounded-lg border border-dashed border-ink-200 px-4 py-5 text-sm text-ink-500">
             下一期體驗課還在安排，追蹤{' '}
             <a
               href={LINKS.INSTAGRAM}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-brand underline-offset-2 hover:underline"
+              className="text-link"
             >
               Instagram
             </a>{' '}
@@ -117,7 +117,7 @@ export default function BeginnerSwitcher({ level1Panel }: Props) {
         id={PANEL_ID.level1}
         className={selected === 'level1' ? 'flex scroll-mt-20 flex-col gap-3' : 'hidden'}
       >
-        <h2 className="font-poppins text-xl font-bold text-heading md:text-2xl">零基礎新手班</h2>
+        <h2 className="text-xl font-bold text-heading md:text-2xl">零基礎新手班</h2>
         {level1Panel}
       </div>
     </div>

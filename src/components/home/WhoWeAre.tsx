@@ -30,7 +30,7 @@ const WhoWeAre = () => {
               key={teacher.slug}
               // 有影片就直接跳到個人頁的影片區（舞者朋友回饋：想看老師跳舞的樣子）
               href={`/teachers/${teacher.slug}${teacher.videos.length > 0 ? '#videos' : ''}`}
-              className="group flex items-start gap-4 rounded-2xl bg-card p-5 ring-1 ring-ink-200 transition hover:ring-brand/40"
+              className="group flex items-start gap-4 rounded-lg bg-card p-5 ring-1 ring-ink-200 transition hover:ring-brand/40"
             >
               <Avatar src={teacher.imageUrl} alt={teacher.name} focus={teacher.avatarFocus} />
               <div className="flex flex-col gap-1">
@@ -41,7 +41,7 @@ const WhoWeAre = () => {
                   )}
                 </p>
                 <p className="text-sm leading-relaxed text-ink-700">{teacher.description[0]}</p>
-                <span className="mt-1 text-sm font-semibold text-brand group-hover:underline">
+                <span className="mt-1 self-start text-link text-sm">
                   {teacher.videos.length > 0 ? `▶ 看${teacher.name}跳舞` : `認識${teacher.name}`} →
                 </span>
               </div>
@@ -49,7 +49,7 @@ const WhoWeAre = () => {
           ))}
         </div>
 
-        <div className="relative mt-8 aspect-[3/2] w-full overflow-hidden rounded-2xl bg-ink-100">
+        <div className="relative mt-8 aspect-[3/2] w-full overflow-hidden rounded-lg bg-ink-100">
           <Image
             src="/images/about/group.jpg"
             alt="HustleHustle KHS 的老師與學員在教室的大合照"

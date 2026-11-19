@@ -44,7 +44,7 @@ export default function TeachersPage() {
             <Link
               key={teacher.slug}
               href={`/teachers/${teacher.slug}`}
-              className='group flex flex-col overflow-hidden rounded-lg bg-card ring-1 ring-black/5 shadow-sm transition-shadow hover:shadow-md'
+              className='group flex flex-col overflow-hidden rounded-lg bg-card ring-1 ring-ink-200 transition hover:ring-brand/40'
             >
               <div className='relative aspect-[3/4] overflow-hidden md:aspect-[2/3]'>
                 <Image
@@ -65,13 +65,13 @@ export default function TeachersPage() {
                   {teacher.courses.map((item) => (
                     <span
                       key={item}
-                      className='text-[11px] text-white bg-brand px-2 py-0.5 rounded md:text-xs md:px-2.5 md:py-1'
+                      className='text-[11px] text-white bg-brand px-2 py-0.5 rounded-full md:text-xs md:px-2.5 md:py-1'
                     >
                       {item}
                     </span>
                   ))}
                 </div>
-                <span className='mt-3 inline-flex items-center gap-0.5 text-xs font-medium text-brand md:mt-4 md:text-sm'>
+                <span className='mt-3 self-start text-link text-xs md:mt-4 md:text-sm'>
                   查看介紹
                   <ChevronRight className='size-3.5 transition-transform group-hover:translate-x-0.5 md:size-4' />
                 </span>

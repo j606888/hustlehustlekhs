@@ -81,7 +81,7 @@ const Navbar = () => {
           <IGIcon className="h-6 w-6" />
         </Link>
 
-        <Button asChild variant="outline" className="absolute right-6 hidden md:inline-flex lg:right-10">
+        <Button asChild variant="ghost" className="absolute right-6 hidden text-ink-800 md:inline-flex lg:right-10">
           <Link href={LINKS.INSTAGRAM_DM} target="_blank" rel="noopener noreferrer">
             <IGIcon className="h-5 w-5" />
             IG 私訊詢問

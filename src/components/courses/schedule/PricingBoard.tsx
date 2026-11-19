@@ -6,7 +6,7 @@ export default function PricingBoard() {
     <div className="bg-card">
       <div className="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-8 md:gap-10 md:px-6 md:py-12">
         <div className="flex flex-col">
-          <h2 className="font-poppins text-2xl font-bold text-heading md:text-3xl">
+          <h2 className="text-2xl font-bold text-heading md:text-3xl">
             課程費用
           </h2>
           <p className="mt-1 text-sm text-ink-600 md:text-base">
@@ -25,11 +25,11 @@ function PlanSection({ plan }: { plan: PricePlan }) {
   return (
     <section
       id={plan.id}
-      className="scroll-mt-20 overflow-hidden rounded-3xl bg-card shadow-sm ring-1 ring-ink-200"
+      className="scroll-mt-20 overflow-hidden rounded-lg bg-card ring-1 ring-ink-200"
     >
       {/* 標頭：方案名 + 適用課程彩色 chip */}
       <div className="flex flex-col gap-2 px-5 py-4 md:px-6 md:py-5">
-        <h3 className="font-poppins text-xl font-bold text-heading md:text-2xl">
+        <h3 className="text-xl font-bold text-heading md:text-2xl">
           {plan.name}
         </h3>
         <div className="flex flex-wrap items-center gap-1.5">
@@ -67,7 +67,7 @@ function PlanSection({ plan }: { plan: PricePlan }) {
 
 function TierCard({ tier }: { tier: PriceTier }) {
   return (
-    <div className="rounded-2xl border border-ink-100 bg-ink-50 px-4 py-4">
+    <div className="rounded-lg border border-ink-100 bg-ink-50 px-4 py-4">
       <div className="flex flex-col">
         <p className="text-lg font-bold text-heading">{tier.title}</p>
         {tier.subtitle && (

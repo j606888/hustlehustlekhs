@@ -82,7 +82,7 @@ export default async function TeacherPage({ params }: { params: Promise<{ slug: 
           </div>
           <div className='flex flex-wrap gap-2 md:justify-center'>
             {teacher.skills.map((skill) => (
-              <div key={skill} className='text-xs text-white bg-brand px-2 py-1 rounded-2xl md:text-base md:px-4 md:py-1 md:rounded-3xl'>{skill}</div>
+              <div key={skill} className='text-xs text-white bg-brand px-2 py-1 rounded-full md:text-base md:px-4 md:py-1'>{skill}</div>
             ))}
           </div>
         </div>
@@ -137,7 +137,7 @@ export default async function TeacherPage({ params }: { params: Promise<{ slug: 
         <p className='text-ink-700 mb-2 font-bold'>授課項目</p>
         <div className='flex flex-wrap gap-2'>
           {teacher.courses.map((course) => (
-            <div key={course} className='text-xs text-white bg-brand px-3 py-2 rounded-md'>{course}</div>
+            <div key={course} className='text-xs text-white bg-brand px-3 py-2 rounded-full'>{course}</div>
           ))}
         </div>
       </div>

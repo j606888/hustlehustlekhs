@@ -39,7 +39,7 @@ const Testimonial = ({ testimonial }: { testimonial: TestimonialType }) => {
   }, [expanded]);
 
   return (
-    <div className="flex h-full flex-col rounded-2xl bg-brand-light p-6 ring-1 ring-brand/15 transition duration-200 hover:ring-brand/30 md:p-7">
+    <div className="flex h-full flex-col rounded-lg bg-brand-light p-6 ring-1 ring-brand/15 transition duration-200 hover:ring-brand/30 md:p-7">
       <div className="flex flex-col items-center text-center">
         <div className="w-24 h-24 relative mb-4">
           <Image
@@ -77,7 +77,7 @@ const Testimonial = ({ testimonial }: { testimonial: TestimonialType }) => {
           onClick={() => setExpanded((prev) => !prev)}
           aria-expanded={expanded}
           // min-h-11（44px）：手機上要好按，之前只有文字本身約 20px 高
-          className="mt-1 inline-flex min-h-11 cursor-pointer items-center gap-1 self-start text-sm font-medium text-brand hover:underline"
+          className="mt-1 min-h-11 cursor-pointer self-start text-link text-sm"
         >
           {expanded ? '收合' : '看更多'}
           <ChevronDown

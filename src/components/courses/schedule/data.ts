@@ -210,13 +210,13 @@ const TIME_AND_PLACE: MonthConfig['legend'] = [
 const FOOTNOTE = '★ 實際場次以 Instagram 公告為準';
 
 /**
- * 月曆上方的顏色圖例（業主 2026/11/19 指定）：藍＝Zouk、藕＝Hustle、金＝Event。
+ * 月曆上方的顏色圖例（業主 2026/11/19 指定）：藍＝Zouk、藕＝Hustle、青＝Event（原本是金色，2026/11/20 改成墨青綠）。
  * 每個月都一樣，不跟 MonthConfig.legend 走。colorName 給讀屏軟體念，畫面上只顯示圓點＋label。
  */
 export const CALENDAR_LEGEND: { theme: ThemeKey; colorName: string; label: string }[] = [
   { theme: 'trackB', colorName: '藍色', label: 'Zouk' },
   { theme: 'trackA', colorName: '藕色', label: 'Hustle' },
-  { theme: 'trackC', colorName: '金色', label: 'Event' },
+  { theme: 'trackC', colorName: '青色', label: 'Event' },
 ];
 
 // TODO: 每個月要更新這一塊 —— 新的月份 push 到 MONTHS 後面（或替換掉過期的），
@@ -310,7 +310,7 @@ export const MONTHS: MonthConfig[] = [
     titleZh: '一月',
     // TODO: 一月的常態課日期還沒排，排好後把 Hustle / Zouk 的日子加進 highlights，
     //       並拿掉 footnote 裡「確認後更新」那句。
-    // 1/23–24 Olga & Fernando 台南 Zouk Weekender：用 trackC（金色）跟常態課的藍、粉分開，
+    // 1/23–24 Olga & Fernando 台南 Zouk Weekender：用 trackC（墨青綠）跟常態課的藍、粉分開，
     // 點下去到「活動」分頁看完整資訊（EVENTS 的 id 要跟這裡的錨點一致）。
     highlights: {
       23: {
@@ -506,7 +506,8 @@ export type EventKind = 'trial' | 'workshop';
 export interface EnrollEvent {
   id: string; // 錨點與 JSON-LD 的 @id，例如 'zouk-trial-0918'
   kind: EventKind;
-  /** 舞種色。報名頁刻意只用兩色：trackA=Hustle、trackB=Zouk（Workshop 也照舞種上色）。 */
+  /** 舞種色：trackA=Hustle、trackB=Zouk，用在報名頁的舞種 chip。Workshop 的日期章與「Workshop」chip
+   *  另外固定用 trackC（墨青綠），跟月曆、活動分頁一致，見 EventCard.tsx。 */
   theme: 'trackA' | 'trackB';
   danceStyle: string; // 'Brazilian Zouk'，JSON-LD 用
   title: string;

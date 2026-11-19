@@ -86,14 +86,14 @@ export default function Introduction() {
     <div className="bg-card">
       <div className="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-8 md:gap-10 md:px-6 md:py-12">
         <div className="flex flex-col gap-3">
-          <h2 className="font-poppins text-2xl font-bold text-heading md:text-3xl">
+          <h2 className="text-2xl font-bold text-heading md:text-3xl">
             舞蹈風格介紹
           </h2>
           <p className="text-sm text-ink-600 md:text-base">
             我們在高雄教兩種雙人舞（社交舞）：旋轉律動的 Hustle，柔和流動的 Brazilian
             Zouk。兩種都是兩人一組，即興互動的舞蹈。
           </p>
-          <div className="flex items-start gap-3 rounded-2xl border border-callout-border bg-callout px-4 py-3.5">
+          <div className="flex items-start gap-3 rounded-lg border border-callout-border bg-callout px-4 py-3.5">
             <span className="text-xl leading-none" aria-hidden>✨</span>
             <p className="text-sm text-heading md:text-base">
               <strong>沒有任何舞蹈經驗？</strong>沒問題——我們的課程從零開始教，不需要舞伴，第一堂課就能跳起來。
@@ -115,17 +115,17 @@ function DanceCard({ dance }: { dance: DanceStyle }) {
   return (
     <section
       id={dance.id}
-      className={`scroll-mt-20 overflow-hidden rounded-3xl p-5 shadow-sm md:p-8 ${theme.pageBg}`}
+      className={`scroll-mt-20 overflow-hidden rounded-lg p-5 md:p-8 ${theme.pageBg}`}
     >
       {/* 標頭 */}
       <div className="flex flex-col leading-none">
         <span
-          className={`font-poppins text-4xl font-bold md:text-6xl ${theme.accentText}`}
+          className={`text-4xl font-bold md:text-6xl ${theme.accentText}`}
           style={{ textShadow: '3px 3px 0 color-mix(in srgb, var(--heading) 18%, transparent)' }}
         >
           {dance.nameEn}
         </span>
-        <span className="mt-2 font-poppins text-xl font-bold text-heading md:text-2xl">
+        <span className="mt-2 text-xl font-bold text-heading md:text-2xl">
           {dance.nameZh}
         </span>
         <span className="mt-1 text-sm text-ink-600">{dance.origin}</span>
@@ -145,7 +145,7 @@ function DanceCard({ dance }: { dance: DanceStyle }) {
       {/* 影片：還沒填 youtubeId 就整塊不渲染，不要留一個空的 iframe */}
       {dance.youtubeId && (
         <div
-          className="relative mt-5 w-full overflow-hidden rounded-2xl shadow-sm"
+          className="relative mt-5 w-full overflow-hidden rounded-lg"
           style={{ paddingBottom: '56.25%' }}
         >
           <iframe
@@ -162,7 +162,7 @@ function DanceCard({ dance }: { dance: DanceStyle }) {
       )}
 
       {/* tagline + 介紹 */}
-      <p className={`mt-5 font-poppins text-lg font-bold md:text-xl ${theme.accentText}`}>
+      <p className={`mt-5 text-lg font-bold md:text-xl ${theme.accentText}`}>
         {dance.tagline}
       </p>
       <div className="mt-3 flex flex-col gap-3">

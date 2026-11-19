@@ -18,7 +18,7 @@ export default function BeginnerClassCard({ item }: { item: BeginnerClass }) {
   return (
     <article
       id={item.id}
-      className="flex scroll-mt-20 flex-col overflow-hidden rounded-3xl bg-card shadow-sm ring-1 ring-ink-200"
+      className="flex scroll-mt-20 flex-col overflow-hidden rounded-lg bg-card ring-1 ring-ink-200"
     >
       <Image
         src={item.poster}
@@ -88,7 +88,7 @@ export default function BeginnerClassCard({ item }: { item: BeginnerClass }) {
             {/* 同一頁切到「體驗課」：用原生 <a href="#trial">，BeginnerSwitcher 聽 hashchange 切換並捲過去 */}
             <a
               href="#trial"
-              className="text-sm font-medium text-brand underline-offset-2 hover:underline"
+              className="text-link text-sm"
             >
               還不確定？先上一次體驗課
             </a>

@@ -62,7 +62,7 @@ export default function EnrollBoard() {
           )}
           <p className="-mt-1 text-sm text-ink-600">
             體驗完想每週固定上課？選下面
-            <a href="#regular" className="font-medium text-brand underline-offset-2 hover:underline">
+            <a href="#regular" className="text-link">
               常態課程
             </a>
             的課卡，從新手班開始。
@@ -84,7 +84,7 @@ export default function EnrollBoard() {
                 href={LINKS.INSTAGRAM}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-medium text-brand underline-offset-2 hover:underline"
+                className="text-link"
               >
                 Instagram
               </a>{' '}
@@ -115,14 +115,14 @@ export default function EnrollBoard() {
           </Section>
         )}
 
-        <div className="flex items-start gap-2.5 rounded-2xl border border-ink-100 bg-ink-50 px-4 py-4">
+        <div className="flex items-start gap-2.5 rounded-lg border border-ink-100 bg-ink-50 px-4 py-4">
           <MessageCircle className="mt-0.5 size-5 flex-shrink-0 text-brand" />
           <p className="text-sm leading-relaxed text-ink-600">
             表單送出後會收到 Google 表單的回覆信。
             有任何問題（要不要帶舞伴、穿什麼鞋、課卡怎麼算）先看{' '}
             <Link
               href={LINKS.FAQ}
-              className="font-medium text-brand underline-offset-2 hover:underline"
+              className="text-link"
             >
               Q&amp;A
             </Link>
@@ -131,7 +131,7 @@ export default function EnrollBoard() {
               href={LINKS.INSTAGRAM_DM}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-medium text-brand underline-offset-2 hover:underline"
+              className="text-link"
             >
               IG 私訊
             </a>
@@ -147,7 +147,7 @@ function JumpLink({ href, title, desc }: { href: string; title: string; desc: st
   return (
     <a
       href={href}
-      className="flex flex-col gap-0.5 rounded-2xl bg-card px-4 py-3 shadow-sm ring-1 ring-ink-200 transition hover:ring-brand"
+      className="flex flex-col gap-0.5 rounded-lg bg-card px-4 py-3 ring-1 ring-ink-200 transition hover:ring-brand"
     >
       <span className="text-base font-bold text-heading">{title}</span>
       <span className="text-sm text-ink-600">{desc} ↓</span>
@@ -171,7 +171,7 @@ function Section({
   return (
     <section id={id} className="flex scroll-mt-20 flex-col gap-3">
       <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-        <h2 className="font-poppins text-xl font-bold text-heading md:text-2xl">
+        <h2 className="text-xl font-bold text-heading md:text-2xl">
           {title}
         </h2>
         {hint && <p className="text-sm text-ink-500">{hint}</p>}
@@ -183,7 +183,7 @@ function Section({
 
 function EmptyNote({ children }: { children: React.ReactNode }) {
   return (
-    <p className="rounded-2xl border border-dashed border-ink-200 px-4 py-5 text-sm text-ink-500">
+    <p className="rounded-lg border border-dashed border-ink-200 px-4 py-5 text-sm text-ink-500">
       {children}
     </p>
   );

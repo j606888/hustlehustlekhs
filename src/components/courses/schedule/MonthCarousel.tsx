@@ -169,7 +169,7 @@ export default function MonthCarousel({ months }: { months: MonthConfig[] }) {
 
       {/* 顏色圖例＋IG 課表海報，放在月曆「上方」（業主 2026/11/19）：
           手機一進來就要先知道顏色代表什麼，海報連結也不用滑到最底才找得到。
-          圖例固定三色、不隨月份變：藍＝Zouk、藕＝Hustle、金＝Event（客座 Workshop 等）。 */}
+          圖例固定三色、不隨月份變：藍＝Zouk、藕＝Hustle、青＝Event（客座 Workshop 等）。 */}
       <div className="mt-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <ul className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-ink-700">
           {CALENDAR_LEGEND.map((item) => (

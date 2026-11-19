@@ -63,15 +63,15 @@ export default function BeginnersPage() {
           }
         />
 
-        <div className="mt-10 flex flex-col items-center gap-3 rounded-3xl bg-ink-50 px-5 py-6 text-center">
+        <div className="mt-10 flex flex-col items-center gap-3 rounded-lg bg-ink-50 px-5 py-6 text-center">
           <p className="text-sm text-ink-700">
             還有疑問？要穿什麼、要不要帶舞伴，先看{' '}
-            <Link href={LINKS.FAQ} className="font-semibold text-brand underline-offset-2 hover:underline">
+            <Link href={LINKS.FAQ} className="text-link">
               常見問題
             </Link>
             ，或直接問我們。
           </p>
-          <Button asChild variant="outline">
+          <Button asChild variant="link">
             <a href={LINKS.INSTAGRAM_DM} target="_blank" rel="noopener noreferrer">
               IG 私訊詢問
             </a>

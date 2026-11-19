@@ -86,16 +86,46 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* 英文／數字用 Poppins，中文落到思源黑體（Noto Sans TC）。兩條規則同一組字，
-   body 是保底，.font-poppins 是 layout 掛在 body 上、元件也會用的 class。 */
-body,
-.font-poppins {
-  font-family: var(--font-poppins), var(--font-noto-tc), system-ui, sans-serif;
+/* 全站只用兩套字：英文／數字用 Montserrat（跟導覽列的 wordmark 同一套），中文落到
+   思源黑體（Noto Sans TC）。以前另外有 Poppins（內文）與 Bebas Neue（照片上的大字），
+   四套字放在一起個性互相打架，所以收成一套。 */
+body {
+  font-family: var(--font-montserrat), var(--font-noto-tc), system-ui, sans-serif;
 }
 
-/* 英文展示字（Bebas Neue），呼應 IG 海報的瘦長粗體，只用在照片上的大字。 */
-.font-display {
-  font-family: var(--font-bebas), var(--font-poppins), sans-serif;
+/* 小標（eyebrow）：區塊標題上方、STEP 1、月份英文、頁尾欄位標題都用這一個。
+   樣式照首圖上的「HUSTLE ・ BRAZILIAN ZOUK」：小字、中等粗細、全大寫、寬字距。
+   顏色不寫在這裡，由呼叫端給（淺底用 text-brand-strong 或 text-ink-500，深底用白／淺灰）。 */
+@utility eyebrow {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  @media (width >= 48rem) {
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+  }
+}
+
+/* 文字連結：全站的次要動作（「看新手班」「了解費用」「IG 私訊詢問」這種）都用這個，
+   不另外做外框按鈕。一頁只留一顆實心主按鈕，其他動作退成文字連結，畫面才安靜。
+   Button 的 variant="link" 也是套這一個。底線常駐（手機沒有 hover，看得出能點），
+   平常是淡淡的品牌色，滑過時變實色。 */
+@utility text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 600;
+  color: var(--brand-strong);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: color-mix(in oklab, var(--brand) 45%, transparent);
+  transition: text-decoration-color 150ms;
+  &:hover {
+    text-decoration-color: currentColor;
+  }
 }
 
 /* 桌機導覽列多了一列選單（64px → 128px）。各區塊的 scroll-mt-20/24 是照手機 64px 算的，
@@ -104,11 +134,6 @@ body,
   html {
     scroll-padding-top: 3rem;
   }
-}
-
-/* 品牌字（Montserrat）：只用在 wordmark 與照片上的英文小標，見 components/Wordmark.tsx。 */
-.font-wordmark {
-  font-family: var(--font-wordmark), var(--font-poppins), sans-serif;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -149,17 +174,20 @@ body,
   --heading: var(--ink-900);
   /* 第二底色。首頁區塊在 --background（暖米白）和這個之間交替，用來切出段落 */
   --section: #fffffe;
-  /* 中性色階：內文、說明、邊框、淺底。數字越大越深，用法同 Tailwind 的 gray-* */
-  --ink-50: oklch(98.5% 0.002 247.839);
-  --ink-100: oklch(96.7% 0.003 264.542);
-  --ink-200: oklch(92.8% 0.006 264.531);
-  --ink-300: oklch(87.2% 0.01 258.338);
-  --ink-400: oklch(70.7% 0.022 261.325);
-  --ink-500: oklch(55.1% 0.027 264.364);
-  --ink-600: oklch(44.6% 0.03 256.802);
-  --ink-700: oklch(37.3% 0.034 259.733);
-  --ink-800: oklch(27.8% 0.033 256.848);
-  --ink-900: oklch(21% 0.034 264.665);
+  /* 中性色階：內文、說明、邊框、淺底。數字越大越深，用法同 Tailwind 的 gray-*。
+     色相刻意放在暖色（50–75°、低彩度的暖灰），跟暖米白底與玫瑰主色同一個色溫；
+     以前是 Tailwind 的藍灰（約 260°），疊在暖底上會發冷。亮度（L）沿用原本的值，
+     所以各組文字／底色的對比度跟以前一樣。 */
+  --ink-50: oklch(98.5% 0.003 75);
+  --ink-100: oklch(96.5% 0.005 75);
+  --ink-200: oklch(92.5% 0.008 70);
+  --ink-300: oklch(87% 0.011 70);
+  --ink-400: oklch(70.5% 0.016 65);
+  --ink-500: oklch(55% 0.018 60);
+  --ink-600: oklch(44.5% 0.018 55);
+  --ink-700: oklch(37% 0.017 55);
+  --ink-800: oklch(27.5% 0.014 50);
+  --ink-900: oklch(21% 0.012 50);
   /* 課程介紹頁的提示框 */
   --callout: #fbeae6;
   --callout-border: #e8c9c3;
@@ -169,55 +197,58 @@ body,
   --warning-bg: oklch(96.2% 0.059 95.617);
   --warning-fg: oklch(41.4% 0.112 45.904);
   /* 活動頁（工作坊）的重點色 */
-  --event-accent: #3a68b8;
+  --event-accent: var(--track-c-strong);
   /* 月曆的「日」 */
   --calendar-sunday: var(--track-a-accent);
 
   /* 課表三條線的配色（THEMES，見 src/components/courses/schedule/data.ts）。
      三組要彼此分得出來，跟品牌主色是兩件事。
+     色調是低彩度的大地色：A 陶土粉（Hustle）、B 灰藍（Zouk）、C 墨青綠（Event／Workshop，業主 2026/11/20 從赭黃改成這個）。
+     以前是高飽和的珊瑚／亮藍／金黃，加上萊姆綠與淺紫的裝飾色塊，跟全站暖米白＋玫瑰的
+     語言差最多。改色時保持「白字壓 strong ≥ 4.5:1」，其他組合不要比現在更淡。
      page＝卡片底、accent-text＝重點文字、accent＝圓章/active chip、
      cell＝月曆方塊、strong＝深一階（白字要過 4.5:1）、blob＝裝飾色塊、soft＝淺底圓點 */
-  --track-a-page: #f5e7d8;
-  --track-a-accent-text: #d4796e;
-  --track-a-accent: #d4796e;
-  --track-a-cell: #d98b82;
-  --track-a-strong: #a8554a;
-  --track-a-blob: #c9bfe0;
-  --track-a-soft: #fbe9e4;
-  --track-b-page: #cfe0f5;
-  --track-b-accent-text: #4d7fc4;
-  --track-b-accent: #5b8dd9;
-  --track-b-cell: #5b8dd9;
-  --track-b-strong: #3a68b8;
-  --track-b-blob: #c7e36a;
-  --track-b-soft: #e6eefa;
-  --track-c-page: #f7ead4;
-  --track-c-accent-text: #d28e2a;
-  --track-c-accent: #e0a23c;
-  --track-c-cell: #e0a23c;
-  --track-c-strong: #94600f;
-  --track-c-blob: #f0c878;
-  --track-c-soft: #fbf0dc;
+  --track-a-page: #f3e6dc;
+  --track-a-accent-text: #c0705f;
+  --track-a-accent: #c47766;
+  --track-a-cell: #cc8676;
+  --track-a-strong: #9a5444;
+  --track-a-blob: #d9c6bd;
+  --track-a-soft: #f7e9e3;
+  --track-b-page: #dfe5eb;
+  --track-b-accent-text: #56718e;
+  --track-b-accent: #6a85a2;
+  --track-b-cell: #6a85a2;
+  --track-b-strong: #4a6480;
+  --track-b-blob: #c5cba8;
+  --track-b-soft: #e9eef3;
+  --track-c-page: #dfe9e6;
+  --track-c-accent-text: #4f7d77;
+  --track-c-accent: #5f8b85;
+  --track-c-cell: #5f8b85;
+  --track-c-strong: #3e6b66;
+  --track-c-blob: #bcd3cd;
+  --track-c-soft: #e9f1ef;
 
   --radius: 0.625rem;
   /* 全站主底色（暖米白）。首頁區塊在這個和 --section 之間交替 */
   --background: #f8f5f2;
-  --foreground: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.18 0.012 50);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: oklch(0.18 0.012 50);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
+  --popover-foreground: oklch(0.18 0.012 50);
   --primary: var(--brand);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.965 0.006 75);
+  --secondary-foreground: oklch(0.21 0.012 50);
+  --muted: oklch(0.965 0.006 75);
+  --muted-foreground: oklch(0.55 0.018 60);
+  --accent: oklch(0.965 0.006 75);
+  --accent-foreground: oklch(0.21 0.012 50);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
+  --border: oklch(0.92 0.009 70);
+  --input: oklch(0.92 0.009 70);
   --ring: var(--brand);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);

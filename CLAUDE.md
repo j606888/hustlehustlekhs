@@ -58,15 +58,27 @@ but it has been reduced to a single venue and single dance style.
 - **Brand color: use `text-brand` / `bg-brand` / `border-brand`, never a hardcoded Tailwind
   color scale.** The single source is `--brand` in `src/app/globals.css`; `--primary` and
   `--ring` both point at it. The navbar/footer wordmark is text, not an image:
-  `src/components/Wordmark.tsx` (Montserrat, `.font-wordmark`, uppercase, single color).
+  `src/components/Wordmark.tsx` (Montserrat, uppercase, single color).
   `public/logo.svg` is no longer rendered anywhere; it hardcodes the hex because SVG cannot
   read CSS variables. The favicon (`src/app/icon.svg`) is a dark-background/white mark and does not
   follow the brand color.
   Note the schedule/introduction cards (`THEMES` in `schedule/data.ts` and `Introduction.tsx`)
   deliberately use their own hardcoded palette: they need several mutually-distinguishable
   colors, which is a different job from the brand color.
-- Fonts: Poppins (`font-poppins`, Latin/digits) with Noto Sans TC as the Chinese fallback in the
-  same stack, both loaded via `next/font/google` in `layout.tsx`
+- Fonts: exactly two families — Montserrat (Latin/digits, also the wordmark) with Noto Sans TC as
+  the Chinese fallback in the same stack on `body`, both loaded via `next/font/google` in
+  `layout.tsx`. No per-component font classes; don't add a third family.
+- Neutrals: the `--ink-*` scale is warm gray (hue ~50–75°) to match the cream background and rose
+  brand; don't reintroduce Tailwind gray/slate.
+- Shape: three radii only — `rounded-lg` for every container (cards, panels, callouts, photos,
+  video), `rounded-full` for chips/tags/pills, `rounded-md` for small controls (icon buttons,
+  calendar cells, date badges). Cards are separated by a `ring-1 ring-ink-200` hairline, not a
+  shadow; `shadow-sm` is reserved for things that must look pressable (calendar cells).
+- Eyebrow labels (small spaced uppercase text above headings, STEP labels, footer column titles)
+  use the `eyebrow` utility in `globals.css`; color is set at the call site.
+- Buttons: one filled `<Button>` (primary) per section. Secondary actions are text links — the
+  `text-link` utility or `<Button variant="link">` — not outline buttons. `variant="outline"` is
+  only for a card's own CTA when a filled trial CTA sits beside it (schedule/enroll cards).
 - UI primitives: shadcn/ui (`src/components/ui/`) backed by Radix UI
 - Icons: SVGs in `public/icons/`, lucide-react for inline icons
 - Analytics: `@vercel/analytics` injected in root layout
