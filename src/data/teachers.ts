@@ -4,6 +4,19 @@
 // 其餘排成等寬卡片，所以想主打誰就給誰 sortOrder: 0。
 // published: false 的老師不會出現在列表、個人頁與 sitemap。
 
+export interface TeacherVideo {
+  src: string;
+  title: string; // 影片下方的小標，例如「Hustle」
+  poster?: string;
+}
+
+// 兩位創辦人一起跳的示範影片（素材/老師 Hustle Demo.mp4、老師Zouk Demo.mov 壓縮成 540p）。
+// 兩支都是暘暘和又嘉一起跳的，所以兩人的個人頁都放。
+const FOUNDER_DEMOS: TeacherVideo[] = [
+  { src: '/videos/hustle-demo.mp4', title: 'Hustle', poster: '/videos/hustle-demo.jpg' },
+  { src: '/videos/zouk-demo.mp4', title: 'Brazilian Zouk', poster: '/videos/zouk-demo.jpg' },
+];
+
 export interface Teacher {
   slug: string; // 網址用，例如 /teachers/sean
   name: string;
@@ -18,7 +31,11 @@ export interface Teacher {
   skills: string[]; // 專長標籤
   courses: string[]; // 授課項目
   description: string[]; // 多段簡介，第一段會被拿去當卡片摘要與 JSON-LD 的 description
-  videos: string[]; // YouTube embed 連結，或影片檔網址
+  /**
+   * 老師跳舞的影片。src 是 /public 下的影片檔（直式 9:16，用 <video> 播）或 YouTube embed 連結。
+   * poster 是播放前顯示的封面圖，影片檔一定要給，不然手機上會是一塊黑。
+   */
+  videos: TeacherVideo[];
   sortOrder: number; // 列表排序（小的在前，第一位為列表大卡）
   published: boolean;
 }
@@ -33,14 +50,14 @@ export const TEACHERS: Teacher[] = [
     title: '創辦人',
     imageUrl: '/teachers/yangyang.jpg',
     avatarFocus: { x: 0.42, y: 0.4, zoom: 1.4 },
-    instagram: undefined,
+    instagram: 'hsuyang0',
     skills: ['Hustle', 'Brazilian Zouk'],
     courses: ['Hustle', 'Brazilian Zouk'],
     description: [
       '擁有20多年的舞蹈經歷，從民俗舞蹈、爵士舞、街舞一路探索至社交舞，涉獵多元舞蹈風格，並專精於 Hustle 與 Brazilian Zouk。',
       '2020年與又嘉共同於高雄創立 Hustlehustlekhs，累積多年舞蹈教學經驗。教學風格輕鬆且注重理解，擅長將複雜動作拆解成清楚易懂的步驟，並透過明確的動作指引，幫助學員掌握身體運用與舞蹈邏輯，讓學習舞蹈不只輕鬆，更能真正跳得自在。',
     ],
-    videos: [],
+    videos: FOUNDER_DEMOS,
     sortOrder: 0,
     published: true,
   },
@@ -50,14 +67,14 @@ export const TEACHERS: Teacher[] = [
     title: '創辦人',
     imageUrl: '/teachers/youjia.jpg',
     avatarFocus: { x: 0.52, y: 0.3, zoom: 1.4 },
-    instagram: undefined,
+    instagram: 'yoga_____5',
     skills: ['Hustle', 'Brazilian Zouk'],
     courses: ['Hustle', 'Brazilian Zouk'],
     description: [
       '大約10年的舞蹈經歷，從大學學習街舞開始，到畢業後接觸社交舞大約7年，專精於 Hustle 與 Brazilian Zouk。',
       '2020年與暘暘共同於高雄創立 Hustlehustlekhs，教學風格清晰簡單，擅長將雙人舞遊戲化，並透過明確的規則與概念，幫助學員掌握不同舞蹈的身體運用方式，有效避免受傷的同時，讓學習舞蹈的過程輕鬆升級，更能跳得好玩並自在。',
     ],
-    videos: [],
+    videos: FOUNDER_DEMOS,
     sortOrder: 1,
     published: true,
   },

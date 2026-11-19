@@ -80,8 +80,9 @@ export default function BeginnerPath({ selectable }: Props) {
         )}
         <ol className="grid items-stretch gap-3 md:grid-cols-[1fr_auto_1fr] md:gap-4">
           {STEPS.map((s, i) => {
-            // 首頁：STEP 1 是建議的第一步，固定加底色。/beginners：選中的那張才加底色。
-            const highlighted = selectable ? selectable.selected === s.key : i === 0;
+            // /beginners：選中的那張才加底色。首頁兩張一律同樣的白底灰框（業主 2026/11/19：
+            // 體驗課那張的紅底紅框讓左右不一致），建議的第一步改由 STEP 1 的實心按鈕帶出來。
+            const highlighted = selectable ? selectable.selected === s.key : false;
             const body = (
               <>
                 <span className="font-poppins text-xs font-bold tracking-widest text-brand-strong">
@@ -150,6 +151,18 @@ export default function BeginnerPath({ selectable }: Props) {
             );
           })}
         </ol>
+        {/* 有跳舞經驗的人看到這段會以為網站只收新手（舞者朋友實測回饋 2026/11/19），
+            給他們一個直接去課表的出口，看得到中階／進階班。/beginners 不需要。 */}
+        {!selectable && (
+          <div className="mt-6 flex justify-center">
+            <Button asChild variant="outline" size="lg">
+              <Link href="/courses?tab=schedule">
+                已經會跳了？
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

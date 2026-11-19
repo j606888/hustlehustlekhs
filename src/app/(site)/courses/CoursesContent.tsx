@@ -63,10 +63,11 @@ export default function CoursesContent() {
 
   return (
     <>
-      <div className="w-full px-4 py-10 flex flex-col items-center justify-center md:px-6">
+      {/* 手機頁首壓矮（業主 2026/11/19：課表 tab 一進來不用滑就看得到整個月曆） */}
+      <div className="w-full px-4 py-4 flex flex-col items-center justify-center md:px-6 md:py-10">
         <SectionHeading
           as="h1"
-          size="lg"
+          size="page-compact"
           eyebrow="課表・費用・風格"
           title="高雄 Hustle / Zouk 課表選課"
         />
@@ -75,7 +76,7 @@ export default function CoursesContent() {
         {TABS.map(tab => (
           <div
             key={tab.query}
-            className={`px-4 py-4 relative hover:cursor-pointer ${tab.query === activeTab ? 'after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-brand' : ''}`}
+            className={`px-4 py-3 md:py-4 relative hover:cursor-pointer ${tab.query === activeTab ? 'after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-brand' : ''}`}
             onClick={() => handleTabClick(tab.query)}
           >
             <div className={`text-sm md:text-base ${tab.query === activeTab ? 'text-brand font-bold' : 'text-ink-600'}`}>{tab.label}</div>

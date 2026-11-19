@@ -1,9 +1,16 @@
 'use client';
 
-import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import IGIcon from '@/components/icons/IGIcon';
 import MonthOverview from './MonthOverview';
-import { SHOW_MONTH_EVENT, isPast, type MonthConfig, type ShowMonthDetail } from './data';
+import {
+  CALENDAR_LEGEND,
+  SHOW_MONTH_EVENT,
+  THEMES,
+  isPast,
+  type MonthConfig,
+  type ShowMonthDetail,
+} from './data';
 
 type Selected = { year: number; month: number; day: number };
 
@@ -160,6 +167,37 @@ export default function MonthCarousel({ months }: { months: MonthConfig[] }) {
         </div>
       )}
 
+      {/* 顏色圖例＋IG 課表海報，放在月曆「上方」（業主 2026/11/19）：
+          手機一進來就要先知道顏色代表什麼，海報連結也不用滑到最底才找得到。
+          圖例固定三色、不隨月份變：藍＝Zouk、藕＝Hustle、金＝Event（客座 Workshop 等）。 */}
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+        <ul className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-ink-700">
+          {CALENDAR_LEGEND.map((item) => (
+            <li key={item.theme} className="flex items-center gap-1.5">
+              <span
+                aria-hidden
+                className={`size-3 rounded-full ${THEMES[item.theme].legendDot}`}
+              />
+              <span>
+                <span className="sr-only">{item.colorName}＝</span>
+                {item.label}
+              </span>
+            </li>
+          ))}
+        </ul>
+        {activePoster && (
+          <a
+            href={activePoster.src}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-card px-3 py-1.5 text-sm font-semibold text-heading ring-1 ring-ink-200 transition hover:ring-brand"
+          >
+            <IGIcon className="size-4" />
+            {months[activeIndex]?.titleZh} IG 課表
+          </a>
+        )}
+      </div>
+
       {/* 一頁一個月：原生 scroll-snap，手機用手指滑、桌機用月份分頁或觸控板。
           slide 寬度剛好等於捲動容器寬度，所以畫在元素框「外面」的外框會被 overflow 裁掉 ——
           月曆卡片因此用 ring-inset（見 MonthOverview），把外框畫進框內。
@@ -167,12 +205,14 @@ export default function MonthCarousel({ months }: { months: MonthConfig[] }) {
       <div
         ref={scrollerRef}
         onScroll={handleScroll}
-        className="mt-4 flex snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="mt-3 flex snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {months.map((month) => (
           <div
             key={`${month.year}-${month.month}`}
-            className="w-full shrink-0 snap-start"
+            // relative：MonthOverview 手機上把月份標題設成 sr-only（absolute 定位），
+            // 沒有定位容器的話，隔壁月份的標題會跑出輪播、把整頁撐出橫向捲軸。
+            className="relative w-full shrink-0 snap-start"
           >
             <MonthOverview
               config={month}
@@ -188,32 +228,6 @@ export default function MonthCarousel({ months }: { months: MonthConfig[] }) {
         ))}
       </div>
 
-      {/* 目前這個月的 IG 課表海報，縮成一列小卡：海報自己的配色（米底、橘紅字）跟官網不同，
-          整張攤開會搶走月曆的主角位置；縮圖＋官網樣式的卡片框，想看的人點開看大圖。
-          放在輪播外面：放進每一頁的話，有海報的月份會把整個輪播撐高。 */}
-      {activePoster && (
-        <a
-          href={activePoster.src}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-6 flex items-center gap-4 rounded-2xl bg-card p-3 shadow-sm ring-1 ring-ink-200 transition hover:ring-brand"
-        >
-          <Image
-            src={activePoster.src}
-            alt={activePoster.alt}
-            width={activePoster.width}
-            height={activePoster.height}
-            sizes="72px"
-            className="h-24 w-[72px] flex-shrink-0 rounded-lg object-cover ring-1 ring-ink-100"
-          />
-          <span className="flex flex-col gap-0.5">
-            <span className="text-base font-bold text-heading">
-              {months[activeIndex]?.titleZh} IG 課表海報
-            </span>
-            <span className="text-sm text-ink-600">點開看大圖，存下來或分享給朋友 →</span>
-          </span>
-        </a>
-      )}
     </section>
   );
 }

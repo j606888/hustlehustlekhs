@@ -8,7 +8,7 @@ import { MONTHS } from './data';
 export default function ScheduleBoard() {
   return (
     <div className="bg-card">
-      <div className="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-8 md:gap-10 md:px-6 md:py-12">
+      <div className="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-4 md:gap-10 md:px-6 md:py-12">
         <MonthCarousel months={MONTHS} />
       </div>
     </div>

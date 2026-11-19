@@ -9,7 +9,8 @@ type Props = {
   subtitle?: string;
   /** 只要一行的副標用 'nowrap'：禁止斷行，手機上字級跟著螢幕寬度縮小。 */
   subtitleFit?: 'wrap' | 'nowrap';
-  size?: 'md' | 'lg';
+  /** 'page-compact'：桌機跟 lg 一樣大，手機縮小成一行（給課表頁這種要把空間留給內容的頁首）。 */
+  size?: 'md' | 'lg' | 'page-compact';
   /** 頁面層級的頁首用 'h1'，首頁區塊用預設的 'h2'。 */
   as?: 'h1' | 'h2';
   className?: string;
@@ -24,7 +25,12 @@ const SectionHeading = ({
   as: Tag = 'h2',
   className = '',
 }: Props) => {
-  const titleSize = size === 'lg' ? 'text-3xl md:text-5xl' : 'text-2xl md:text-3xl';
+  const titleSize =
+    size === 'lg'
+      ? 'text-3xl md:text-5xl'
+      : size === 'page-compact'
+        ? 'text-2xl md:text-5xl'
+        : 'text-2xl md:text-3xl';
   // nowrap：約 22 個全形字 × 4vw ≈ 88vw，320px 的小手機扣掉左右留白也放得下
   const subtitleClass =
     subtitleFit === 'nowrap'
