@@ -67,18 +67,24 @@ export default async function TeacherPage({ params }: { params: Promise<{ slug: 
           <div className='flex items-baseline gap-1'>
             <h1 className='text-2xl font-bold md:text-4xl'>{teacher.name}</h1>
             {teacher.title && <span className='text-sm text-ink-500 font-bold md:text-xl'>({teacher.title})</span>}
+            {/* 只放圖示、不寫帳號（業主 2026/11/19），放在名字旁邊；帳號名改由 aria-label 念給讀屏 */}
+            {teacher.instagram && (
+              <Link
+                href={`https://www.instagram.com/${teacher.instagram}`}
+                target='_blank'
+                rel='noopener noreferrer'
+                aria-label={`${teacher.name}的 Instagram（@${teacher.instagram}）`}
+                className='ml-1 self-center p-1 text-ink-600 transition hover:text-brand'
+              >
+                <IGIcon className='w-5 h-5 md:w-7 md:h-7' />
+              </Link>
+            )}
           </div>
           <div className='flex flex-wrap gap-2 md:justify-center'>
             {teacher.skills.map((skill) => (
               <div key={skill} className='text-xs text-white bg-brand px-2 py-1 rounded-2xl md:text-base md:px-4 md:py-1 md:rounded-3xl'>{skill}</div>
             ))}
           </div>
-          {teacher?.instagram && (
-            <Link href={`https://www.instagram.com/${teacher.instagram}`} target='_blank' rel='noopener noreferrer' className='text-sm text-ink-500 underline flex items-center gap-1 md:text-lg'>
-              <IGIcon className='w-4 h-4 md:w-6 md:h-6' />
-              @{teacher.instagram}
-            </Link>
-          )}
         </div>
       </div>
       <div className='w-full max-w-[350px] bg-ink-100 rounded-lg p-3 md:max-w-full md:p-6'>
@@ -89,6 +95,44 @@ export default async function TeacherPage({ params }: { params: Promise<{ slug: 
           <p key={index} className='text-ink-700'>{desc}</p>
         ))}
       </div>
+      {/* 舞蹈影片排在簡介正後面（舞者朋友回饋 2026/11/19：想看老師跳舞的樣子），
+          首頁老師卡的「看跳舞影片」連到 #videos。影片都是直式，手機上兩支並排剛好。 */}
+      {teacher.videos.length > 0 && (
+        <section id='videos' className='w-full max-w-[560px] scroll-mt-24 md:mx-auto'>
+          <h2 className='text-ink-700 mb-2 text-center font-bold md:text-xl md:mb-3'>看{teacher.name}跳舞</h2>
+          <div className='grid grid-cols-2 gap-3'>
+            {teacher.videos.map((video) => (
+              <figure key={video.src} className='flex flex-col gap-1.5'>
+                <div
+                  className={`relative w-full bg-black rounded-lg overflow-hidden ${isFileVideo(video.src) ? 'aspect-[9/16]' : 'aspect-square'}`}
+                >
+                  {isFileVideo(video.src) ? (
+                    <video
+                      className="absolute top-0 left-0 w-full h-full object-cover"
+                      src={video.src}
+                      poster={video.poster}
+                      controls
+                      playsInline
+                      preload="none"
+                    />
+                  ) : (
+                    <iframe
+                      className="absolute top-0 left-0 w-full h-full"
+                      src={video.src}
+                      title={video.title}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                    ></iframe>
+                  )}
+                </div>
+                <figcaption className='text-sm text-ink-600 text-center'>{video.title}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      )}
       <div className='w-full max-w-[350px]'>
         <p className='text-ink-700 mb-2 font-bold'>授課項目</p>
         <div className='flex flex-wrap gap-2'>
@@ -97,40 +141,6 @@ export default async function TeacherPage({ params }: { params: Promise<{ slug: 
           ))}
         </div>
       </div>
-      {teacher.videos.length > 0 && (
-        <div className='w-full max-w-[350px]'>
-          <p className='text-ink-700 mb-2 font-bold'>舞蹈展示</p>
-          <div className='flex flex-wrap gap-2'>
-            {teacher.videos.map((video, index) => (
-              // 上傳的影片多為直式（9:16），YouTube embed 維持正方形
-              <div
-                key={index}
-                className={`relative w-full bg-black rounded-lg overflow-hidden ${isFileVideo(video) ? 'aspect-[9/16]' : 'aspect-square'}`}
-              >
-                {isFileVideo(video) ? (
-                  <video
-                    className="absolute top-0 left-0 w-full h-full object-contain"
-                    src={video}
-                    controls
-                    playsInline
-                    preload="metadata"
-                  />
-                ) : (
-                  <iframe
-                    className="absolute top-0 left-0 w-full h-full"
-                    src={video}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  ></iframe>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

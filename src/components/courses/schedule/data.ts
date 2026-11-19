@@ -209,6 +209,16 @@ const TIME_AND_PLACE: MonthConfig['legend'] = [
 ];
 const FOOTNOTE = '★ 實際場次以 Instagram 公告為準';
 
+/**
+ * 月曆上方的顏色圖例（業主 2026/11/19 指定）：藍＝Zouk、藕＝Hustle、金＝Event。
+ * 每個月都一樣，不跟 MonthConfig.legend 走。colorName 給讀屏軟體念，畫面上只顯示圓點＋label。
+ */
+export const CALENDAR_LEGEND: { theme: ThemeKey; colorName: string; label: string }[] = [
+  { theme: 'trackB', colorName: '藍色', label: 'Zouk' },
+  { theme: 'trackA', colorName: '藕色', label: 'Hustle' },
+  { theme: 'trackC', colorName: '金色', label: 'Event' },
+];
+
 // TODO: 每個月要更新這一塊 —— 新的月份 push 到 MONTHS 後面（或替換掉過期的），
 //       highlights 的 key 是「幾號」，值決定那一格的顏色與點下去跳到哪張課表卡。
 // 陣列順序就是月曆在 /courses 課表 tab 的顯示順序（由近到遠）。
@@ -221,7 +231,13 @@ export const MONTHS: MonthConfig[] = [
     // 十一月週五沒有 Zouk 正式課：週五只剩 11/13 體驗課＋Party 與 11/27 Lambada，
     // 兩場都掛在 Zouk 那張課表卡（zouk-fri）上。
     highlights: {
-      12: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
+      // 11/12 中階班之後接體驗課（海報上整段標色），所以也是特別場次
+      12: {
+        theme: 'trackA',
+        label: '中階\n+體驗課',
+        trackId: 'hustle-thu',
+        emphasis: true,
+      },
       13: {
         theme: 'trackB',
         label: '體驗課\n+Party',
@@ -246,6 +262,12 @@ export const MONTHS: MonthConfig[] = [
     },
     legend: TIME_AND_PLACE,
     footnote: FOOTNOTE,
+    poster: {
+      src: '/images/schedule/2026-11.webp',
+      alt: '11 月課表海報：週四 Hustle 職人棧 11/5 停課，11/12 中階課＋體驗課＋練習，11/19 中階課＋練習，11/26 體驗課＋Social；週五 Zouk Social Hub 11/6、11/20 停課，11/13 Zouk 體驗課＋Zouk x Hustle Party，11/27 Lambada 新手班（Fast Track）＋練習',
+      width: 1080,
+      height: 1527,
+    },
   },
   {
     year: 2026,
@@ -262,8 +284,7 @@ export const MONTHS: MonthConfig[] = [
         trackId: 'zouk-fri',
         emphasis: true,
       },
-      17: { theme: 'trackA', label: 'Hustle', trackId: 'hustle-thu' },
-      // 12/18 Zouk 停課，所以不 highlight。
+      // 12/17 Hustle、12/18 Zouk 停課（12/17 是 2026/11/19 新版海報改的），所以不 highlight。
       24: {
         theme: 'trackA',
         label: '體驗課\n+Party',
@@ -277,7 +298,7 @@ export const MONTHS: MonthConfig[] = [
     footnote: FOOTNOTE,
     poster: {
       src: '/images/schedule/2026-12.webp',
-      alt: '12 月課表海報：週四 Hustle 職人棧 12/3、12/10、12/17 中階班＋新手班＋練習，12/24 體驗課＋練習；週五 Zouk Social Hub 12/4、12/25 新手班＋進階班＋練習，12/11 體驗課＋Party，12/18 停課',
+      alt: '12 月課表海報：週四 Hustle 職人棧 12/3、12/10 中階班＋新手班＋練習，12/17 停課，12/24 體驗課＋練習；週五 Zouk Social Hub 12/4、12/25 新手班＋進階班＋練習，12/11 體驗課＋Party，12/18 停課',
       width: 1080,
       height: 1440,
     },
@@ -374,7 +395,7 @@ export const TRACKS: Track[] = [
       },
       { label: '12/3' },
       { label: '12/10' },
-      { label: '12/17' },
+      { label: '12/17', off: true, note: '停課' },
       {
         label: '12/24',
         note: '體驗＋Party',

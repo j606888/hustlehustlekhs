@@ -6,7 +6,7 @@ import { getPublishedTeachers } from '@/data/teachers';
 // 第一次來的人最想知道「是誰在教」，所以這段先介紹老師（資料取自 teachers.ts，
 // 跟 /teachers 頁同一份），再講我們的故事。學員心得裡常提到又嘉、暘暘，
 // 讀到這裡就對得上人。
-// TODO: 之後首圖換成雙人跳舞的影片時，把現在的大合照（public/images/hero.jpg）移到這一段。
+// 老師卡片後面放一張學員大合照（public/images/about/group.jpg），對應標題的「夥伴」。
 const WhoWeAre = () => {
   const teachers = getPublishedTeachers();
 
@@ -28,7 +28,8 @@ const WhoWeAre = () => {
           {teachers.map((teacher) => (
             <Link
               key={teacher.slug}
-              href={`/teachers/${teacher.slug}`}
+              // 有影片就直接跳到個人頁的影片區（舞者朋友回饋：想看老師跳舞的樣子）
+              href={`/teachers/${teacher.slug}${teacher.videos.length > 0 ? '#videos' : ''}`}
               className="group flex items-start gap-4 rounded-2xl bg-card p-5 ring-1 ring-ink-200 transition hover:ring-brand/40"
             >
               <Avatar src={teacher.imageUrl} alt={teacher.name} focus={teacher.avatarFocus} />
@@ -41,11 +42,22 @@ const WhoWeAre = () => {
                 </p>
                 <p className="text-sm leading-relaxed text-ink-700">{teacher.description[0]}</p>
                 <span className="mt-1 text-sm font-semibold text-brand group-hover:underline">
-                  認識{teacher.name} →
+                  {teacher.videos.length > 0 ? `▶ 看${teacher.name}跳舞` : `認識${teacher.name}`} →
                 </span>
               </div>
             </Link>
           ))}
+        </div>
+
+        <div className="relative mt-8 aspect-[3/2] w-full overflow-hidden rounded-2xl bg-ink-100">
+          <Image
+            src="/images/about/group.jpg"
+            alt="HustleHustle KHS 的老師與學員在教室的大合照"
+            fill
+            // 區塊最寬 max-w-5xl（1024px）扣掉左右留白
+            sizes="(min-width: 1024px) 984px, 100vw"
+            className="object-cover object-[50%_60%]"
+          />
         </div>
 
         <div className="mx-auto mt-8 max-w-2xl text-center text-base text-ink-700 text-balance">

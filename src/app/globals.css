@@ -98,6 +98,19 @@ body,
   font-family: var(--font-bebas), var(--font-poppins), sans-serif;
 }
 
+/* 桌機導覽列多了一列選單（64px → 128px）。各區塊的 scroll-mt-20/24 是照手機 64px 算的，
+   這裡在桌機統一補上多出來的 48px，錨點跳轉才不會被導覽列蓋住。 */
+@media (min-width: 48rem) {
+  html {
+    scroll-padding-top: 3rem;
+  }
+}
+
+/* 品牌字（Montserrat）：只用在 wordmark 與照片上的英文小標，見 components/Wordmark.tsx。 */
+.font-wordmark {
+  font-family: var(--font-wordmark), var(--font-poppins), sans-serif;
+}
+
 /* ─────────────────────────────────────────────────────────────
    品牌主色。全站唯一來源 —— 要換色只改下面 --brand 這一組。
    元件一律用 text-brand / bg-brand / border-brand，不要寫死 Tailwind 色階。

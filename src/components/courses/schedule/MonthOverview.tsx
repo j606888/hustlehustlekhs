@@ -37,7 +37,9 @@ export default function MonthOverview({ config, selectedDay, onSelectDay, now }:
     <section className="w-full">
       {/* 月份標題：字級、字重、顏色跟全站區塊標題一致。
           以前是 IG 海報風格的超大英文月份加粉紅陰影，跟其他頁看起來像不同網站，已改掉。 */}
-      <h2 className="flex items-baseline gap-2 text-heading">
+      {/* 手機上這行藏起來（留給讀屏與搜尋引擎）：上方的月份分頁已經寫了幾月，
+          省下的高度讓整個月曆不用滑就看得到。 */}
+      <h2 className="sr-only text-heading md:not-sr-only md:flex md:items-baseline md:gap-2">
         <span className="text-2xl font-bold md:text-3xl">{titleZh}</span>
         <span className="font-poppins text-sm font-semibold tracking-widest text-ink-500">
           {titleEn} {year}
@@ -47,7 +49,7 @@ export default function MonthOverview({ config, selectedDay, onSelectDay, now }:
       {/* 月曆 */}
       {/* ring-inset：這張卡在輪播裡的寬度等於捲動容器寬度，
           外擴的 ring 會被 overflow 裁掉（左右兩側的線會不見），所以畫在框內。 */}
-      <div className="mt-5 rounded-2xl bg-card p-3 shadow-sm ring-1 ring-inset ring-ink-200 md:p-5">
+      <div className="rounded-2xl bg-card p-2.5 md:mt-5 shadow-sm ring-1 ring-inset ring-ink-200 md:p-5">
         <div className="grid grid-cols-7 gap-1 md:gap-2">
           {WEEKDAYS.map((w, i) => (
             <div
@@ -67,7 +69,7 @@ export default function MonthOverview({ config, selectedDay, onSelectDay, now }:
               return (
                 <div
                   key={day}
-                  className="flex aspect-square items-center justify-center text-sm text-ink-400 md:text-base"
+                  className="flex h-10 items-center justify-center text-sm text-ink-400 md:aspect-square md:h-auto md:text-base"
                 >
                   {day}
                 </div>
@@ -85,7 +87,8 @@ export default function MonthOverview({ config, selectedDay, onSelectDay, now }:
               ? theme.highlightCellStrongSelected
               : theme.highlightCellSelected;
             const cellClass = cn(
-              'flex aspect-square flex-col items-center justify-center overflow-hidden rounded-xl px-0.5 transition-transform',
+              // 手機固定 40px 高（比正方形矮一點），六週的月份也能跟當天課表一起擠進一個畫面
+              'flex h-10 flex-col items-center md:aspect-square md:h-auto justify-center overflow-hidden rounded-xl px-0.5 transition-transform',
               // 選中：實心變成同色外框＋凹陷內陰影，像被按下去。框線畫在方塊內（border-box），
               // 不放大、不往外長 —— 手機格距只有 4px，往外凸會壓到隔壁的方塊。
               // 內陰影是擬物（neumorphism）的按壓效果：左上一層暗影、右下一層亮光。

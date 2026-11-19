@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bebas_Neue, Noto_Sans_TC, Poppins } from "next/font/google";
+import { Bebas_Neue, Montserrat, Noto_Sans_TC, Poppins } from "next/font/google";
 import { Analytics } from '@vercel/analytics/next';
 import JsonLd from '@/components/JsonLd';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_NAME_SERP, SITE_URL } from '@/constants/site';
@@ -32,6 +32,15 @@ const bebasNeue = Bebas_Neue({
   weight: '400',
   subsets: ['latin'],
   variable: '--font-bebas',
+  display: 'swap',
+});
+
+// 品牌字（wordmark）：導覽列中央與頁尾的「HUSTLEHUSTLE KHS」。寬體幾何無襯線、全大寫加字距，
+// 參考精品官網置中 logo 的做法。只給 wordmark 和照片上的英文小標用（.font-wordmark），不排內文。
+const montserrat = Montserrat({
+  weight: ['500', '600'],
+  subsets: ['latin'],
+  variable: '--font-wordmark',
   display: 'swap',
 });
 
@@ -76,7 +85,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-TW">
-      <body className={`${notoSansTC.variable} ${poppins.variable} ${bebasNeue.variable} font-poppins antialiased`}>
+      <body className={`${notoSansTC.variable} ${poppins.variable} ${bebasNeue.variable} ${montserrat.variable} font-poppins antialiased`}>
         <JsonLd data={organizationJsonLd()} />
         {children}
         <Analytics />
