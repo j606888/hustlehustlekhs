@@ -17,11 +17,15 @@ const DANCES = [
     prefix: undefined,
     when: '週四 19:30',
     fit: '喜歡節奏明快、聽到流行音樂就想動的人',
-    photo: '/images/styles/hustle-hd.jpg',
+    photo: '/images/styles/hustle-class.jpg',
     photoAlt: '學員在課堂上跳 Hustle',
     // 照片是橫的、卡片是正方形：往右偏一點，兩個人的臉才都在框裡
-    photoPosition: '57% center',
+    photoPosition: '60% center',
     photoZoom: 1,
+    // 這張是白衣、藍布幕的亮照片，旁邊的 Zouk 是暖色暗照片。多壓一層暗色＋下半部漸層，
+    // 兩張卡的明暗才一致，白字也讀得到。
+    // 業主覺得 55/30/20 太暗，調淡成只在下半部壓暗（給白字），上半部的臉維持原本亮度。
+    overlay: 'bg-gradient-to-t from-black/35 via-black/10 to-black/0',
   },
   {
     id: 'zouk',
@@ -36,6 +40,7 @@ const DANCES = [
     // 照片高度已經填滿正方形，沒辦法單純往上移；改成以底部為基準放大，把臉往上推。
     // 放太大男生的臉會被切掉，所以只放大 1.15，另外把字放在卡片下半部。
     photoZoom: 1.15,
+    overlay: undefined,
   },
 ];
 
@@ -83,6 +88,8 @@ const DanceStyles = () => {
                 </div>
                 {/* 只壓一層很淡的暗色（業主要照片透出來），白字靠文字陰影撐住可讀性 */}
                 <div className="absolute inset-0 bg-black/15 transition-colors group-hover:bg-black/5" />
+                {/* 個別照片太亮時的額外遮罩（見 DANCES 的 overlay），讓兩張卡明暗一致 */}
+                {dance.overlay && <div className={`absolute inset-0 ${dance.overlay}`} />}
                 {/* 字放在卡片下半部（不是正中間），才不會蓋到照片裡的臉 */}
                 <div
                   className="absolute inset-0 flex flex-col items-center justify-end pb-[24%] text-center leading-none text-white"

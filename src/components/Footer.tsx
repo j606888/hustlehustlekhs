@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { LINKS } from '@/constants/links'
 import { VENUES } from '@/data/venues'
+import Wordmark from '@/components/Wordmark'
 
 const Footer = () => {
   return (
@@ -11,7 +12,9 @@ const Footer = () => {
           {/* Brand */}
           {/* 手機上 logo 與標語一起置中；桌機是四欄並排，跟其他欄一樣靠左 */}
           <div className="flex flex-col items-center gap-3 md:items-start">
-            <Image src="/logo.svg" alt="HustleHustle KHS" width={340} height={56} className="brightness-0 invert w-auto h-8" />
+            <Link href="/" aria-label="HustleHustle KHS 首頁" className="text-white">
+              <Wordmark className="text-xl lg:text-lg xl:text-xl" />
+            </Link>
             {/* 業主要求只佔一行：桌機四欄時欄寬只有約 240px，所以字縮小並禁止斷行 */}
             <p className="whitespace-nowrap text-center text-xs text-ink-400 md:text-left lg:text-[11px] xl:text-xs">
               高雄 Hustle・Brazilian Zouk 雙人舞教室

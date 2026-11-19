@@ -5,10 +5,12 @@
  *
  * TODO: 有素材後填其中一個，兩個都留空的話 Hero 會顯示品牌色的佔位區塊。
  *   - 影片：把 mp4 上傳到 Vercel Blob（或任何可直連的 https 網址），填進 videoUrl
- *   - 圖片：把圖放到 public/images/hero.jpg，imageUrl 填 '/images/hero.jpg'
+ *   - 圖片：把圖放到 public/images/，imageUrl 填路徑（例如 '/images/styles/hustle-hd.jpg'）
  * 兩個都填時以影片優先。
  */
 export const HERO_MEDIA: { videoUrl?: string; imageUrl?: string } = {
   videoUrl: undefined,
-  imageUrl: '/images/hero.jpg',
+  // 滿版首圖要「暗底＋人物在中間偏右」，白字才壓得上去；大合照背景太亮、
+  // 人又排滿整張，字會蓋到臉，所以首圖改用這張；大合照移到「關於我們」（images/about/group.jpg）。換照片時記得調 Hero.tsx 的 OBJECT_POSITION。
+  imageUrl: '/images/styles/hustle-hd.jpg',
 };
