@@ -11,11 +11,14 @@ export interface TeacherVideo {
 }
 
 // 兩位創辦人一起跳的示範影片。兩支都是暘暘和又嘉一起跳的，所以兩人的個人頁都放。
-//   Hustle：素材/老師 Hustle Demo.mp4 壓成 540p
-//   Zouk：素材/老師Zouk Demo.mov（1080p 新版）壓成 720p H.264、CRF 28、faststart，約 14MB
+//   Hustle：素材/老師 Hustle Demo.mov（1080p）壓成 720p
+//   Zouk：素材/老師Zouk Demo.mov（1080p）壓成 720p
+//   兩支都是 H.264、CRF 28、AAC 96k、faststart（邊下載邊播）
+//   ffmpeg -i 原檔 -vf scale=720:1280:flags=lanczos -c:v libx264 -preset slow -crf 28 \
+//     -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart -map_metadata -1 輸出.mp4
 // 換影片時請用新檔名，避免瀏覽器／CDN 快取還在給舊檔。
 const FOUNDER_DEMOS: TeacherVideo[] = [
-  { src: '/videos/hustle-demo.mp4', title: 'Hustle', poster: '/videos/hustle-demo.jpg' },
+  { src: '/videos/hustle-demo-720.mp4', title: 'Hustle', poster: '/videos/hustle-demo-720.jpg' },
   { src: '/videos/zouk-demo-720.mp4', title: 'Brazilian Zouk', poster: '/videos/zouk-demo-720.jpg' },
 ];
 
