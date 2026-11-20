@@ -60,6 +60,9 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
+  // 讓 env(safe-area-inset-bottom) 在 iPhone 上真的有值（沒有 cover 時永遠是 0），
+  // 手機底部報名列才會避開 Home 條，也讓 iOS 26 Safari 的底部工具列收合時貼齊螢幕底。
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({
