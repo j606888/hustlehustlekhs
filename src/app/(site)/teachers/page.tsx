@@ -23,6 +23,7 @@ export const metadata: Metadata = {
 export default function TeachersPage() {
   const teachers = getPublishedTeachers();
   const assistants = getPublishedAssistants();
+  const teachingYears = new Date().getFullYear() - 2020;
 
   return (
     <>
@@ -59,7 +60,11 @@ export default function TeachersPage() {
               <div className='flex flex-1 flex-col p-3 md:p-4'>
                 <h3 className='text-base font-bold leading-tight md:text-xl'>{teacher.name}</h3>
                 {teacher.title && (
-                  <p className='mt-0.5 text-xs text-ink-500 md:text-sm'>{teacher.title}</p>
+                  <p className='mt-0.5 text-xs text-ink-500 md:text-sm'>
+                    {teacher.title === '創辦人'
+                      ? `創辦人・${teachingYears} 年教學經驗`
+                      : teacher.title}
+                  </p>
                 )}
                 <div className='mt-2 flex flex-wrap gap-1.5'>
                   {teacher.courses.map((item) => (

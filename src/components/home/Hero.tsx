@@ -6,15 +6,15 @@ type Props = {
 };
 
 /*
- * 滿版首圖，雜誌感排版：文字靠左、人物偏右，營造高質感生活風格封面視覺。
+ * 滿版首圖，文字置中壓在照片上，漸層盡量通透讓照片質感自然透出。
  *
  * 高度：
  *   手機 4:5 —— 保留舞者動態，底部露出下一段，引導往下探索。
  *   桌機 —— 一個螢幕高扣掉導覽列（8rem），最高 760px、最低 480px。
  *
- * OBJECT_POSITION：將人物維持在畫面右半部，左側留給標題與文案。
+ * OBJECT_POSITION 決定裁切時保留哪一塊：照片換掉的話，要依照新照片人物的位置調整。
  */
-const OBJECT_POSITION = "object-[72%_30%] md:object-[76%_35%]";
+const OBJECT_POSITION = "object-[62%_30%] md:object-[60%_35%]";
 
 const Hero = ({ media }: Props) => {
   return (
@@ -22,28 +22,21 @@ const Hero = ({ media }: Props) => {
       <div className="relative aspect-[4/5] w-full md:aspect-auto md:h-[clamp(480px,calc(100svh-8rem),760px)]">
         <HeroMedia media={media} />
 
-        {/* 雜誌感非對稱漸層：桌機左向右暗（護字）、右側通透（留給人物）；手機由左下往右上延伸 */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent md:bg-gradient-to-r md:from-black/80 md:via-black/45 md:to-transparent" />
+        {/* 減輕的暗色漸層：只在底部壓暗護字，上半部幾乎全透讓照片自然透出 */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-black/0" />
 
-        {/* 雜誌感排版：文字靠左對齊，桌機垂直置中、手機靠左下 */}
-        <div className="absolute inset-0 flex flex-col justify-end px-6 pb-10 text-left text-white md:justify-center md:pb-0 md:px-12 lg:px-16">
-          <div className="flex max-w-xl flex-col items-start gap-3 md:gap-4">
-            <div className="flex items-center gap-2.5">
-              <span className="h-px w-6 bg-brand-pale/90" aria-hidden />
-              <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-white/90 md:text-sm">
-                Hustle ・ Brazilian Zouk
-              </p>
-            </div>
-            {/* h1 標題靠左排版，字距微調更具設計感 */}
-            <h1 className="text-2xl font-bold leading-snug tracking-[0.06em] text-balance drop-shadow-sm md:text-4xl md:leading-tight lg:text-[2.85rem]">
-              在高雄學雙人社交舞，
-              <br />
-              第一次跳舞就從這裡開始
-            </h1>
-            <p className="text-[clamp(0.9rem,4vw,1.15rem)] font-medium text-white/90 md:text-xl">
-              不用舞蹈基礎，會走路就會跳的雙人舞
-            </p>
-          </div>
+        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-3 px-5 pb-8 text-center text-white md:gap-4 md:pb-16">
+          <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-white/85 md:text-sm">
+            Hustle ・ Brazilian Zouk
+          </p>
+          <h1 className="text-2xl font-bold leading-snug tracking-[0.06em] text-balance drop-shadow-sm md:text-4xl md:leading-tight lg:text-[2.75rem]">
+            在高雄學雙人社交舞，
+            <br />
+            第一次跳舞就從這裡開始
+          </h1>
+          <p className="whitespace-nowrap text-[clamp(0.9rem,4.4vw,1.15rem)] font-medium text-white/90 md:text-xl">
+            不用舞蹈基礎，會走路就會跳的雙人舞
+          </p>
         </div>
       </div>
     </section>

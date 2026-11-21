@@ -41,6 +41,8 @@ export interface Teacher {
    * poster 是播放前顯示的封面圖，影片檔一定要給，不然手機上會是一塊黑。
    */
   videos: TeacherVideo[];
+  /** Instagram Reel 嵌入連結 */
+  instagramReel?: string;
   sortOrder: number; // 列表排序（小的在前，第一位為列表大卡）
   published: boolean;
 }
@@ -80,6 +82,7 @@ export const TEACHERS: Teacher[] = [
       '2020年與暘暘共同於高雄創立 Hustlehustlekhs，教學風格清晰簡單，擅長將雙人舞遊戲化，並透過明確的規則與概念，幫助學員掌握不同舞蹈的身體運用方式，有效避免受傷的同時，讓學習舞蹈的過程輕鬆升級，更能跳得好玩並自在。',
     ],
     videos: FOUNDER_DEMOS,
+    instagramReel: 'https://www.instagram.com/reel/DWtqbxlEwG9/embed',
     sortOrder: 1,
     published: true,
   },

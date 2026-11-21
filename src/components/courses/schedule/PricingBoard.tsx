@@ -96,11 +96,21 @@ function TierCard({ tier }: { tier: PriceTier }) {
         {tier.options.map((option) => (
           <div
             key={option.name}
-            className="flex items-center justify-between border-t border-ink-200 pt-2"
+            className={cn(
+              "flex items-center justify-between border-t border-ink-200 pt-2",
+              option.badge && "bg-brand/5 -mx-2 px-2 py-1.5 rounded-md border-t-0 my-0.5"
+            )}
           >
-            <span className="text-base font-bold text-heading">
-              {option.name}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="text-base font-bold text-heading">
+                {option.name}
+              </span>
+              {option.badge && (
+                <span className="rounded-full bg-brand px-2 py-0.5 text-[11px] font-bold text-white shadow-xs">
+                  {option.badge}
+                </span>
+              )}
+            </div>
             <span className="text-base font-bold text-heading">
               ${option.price}
             </span>

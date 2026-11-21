@@ -154,7 +154,10 @@ function VenueCard({ venue, tracks }: { venue: Venue; tracks: Track[] }) {
           地址：{venue.addressFull}
         </address>
         {venue.navNote && (
-          <p className="text-sm text-ink-600">{venue.navNote}</p>
+          <div className="mt-1 flex items-start gap-1.5 rounded-lg bg-brand-light px-3.5 py-2.5 text-sm text-ink-800 ring-1 ring-brand/20">
+            <span className="font-bold text-brand shrink-0">📍 入場指引：</span>
+            <span className="font-medium">{venue.navNote}</span>
+          </div>
         )}
         {venue.addressNote && (
           <p className="text-xs text-ink-500">※ {venue.addressNote}</p>

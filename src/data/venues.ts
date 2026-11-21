@@ -54,6 +54,7 @@ export const VENUES: Venue[] = [
     addressFull: '高雄市左營區至聖路171號2樓',
     // 業主指定的 Google 地圖分享連結（直接指到職人棧這個地點，比用地址搜尋準）
     mapLink: 'https://maps.app.goo.gl/WdCRCNXMAqYFVCvp6',
+    navNote: '認準1樓門牌，按門右邊的電鈴，門開了後上二樓就到了！',
     trackIds: ['hustle-thu'],
   },
   {
@@ -68,6 +69,7 @@ export const VENUES: Venue[] = [
     addressFull: '高雄市三民區大昌二路67號3樓之2',
     // 業主指定的 Google 地圖分享連結（直接指到 Social Hub 這個地點，比用地址搜尋準）
     mapLink: 'https://maps.app.goo.gl/TADF5CutZ9nXDxXq6',
+    navNote: '認牙醫診所旁邊的大樓，進來後電梯直上三樓。',
     trackIds: ['zouk-fri'],
   },
 ];

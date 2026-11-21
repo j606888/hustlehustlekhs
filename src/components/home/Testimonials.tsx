@@ -59,7 +59,7 @@ const Testimonial = ({ testimonial }: { testimonial: TestimonialType }) => {
       {testimonial.quote && (
         <div className="mt-6 mb-5 border-b border-brand/20 pb-5">
           <Quote className="mb-2 size-6 shrink-0 text-brand/40 fill-brand/20" />
-          <p className="text-base font-bold leading-snug text-ink-900 text-balance md:text-lg">
+          <p className="w-full text-left text-base font-bold leading-normal text-ink-900 break-words md:text-lg">
             “{testimonial.quote}”
           </p>
         </div>

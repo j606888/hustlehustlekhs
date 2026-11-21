@@ -66,7 +66,11 @@ export default async function TeacherPage({ params }: { params: Promise<{ slug: 
         <div className='flex flex-col gap-1.5 md:items-center'>
           <div className='flex items-baseline gap-1'>
             <h1 className='text-2xl font-bold md:text-4xl'>{teacher.name}</h1>
-            {teacher.title && <span className='text-sm text-ink-500 font-bold md:text-xl'>({teacher.title})</span>}
+            {teacher.title && (
+              <span className='text-sm text-ink-500 font-medium md:text-lg'>
+                ({teacher.title === '創辦人' ? `創辦人・${new Date().getFullYear() - 2020} 年教學經驗` : teacher.title})
+              </span>
+            )}
             {/* 只放圖示、不寫帳號（業主 2026/11/19），放在名字旁邊；帳號名改由 aria-label 念給讀屏 */}
             {teacher.instagram && (
               <Link
@@ -130,6 +134,22 @@ export default async function TeacherPage({ params }: { params: Promise<{ slug: 
                 <figcaption className='text-sm text-ink-600 text-center'>{video.title}</figcaption>
               </figure>
             ))}
+          </div>
+        </section>
+      )}
+      {teacher.instagramReel && (
+        <section className='w-full max-w-[420px] mx-auto flex flex-col items-center gap-2.5'>
+          <h2 className='text-ink-700 font-bold md:text-xl'>Instagram 精選影片</h2>
+          <div className='w-full aspect-[9/14] overflow-hidden rounded-lg border border-ink-200 bg-card shadow-sm'>
+            <iframe
+              src={teacher.instagramReel}
+              className='w-full h-full'
+              title={`${teacher.name} Instagram Reel`}
+              frameBorder="0"
+              scrolling="no"
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              allowFullScreen
+            />
           </div>
         </section>
       )}

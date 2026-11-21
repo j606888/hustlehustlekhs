@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { cn } from '@/lib/utils';
 import Introduction from '@/components/courses/Introduction';
 import ScheduleBoard from '@/components/courses/schedule/ScheduleBoard';
 import PricingBoard from '@/components/courses/schedule/PricingBoard';
@@ -72,16 +73,33 @@ export default function CoursesContent() {
           title="高雄 Hustle / Zouk 課表選課"
         />
       </div>
-      <div className="flex justify-center px-3 border-b border-ink-200 md:px-6">
-        {TABS.map(tab => (
-          <div
-            key={tab.query}
-            className={`px-4 py-3 md:py-4 relative hover:cursor-pointer ${tab.query === activeTab ? 'after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-brand' : ''}`}
-            onClick={() => handleTabClick(tab.query)}
-          >
-            <div className={`text-sm md:text-base ${tab.query === activeTab ? 'text-brand font-bold' : 'text-ink-600'}`}>{tab.label}</div>
-          </div>
-        ))}
+      <div className="flex justify-center px-4 mb-4">
+        <div
+          role="tablist"
+          aria-label="課程頁籤"
+          className="inline-flex max-w-full items-center overflow-x-auto rounded-full bg-ink-100 p-1 ring-1 ring-ink-200/70"
+        >
+          {TABS.map((tab) => {
+            const isActive = tab.query === activeTab;
+            return (
+              <button
+                key={tab.query}
+                role="tab"
+                type="button"
+                aria-selected={isActive}
+                onClick={() => handleTabClick(tab.query)}
+                className={cn(
+                  'rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-200 md:px-5 md:py-2 md:text-sm whitespace-nowrap cursor-pointer',
+                  isActive
+                    ? 'bg-card text-brand font-bold shadow-sm'
+                    : 'text-ink-600 hover:text-ink-900'
+                )}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
       {/* 三個 tab 一律渲染、非 active 的用 hidden 藏起來（而不是條件渲染），
           讓課表／價格／舞風介紹的文字全部進入靜態 HTML。 */}
