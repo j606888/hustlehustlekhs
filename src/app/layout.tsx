@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Montserrat, Noto_Sans_TC } from "next/font/google";
 import { Analytics } from '@vercel/analytics/next';
+import Clarity from '@/components/Clarity';
 import JsonLd from '@/components/JsonLd';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_NAME_SERP, SITE_URL } from '@/constants/site';
 import { organizationJsonLd } from '@/lib/jsonLd';
@@ -76,6 +77,7 @@ export default function RootLayout({
         <JsonLd data={organizationJsonLd()} />
         {children}
         <Analytics />
+        <Clarity />
       </body>
     </html>
   );

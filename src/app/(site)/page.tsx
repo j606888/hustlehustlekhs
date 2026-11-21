@@ -44,8 +44,9 @@ export default function Home() {
     name: t.name,
     title: t.title,
     image: t.imageUrl,
-    content: t.content,
     danceStyle: t.danceStyle,
+    quote: t.quote,
+    content: t.content,
   }));
 
   const faqs = getPublishedFaqs();

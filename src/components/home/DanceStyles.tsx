@@ -16,7 +16,7 @@ const DANCES = [
     name: 'Hustle',
     prefix: undefined,
     when: '週四 19:30',
-    fit: '喜歡節奏明快、聽到流行音樂就想動的人',
+    fit: '當音響放起流行歌與 Disco，腳步就自然跟著旋律輕快踩踏。適合想在下班後輕鬆流汗、享受明快節奏與歡樂互動的你。',
     // 原檔 素材/網站照片精選/DSC09802.JPG，輸出成 2000px 寬
     photo: '/images/styles/hustle-laugh.jpg',
     photoAlt: '學員在課堂上跳 Hustle',
@@ -33,7 +33,7 @@ const DANCES = [
     name: 'Zouk',
     prefix: 'Brazilian',
     when: '週五 19:30',
-    fit: '喜歡流動、浪漫的感覺，想多感受兩人連結的人',
+    fit: '在 R&B 的慢節奏中放慢呼吸，感受雙人牽引的浪漫流動。不需要言語對話，適合想卸下整天疲憊、重新感受肢體連結的你。',
     // 換照片時請用新檔名：同檔名換圖，瀏覽器和圖片快取可能還在給舊圖（之前就卡過一次灰底）
     // 原檔 素材/網站照片精選/DSC09528.JPG，輸出成 2000px 寬
     photo: '/images/styles/zouk-embrace.jpg',
@@ -115,8 +115,7 @@ const DanceStyles = () => {
                   </h3>
                   <span className="text-sm font-semibold text-ink-700">{dance.when}</span>
                 </div>
-                <p className="text-sm text-ink-700">
-                  <strong className="font-semibold text-brand-strong">適合：</strong>
+                <p className="text-sm leading-relaxed text-ink-700">
                   {dance.fit}
                 </p>
                 <span className="mt-1 self-start text-link text-sm">
