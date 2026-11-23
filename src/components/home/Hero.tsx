@@ -6,12 +6,10 @@ type Props = {
 };
 
 /*
- * 滿版首圖，文字壓在照片下緣（參考精品官網的大圖＋置中標題）。
+ * 滿版首圖，文字置中壓在照片上，漸層盡量通透讓照片質感自然透出。
  *
  * 高度：
- *   手機 4:5 —— 目前只有橫式照片（3:2），裁成全螢幕直式（約 9:19）會只剩一個人；
- *              4:5 剛好還放得下一對舞者，下面也會露出下一段，讓人知道要往下滑。
- *              之後拍了直式照片，可以改成 h-[calc(100svh-4rem)] 做真正的全螢幕。
+ *   手機 4:5 —— 保留舞者動態，底部露出下一段，引導往下探索。
  *   桌機 —— 一個螢幕高扣掉導覽列（8rem），最高 760px、最低 480px。
  *
  * OBJECT_POSITION 決定裁切時保留哪一塊：照片換掉的話，要依照新照片人物的位置調整。
@@ -24,27 +22,21 @@ const Hero = ({ media }: Props) => {
       <div className="relative aspect-[4/5] w-full md:aspect-auto md:h-[clamp(480px,calc(100svh-8rem),760px)]">
         <HeroMedia media={media} />
 
-        {/* 由下往上的暗色漸層，讓白字在任何照片上都讀得到 */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/0 md:via-black/20" />
+        {/* 減輕的暗色漸層：只在底部壓暗護字，上半部幾乎全透讓照片自然透出 */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-black/0" />
 
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-3 px-5 pb-8 text-center text-white md:gap-4 md:pb-16">
           <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-white/85 md:text-sm">
             Hustle ・ Brazilian Zouk
           </p>
-          {/* h1 前半句帶「高雄／雙人社交舞」，讓只掃一眼標題的人也知道這是什麼、在哪裡；
-              後半句保留原本的情感標語。 */}
           <h1 className="text-2xl font-bold leading-snug tracking-[0.06em] text-balance drop-shadow-sm md:text-4xl md:leading-tight lg:text-[2.75rem]">
             在高雄學雙人社交舞，
             <br />
             第一次跳舞就從這裡開始
           </h1>
-          {/* 業主要求剛好一行：nowrap 不讓它斷行，字級跟著螢幕寬度縮放
-              （手機 17 個全形字 × 4.4vw ≈ 75vw，扣掉左右 20px 留白還放得下）。 */}
           <p className="whitespace-nowrap text-[clamp(0.9rem,4.4vw,1.15rem)] font-medium text-white/90 md:text-xl">
             不用舞蹈基礎，會走路就會跳的雙人舞
           </p>
-          {/* 按鈕刻意不放（業主 2026/11/16：首頁太複雜、資訊重複）。
-              下一段「兩步驟開始跳舞」就是報名入口。 */}
         </div>
       </div>
     </section>

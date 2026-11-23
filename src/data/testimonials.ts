@@ -9,6 +9,7 @@ export interface Testimonial {
   title: string; // 一句話的自我描述
   imageUrl: string;
   danceStyle: string; // 顯示在名字下方的小 chip
+  quote?: string; // 提煉的大字金句（Punchline）
   content: string[]; // 多段心得
   sortOrder: number;
   published: boolean;
@@ -24,6 +25,7 @@ export const TESTIMONIALS: Testimonial[] = [
     title: '跳過 Salsa、Bachata、Swing、Tango 的社交舞老手',
     imageUrl: '/testimonials/julie.jpg',
     danceStyle: 'Zouk',
+    quote: '整個人沉浸在音樂流動與連結的小宇宙裡，學到的細緻度讓跳舞更加流暢自在。',
     content: [
       '接觸過 Salsa、Bachata、Swing 和 Tango，當初因為喜歡 Zouk 的流動感，加上現在 Bachata 也融入了許多 Zouk 元素，沒想到一踏入就深深愛上了。',
       '十分享受跳 Zouk 的當下，感覺整個人都沉浸在音樂流動與連結的小宇宙裡。',
@@ -39,6 +41,7 @@ export const TESTIMONIALS: Testimonial[] = [
     title: '下班想動一動，結果一跳就是三年',
     imageUrl: '/testimonials/yucheng.jpg',
     danceStyle: 'Zouk',
+    quote: '很後悔沒有更早一點認識跳舞！當下專注於連結，能體驗到前所未有的自由與神奇。',
     content: [
       '一開始，我也只是抱著下班想動一動、打發時間的心情參加了第一場舞會、上了第一堂體驗課。沒想到這一跳，就跳了三年。',
       '這三年來，除了學會舞蹈，我發現自己變得更有自信，與人相處時更加自然真誠，也更能感受當下的情緒、欣賞生活中的美。很難用三言兩語完整表達這段歷程對我的影響，只能說：很後悔沒有更早一點認識跳舞！',
@@ -54,6 +57,7 @@ export const TESTIMONIALS: Testimonial[] = [
     title: '大學國標社出身，多年後重新跳舞',
     imageUrl: '/testimonials/chemistry.jpg',
     danceStyle: 'Hustle',
+    quote: '每週都能感覺自己逐漸進步，對這種純粹正向的快樂深深沈迷。',
     content: [
       '大學曾是國標社，但好多年沒跳舞，好不容易身體健康，剛好聽到有人要學跳舞，就跟去了～～',
       '跳舞很開心，同學們也很 Nice 就一路停不下來。透過上課、練習會，每週都能感覺自己逐漸進步，對這種正向的感覺深深沈迷。',
@@ -70,6 +74,7 @@ export const TESTIMONIALS: Testimonial[] = [
     title: '下班想找新活動，就這樣跳進 Hustle 的上班族',
     imageUrl: '/testimonials/johnny.jpg',
     danceStyle: 'Hustle',
+    quote: '原本以為跳舞都是 E 人的場合，來了才發現很多 I 人，是個能放鬆享受的新世界。',
     content: [
       '工作之外的下班時間，除了聊天聚餐運動之外，想找有興趣的新的活動，也是在不再考慮自我的限制下，才對跳舞萌生出嘗試的念頭，多次看到跳舞資訊，某一次就決定試試。我一開始是不太懂，而選擇了 Hustle。如果多了解去選適合的舞風，或是不了解先試試體驗課，覺得其實差不多，體驗課可以可直接感受。',
       '原本以為跳舞是 E 人的場合，但真正接觸之後才發現比想像的豐富，是好聽的 disco 音樂，和不同人互動，團體中也有 I 人。在跳舞的學習中，從跳舞的舞步、一些基本招，到進階，都是逐步熟悉整個過程，hustlehustlekhs 的老師能把整個過程變比較容易，還有和人互動，及邀舞都是在一種健康環境。重要的是，能更享受在舞蹈中就佷棒。',
@@ -84,6 +89,7 @@ export const TESTIMONIALS: Testimonial[] = [
     title: '從 Bachata 踏進 Zouk 世界的學員',
     imageUrl: '/testimonials/nora.jpg',
     danceStyle: 'Zouk',
+    quote: '好喜歡跟舞伴流動不停的感覺，在這邊真的很有成就感，拜託一定要來！',
     content: [
       '從 Bachata 踏入 Zouk 的世界，直接轉換成最喜歡的雙人舞 😝 好喜歡音樂間跟舞伴流動不停的感覺，也太謝謝又嘉跟暘超清楚的教學方式，讓我們更清楚腳步可以在 social 中跳出優美的舞步，在這邊真的可以很有成就感 😍 拜託一定要來！',
     ],

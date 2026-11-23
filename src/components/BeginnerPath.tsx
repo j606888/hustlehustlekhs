@@ -124,7 +124,9 @@ export default function BeginnerPath({ selectable }: Props) {
             );
             const cardClass = cn(
               'flex flex-col gap-3 rounded-lg p-5 text-left ring-1 transition',
-              highlighted ? 'bg-brand-light ring-2 ring-brand' : 'bg-card ring-ink-200',
+              highlighted
+                ? 'bg-brand-light ring-2 ring-brand shadow-[0_4px_20px_color-mix(in_oklab,var(--brand)_22%,transparent)]'
+                : 'bg-card ring-ink-200',
               selectable && !highlighted && 'cursor-pointer hover:ring-brand/50'
             );
             return (

@@ -15,8 +15,9 @@ type TestimonialType = {
   name: string;
   title: string;
   image: string;
-  content: string[];
   danceStyle: string;
+  quote?: string;
+  content: string[];
 };
 
 const Testimonial = ({ testimonial }: { testimonial: TestimonialType }) => {
@@ -54,8 +55,15 @@ const Testimonial = ({ testimonial }: { testimonial: TestimonialType }) => {
         <p className="text-sm text-ink-500">{testimonial.title}</p>
         <span className="mt-3 rounded-full bg-card px-3 py-1 text-xs font-medium text-brand-strong ring-1 ring-brand/15">{testimonial.danceStyle} 學員</span>
       </div>
-      {/* 引號當作心得段落的起點，內文改左對齊以利長段閱讀 */}
-      <Quote className="mt-6 mb-3 shrink-0 text-brand/25 fill-brand/25" size={28} />
+      {/* 提煉的雜誌訪談大字金句（Punchline）：以品牌細線與間距清楚區隔 */}
+      {testimonial.quote && (
+        <div className="mt-6 mb-5 border-b border-brand/20 pb-5">
+          <Quote className="mb-2 size-6 shrink-0 text-brand/40 fill-brand/20" />
+          <p className="w-full text-left text-base font-bold leading-normal text-ink-900 break-words md:text-lg">
+            “{testimonial.quote}”
+          </p>
+        </div>
+      )}
       <div className="relative">
         <div
           ref={contentRef}

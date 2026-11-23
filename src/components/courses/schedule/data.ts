@@ -876,6 +876,7 @@ function sortKey(event: EnrollEvent): number {
 export interface PriceOption {
   name: string; // '單堂體驗' / '整期五堂'
   price: number;
+  badge?: string; // 方案特色標籤，例如 '★ 最受新手歡迎'
 }
 
 export interface PriceCourse {
@@ -921,7 +922,7 @@ export const PRICE_PLANS: PricePlan[] = [
         ],
         options: [
           { name: '單堂', price: 450 },
-          { name: '4 堂課卡', price: 1700 },
+          { name: '4 堂課卡', price: 1700, badge: '★ 最受新手歡迎' },
           { name: '8 堂課卡', price: 3200 },
         ],
       },
@@ -942,7 +943,7 @@ export const PRICE_PLANS: PricePlan[] = [
         ],
         options: [
           { name: '單堂', price: 450 },
-          { name: '4 堂課卡', price: 1700 },
+          { name: '4 堂課卡', price: 1700, badge: '★ 最受新手歡迎' },
           { name: '8 堂課卡', price: 3200 },
         ],
       },
